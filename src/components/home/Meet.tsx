@@ -3,7 +3,6 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { puppies, puppyLabel, type Puppy } from "@/data";
 import Img from "@/components/Img";
-import Mascot from "./Mascot";
 
 const doorTones = ["bg-[#7a4a2b]", "bg-[#a24a1a]", "bg-[#5a3a2a]"];
 const hasVideo = (p: Puppy) => p.media.some((m) => m.kind === "video");
@@ -35,11 +34,10 @@ export default function Meet() {
   const stage = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<boolean[]>(() => puppies.map((_, i) => i < 3));
-  const walker = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const o = outer.current!, s = stage.current!, t = track.current!;
-    let raf = 0, last = "", h = "", walkT = 0;
+    let raf = 0, last = "", h = "";
     const doors = Array.from(t.children) as HTMLElement[];
     const geom = () => {
       const travel = Math.max(0, t.scrollWidth - window.innerWidth);
@@ -57,8 +55,6 @@ export default function Meet() {
       const p = scrollLen ? Math.min(1, Math.max(0, (window.scrollY - top) / scrollLen)) : 0;
       const x = -p * travel;
       t.style.transform = `translate3d(${x}px,0,0)`;
-      const w = walker.current; // legs swing while the page is scrolling
-      if (w) { w.classList.add("is-walking"); clearTimeout(walkT); walkT = window.setTimeout(() => w.classList.remove("is-walking"), 180); }
       const next = doors.map((d) => { const c = d.offsetLeft + d.offsetWidth / 2 + x; return c < window.innerWidth * 0.6; }); // doors left of the mascot stay open once passed
       const k = next.join();
       if (k !== last) { last = k; setOpen(next); }
@@ -108,7 +104,6 @@ export default function Meet() {
           ))}
         </div>
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-[7.5rem] border-t-[3px] border-cocoa bg-toffee/70" style={{ backgroundImage: "repeating-linear-gradient(90deg, transparent 0 175px, color-mix(in srgb, var(--color-cocoa) 15%, transparent) 175px 177px)" }} />
-        <div ref={walker} className="tp-walker absolute bottom-3 left-[14%] z-10 w-44"><Mascot pose="walk" /></div>
       </div>
     </section>
   );

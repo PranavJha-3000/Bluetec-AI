@@ -15,8 +15,8 @@ export default function Roamer() {
       const x = max > 0 ? (scrollY / max) * (innerWidth - el.offsetWidth) : 0;
       if (scrollY !== last) dir = scrollY > last ? 1 : -1;
       last = scrollY;
-      const meet = document.getElementById("meet")?.getBoundingClientRect();
-      const hide = innerWidth >= 768 && !!meet && meet.top <= 0 && meet.bottom > innerHeight; // Meet has its own mascot
+      const foot = document.querySelector("footer")?.getBoundingClientRect();
+      const hide = scrollY < 120 || (!!foot && foot.top < innerHeight - 60); // hero has its own peeking pup; footer has the basket pup
       el.style.opacity = hide ? "0" : "1";
       el.style.transform = `translateX(${x}px) scaleX(${dir})`;
       el.classList.add("is-walking");

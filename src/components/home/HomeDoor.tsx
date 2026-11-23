@@ -1,5 +1,4 @@
 import Img from "@/components/Img";
-import Mascot from "./Mascot";
 import { puppies, SITE } from "@/data";
 
 export default function HomeDoor() {
@@ -24,7 +23,6 @@ export default function HomeDoor() {
           <span className="hand absolute bottom-6 left-1/2 z-10 -translate-x-1/2 rounded-md border-2 border-cocoa bg-honey px-4 text-sm text-cocoa">welcome home</span>
           <span className="absolute right-[10%] bottom-6 h-10 w-14 rounded-b-lg bg-toffee"><i className="absolute -top-14 left-1/2 block h-16 w-12 -translate-x-1/2 rounded-t-full bg-[#5b9a4f]" /></span>
           <span className="absolute bottom-6 left-[12%] h-10 w-14 rounded-b-lg bg-toffee"><i className="absolute -top-14 left-1/2 block h-16 w-12 -translate-x-1/2 rounded-t-full bg-[#5b9a4f]" /></span>
-          <Mascot pose="walk" className="absolute bottom-4 left-[8%] z-10 w-40" />
         </div>
         <div aria-hidden className="mx-auto h-4 max-w-[44rem] rounded bg-cocoa-soft/60" />
         <a href={SITE.whatsapp} className="btn btn-wa mt-10">Enquire on WhatsApp</a>
