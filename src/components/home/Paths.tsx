@@ -9,7 +9,12 @@ export default function Paths() {
     <section id="paths" className="py-20 md:py-28" style={{ background: "linear-gradient(var(--color-honey-soft), var(--color-honey-soft))" }}>
       <div className="wrap">
         <h2 className="mx-auto max-w-[14ch] text-center text-[clamp(2.4rem,6vw,5rem)] leading-[0.95]">Two ways to meet your puppy</h2>
-        <div className="mt-12 grid gap-8 md:grid-cols-2 md:gap-10">
+        <div aria-hidden className="relative mx-auto mt-8 hidden w-fit items-center gap-1 md:flex">
+          <span className="border-y-2 border-cocoa px-8 py-2 text-xl font-bold text-cocoa" style={{ background: "linear-gradient(var(--color-honey), var(--color-toffee))", clipPath: "polygon(8% 0,100% 0,100% 100%,8% 100%,0 50%)" }}>Puppies in Dubai</span>
+          <span className="border-y-2 border-cocoa px-8 py-2 text-xl font-bold text-cocoa" style={{ background: "linear-gradient(var(--color-honey), var(--color-toffee))", clipPath: "polygon(0 0,92% 0,100% 50%,92% 100%,0 100%)" }}>Imported for you</span>
+        </div>
+        <div className="relative mt-6 grid gap-8 md:mt-0 md:grid-cols-2 md:gap-10">
+          <span aria-hidden className="absolute inset-y-0 left-1/2 hidden w-3 -translate-x-1/2 rounded-b border-x-[3px] border-cocoa bg-toffee md:block" />
           <article className="card flex flex-col overflow-hidden bg-milk/70 p-6 md:p-8">
             <div aria-hidden className="-mx-6 -mt-6 mb-6 h-12 md:-mx-8 md:-mt-8" style={{ background: stripes, maskImage: scallop, maskSize: "3rem 100%", WebkitMaskImage: scallop, WebkitMaskSize: "3rem 100%" }} />
             <svg aria-hidden viewBox="0 0 400 110" className="h-28 w-full" fill="none" stroke="var(--color-cocoa-soft)" strokeOpacity=".45" strokeWidth="4">

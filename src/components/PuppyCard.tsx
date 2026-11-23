@@ -11,9 +11,9 @@ export default function PuppyCard({ p }: { p: Puppy }) {
         <span className="hand absolute left-3 top-3 -rotate-3 rounded-full border-2 border-cocoa bg-honey px-3 py-1 text-sm">Available</span>
         {video && <span className="hand absolute bottom-3 right-3 rounded-full bg-cocoa px-3 py-1 text-sm text-milk">with video</span>}
       </div>
-      <div className="p-4">
-        <h3 className="text-2xl">{puppyLabel(p)}</h3>
-        <p className="text-cocoa-soft">{p.breed} · {p.genderLabel} · {p.age}</p>
+      <div className="p-3 sm:p-4">
+        <h3 className="text-lg leading-tight sm:text-2xl">{puppyLabel(p)}</h3>
+        <p className="text-sm text-cocoa-soft sm:text-base">{p.breed} · {p.genderLabel} · {p.age}</p>
       </div>
     </Link>
   );

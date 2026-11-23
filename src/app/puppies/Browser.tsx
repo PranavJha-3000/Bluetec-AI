@@ -43,7 +43,7 @@ export default function Browser() {
         {filtered && <button onClick={() => { setF({}); window.history.replaceState(null, "", window.location.pathname); }} className="ml-3 underline">Clear filters</button>}
       </p>
       {list.length ? (
-        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{list.map((p) => <PuppyCard key={p.slug} p={p} />)}</div>
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">{list.map((p) => <PuppyCard key={p.slug} p={p} />)}</div>
       ) : (
         <div className="card mt-6 p-10 text-center">
           <p className="font-display text-3xl font-extrabold">Nobody here yet</p>

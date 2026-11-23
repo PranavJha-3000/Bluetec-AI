@@ -6,18 +6,27 @@ This is a coarse score, not a pixel-exact diff: photos, text wrapping and differ
 
 | Page | Reference | Our height | Diff |
 |---|---|---|---|
-| Home hero 1440 / 390 (viewport) | 1440x900 / 390x844 | viewport | 13.9% / 16.1% |
-| /faq d / m | 2372 / 3082 | 1962 / 2689 | 44.6% / 38.2% |
-| /contact | 1952 / 3579 | 1567 / 2651 | 28.4% / 43.2% |
-| /how-it-works | 4506 / 7972 | 2103 / 3661 | 32.6% / 33.0% |
-| /puppies | 3673 / 5643 | 3325 / 10277 | 28.0% / 38.8% |
-| /happy-families | 8787 / 32314 | 7854 / 9105 | 32.3% / 33.8% |
-| /gone-home | 3063 / 7234 | 2358 / 5579 | 39.0% / 35.5% |
-| /puppies/maltipoo-max-male | 3274 / 5223 | 2435 / 3518 | 39.1% / 42.6% |
-| 404 | 1606 / 2099 | 1098 / 1628 | 40.3% / 33.7% |
+| vp-d-hero (/) | 1440x900 | viewport | 13.9% |
+| vp-m-hero (/) | 390x844 | viewport | 16.1% |
+| d-faq (/faq) | 1425x2372 | 2183 | 37.4% |
+| m-faq (/faq) | 375x3082 | 2871 | 33.4% |
+| d-contact (/contact) | 1425x1952 | 1788 | 19.9% |
+| m-contact (/contact) | 375x3579 | 2834 | 38.6% |
+| d-how (/how-it-works) | 1425x4506 | 2323 | 34.7% |
+| m-how (/how-it-works) | 375x7972 | 3843 | 34.2% |
+| d-puppies (/puppies) | 1425x3673 | 3514 | 24.4% |
+| m-puppies (/puppies) | 375x5643 | 4545 | 45.6% |
+| d-families (/happy-families) | 1425x8787 | 8075 | 33.8% |
+| m-families (/happy-families) | 378x32314 | 9287 | 33.8% |
+| d-gone (/gone-home) | 1425x3063 | 2579 | 32.7% |
+| m-gone (/gone-home) | 375x7234 | 5761 | 36.9% |
+| d-detail (/puppies/maltipoo-max-male) | 1425x3274 | 2656 | 38.6% |
+| m-detail (/puppies/maltipoo-max-male) | 375x5223 | 3700 | 44.0% |
+| d-notfound (/nope) | 1425x1606 | 1319 | 29.0% |
+| m-notfound (/nope) | 375x2099 | 1811 | 26.5% |
 
 ## Findings
-- The home hero is the closest match. Every inner page is 15–55% shorter than the reference (spacing and decorative sections are lighter), so the next fidelity pass should be inner-page vertical rhythm and the missing decorative blocks.
-- Mobile `/puppies` is 10277px against 5643px: our cards are too tall on a phone (the reference uses a denser 2-column grid).
-- Mobile `/happy-families` reference is 32314px; its photo wall is far taller than ours.
-- Not compared: home scroll scenes (reference screenshots were taken mid-scroll at offsets that depend on its own page height).
+- Latest run after the footer, passport book, signpost and mobile 2-column puppies grid. Inner pages are still 10-35% shorter than the reference and score 20-46% on the coarse metric, so they are close in structure but not pixel-matched.
+- Home hero is the closest match (14% / 16%).
+- Remaining known differences: reference decorative blocks on inner pages, exact copy and spacing, tall mobile photo wall on /happy-families (reference 32314px vs ours ~9300px).
+- Not compared: home scroll scenes (reference screenshots depend on its own page height).
