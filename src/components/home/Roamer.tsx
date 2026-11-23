@@ -30,7 +30,8 @@ export default function Roamer() {
       const w = el.offsetWidth;
       const x = pinned ? 0.14 * innerWidth : max > 0 ? (scrollY / max) * (innerWidth - w) : 0;
       const foot = document.querySelector("footer")?.getBoundingClientRect();
-      const hide = !pinned && (scrollY < 120 || (!!foot && foot.top < innerHeight - 60)); // hero has its own peeking pup; footer has the basket pup
+      const hide = !pinned && (scrollY < 120 || (!!foot && foot.top < innerHeight)); // hero has its own peeking pup; footer has the basket pup
+      el.style.transitionDuration = !!foot && foot.top < innerHeight ? "0s" : ""; // no half-faded ghost beside the basket pup
       el.style.opacity = hide ? "0" : "1";
       el.style.transform = `translateX(${x}px)`;
       const moved = pinned ? Math.abs(scrollY - lastY) * 1.25 : Math.abs(x - lastX); // the track travels 1.25px per scrolled px
