@@ -233,3 +233,6 @@ main:has(#home) + footer { margin-top: 0; } /* home ends dark: no milk strip bef
 .tpf-back { z-index: 1; } .tpf-pup { z-index: 10; } .tpf-front { z-index: 25; }
 
 .gutter { padding-inline: var(--gutter); }
+
+html[data-basket] .tpf-pup { opacity: 0; transition: opacity .15s; }
+html[data-basket="in"] .tpf-pup { opacity: 1; }
