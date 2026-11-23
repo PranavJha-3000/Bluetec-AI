@@ -2,57 +2,51 @@ import Link from "next/link";
 import { puppies, SITE } from "@/data";
 import Img from "@/components/Img";
 import Mascot from "./Mascot";
-import Scallop from "./Scallop";
-import HeroTag from "./HeroTag";
 
-const shapes = [
-  { h: "h-[8.5rem] md:h-[11rem]", r: -3 },
-  { h: "h-[11rem] md:h-[14.5rem]", r: 2 },
-  { h: "h-[8rem] md:h-[11.5rem]", r: -2 },
-  { h: "h-[9.5rem] md:h-[12.5rem]", r: 0 },
-  { h: "h-[11rem] md:h-[15rem]", r: 3 },
-  { h: "h-[9rem] md:h-[11rem]", r: -3 },
+// Lineup seats (position, width, peek, tilt) are the reference's own values for its six hero puppies.
+const SEATS = [
+  { slug: "maltipoo-max-male", x: "9%", w: "8.6rem", peek: 0.62, tilt: "-5deg" },
+  { slug: "korean-teacup-maltipoo-female", x: "22.5%", w: "10.4rem", peek: 0.8, tilt: "3deg" },
+  { slug: "pomeranian-female", x: "35%", w: "9.2rem", peek: 0.7, tilt: "-2deg" },
+  { slug: "maltipoo-cavapoo-male", x: "65%", w: "9.4rem", peek: 0.74, tilt: "3deg" },
+  { slug: "toy-poodle-male-female", x: "77.5%", w: "10.6rem", peek: 0.82, tilt: "-3deg" },
+  { slug: "maltipoo-female-2", x: "91%", w: "8.4rem", peek: 0.6, tilt: "4deg" },
 ];
-const lattice = "linear-gradient(45deg, transparent 48%, color-mix(in srgb, var(--color-toffee) 14%, transparent) 49% 51%, transparent 52%), linear-gradient(-45deg, transparent 48%, color-mix(in srgb, var(--color-toffee) 14%, transparent) 49% 51%, transparent 52%)";
 
 export default function Hero() {
-  const pups = puppies.slice(0, 6);
-  // tag shows the cycling breed/name of each of the 7 puppies
-  const labels = pups.map((p) => p.name ? `${p.name} · ${p.breed}` : p.breed);
   return (
-    <section id="hero" className="relative overflow-hidden" style={{ background: "radial-gradient(ellipse 60% 45% at 50% 62%, var(--color-honey-soft), transparent 70%), var(--color-milk)" }}>
-      <div className="wrap relative z-10 flex flex-col items-center pt-8 text-center md:pt-6">
-        <p className="hand text-lg text-toffee-ink md:text-3xl">every puppy is family</p>
-        <svg aria-hidden viewBox="0 0 252 10" className="-mt-1 w-40 text-toffee-ink md:w-64"><path d="M2 5q15-7 30 0t30 0 30 0 30 0 30 0 30 0 30 0 30 0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
-        <h1 className="mt-3 max-w-[11ch] text-[clamp(2.6rem,6.9vw,6.2rem)] leading-[0.92] md:max-w-[12ch]">Premium teacup puppies in Dubai</h1>
-        <p className="mt-4 max-w-[34rem] text-balance text-[1.05rem] text-cocoa-soft md:mt-6 md:text-lg">Meet your new best friend in our Dubai showroom, or order a rare miniature breed from trusted breeders worldwide.</p>
-        <div className="mt-6 flex flex-col items-center gap-4 md:mt-9 md:flex-row">
+    <section id="hero" aria-labelledby="hero-title" className="tph" style={{ "--sky-top": "#fffdf8", "--sky-bottom": "#fff1d8", "--quilt": "#fff1d8" } as React.CSSProperties}>
+      <span aria-hidden className="tph-sun" />
+      <div className="tph-copy gutter">
+        <p className="tph-note hand">every puppy is family
+          <svg viewBox="0 0 220 24" preserveAspectRatio="none" className="absolute -bottom-2 left-0 h-3 w-full text-toffee" aria-hidden><path d="M4 14c18-10 30 8 48-1s28-9 46 0 30 8 48-1 30-9 48 0 18 2 22 0" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </p>
+        <h1 id="hero-title" className="tph-title"><span className="block">Premium teacup</span><span className="block">puppies in Dubai</span></h1>
+        <p className="tph-lede">Meet your new best friend in our Dubai showroom, or order a rare miniature breed from trusted breeders worldwide.</p>
+        <div className="tph-actions">
           <Link href="/puppies" className="btn btn-primary">View available puppies</Link>
           <a href={SITE.whatsapp} className="btn btn-ghost">Enquire on WhatsApp</a>
         </div>
       </div>
-      <div className="relative mt-14 md:mt-10">
-        <div aria-hidden className="absolute inset-x-0 bottom-0 top-[60%] bg-honey-soft" style={{ backgroundImage: lattice, backgroundSize: "56px 56px" }} />
-        <div className="relative flex items-end justify-center gap-1.5 overflow-hidden px-2 pt-12 md:gap-3 md:px-6 lg:gap-5 xl:gap-6">
-          {pups.map((p, i) => (
-            <div key={p.slug} className="contents">
-              {i === 3 && (
-                <div className="relative z-10 -mb-3 w-[4.5rem] shrink-0 md:-mb-5 md:w-[9rem] lg:w-[11rem] xl:w-[13rem]">
-                  <span aria-hidden className="tp-hm motion-reduce:hidden hand absolute -top-7 left-1/2 rounded-full border-2 border-cocoa bg-milk px-3 text-xs md:-top-10 md:text-base">hm?</span>
-                  <Mascot pose="peek" className="-mb-[16%] -ml-[105%] w-[220%] max-w-none" />
-                </div>
-              )}
-              <div className={`relative w-[3.1rem] shrink-0 md:w-[5.5rem] lg:w-[7.25rem] xl:w-[8.5rem]`} style={{ transform: `rotate(${shapes[i].r}deg)` }}>
-                {i === 2 && <HeroTag labels={labels} />}
-                <div style={{ "--i": i } as React.CSSProperties} className={`tp-rise ${shapes[i].h} w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa bg-honey-soft`}>
-                  <Img m={p.cover} alt={p.name || p.breed} eager />
-                </div>
-              </div>
-            </div>
-          ))}
+      <div className="tph-stage">
+        <ul className="tph-lineup" aria-label="Some of the puppies in our showroom">
+          {SEATS.map((s, i) => {
+            const p = puppies.find((q) => q.slug === s.slug) ?? puppies[i];
+            const label = p.name ? `${p.name}, ${p.breed}` : p.breed;
+            return (
+              <li key={s.slug} className="tph-seat" style={{ "--x": s.x, "--w": s.w, "--peek": s.peek, "--tilt": s.tilt, "--i": i } as React.CSSProperties}>
+                <Link href={`/puppies/${p.slug}`} className="tph-pup" aria-label={`Meet ${label}`}>
+                  <span className="tph-photo"><Img m={p.cover} alt={`${p.genderLabel} ${p.breed} puppy`} eager /></span>
+                  <span aria-hidden className="tph-name hand" data-show={i === 2 || undefined}>{p.name || p.breed}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="tph-teddy"><Mascot pose="peek" className="w-full" /></div>
+        <div aria-hidden className="tph-quilt">
+          <svg className="tph-edge" width="100%" height="40" preserveAspectRatio="none"><defs><pattern id="tp-scallop" width="76" height="40" patternUnits="userSpaceOnUse"><path d="M0 40V27A38 25 0 0 1 76 27V40Z" style={{ fill: "var(--quilt)" }} /><path d="M0 27A38 25 0 0 1 76 27" fill="none" stroke="#2a170e" strokeWidth="3" /><path d="M11 33A27 19 0 0 1 65 33" fill="none" stroke="#2a170e" strokeWidth="1.6" strokeDasharray="3.5 5.5" strokeLinecap="round" opacity=".42" /></pattern></defs><rect width="100%" height="40" fill="url(#tp-scallop)" /></svg>
         </div>
-        <Scallop className="relative z-10 -mt-[22px]" />
-        <div className="h-8 bg-honey-soft md:h-24" style={{ backgroundImage: lattice, backgroundSize: "56px 56px" }} />
       </div>
     </section>
   );

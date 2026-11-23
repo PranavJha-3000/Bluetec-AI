@@ -1,57 +1,58 @@
 import Link from "next/link";
-import Mascot from "./Mascot";
+import Img from "@/components/Img";
 
-const stripes = "repeating-linear-gradient(90deg,var(--color-toffee-deep) 0 1.5rem,var(--color-milk) 1.5rem 3rem)";
-const scallop = "radial-gradient(circle at 1.5rem 0.2rem, #000 1.45rem, transparent 1.5rem)";
+// Signpost scene: markup and sizes follow the reference's tp-fork / tp-way / tp-sign / tp-window / tp-flight rules.
+const ROUTE = "M40 250 C 170 40, 470 20, 620 168";
+const Plane = () => (
+  <g transform="translate(-126 -78)">
+    <path d="M28 60 L8 26 L34 26 L60 54 Z" className="tpw-wing" />
+    <path d="M108 112 L142 156 L172 156 L158 112 Z" className="tpw-wing tpw-wing--far" />
+    <path d="M20 80 C20 52 52 44 80 44 L168 44 C200 44 224 60 232 80 C224 100 200 112 168 112 L80 112 C52 112 20 104 20 80 Z" className="tpw-body" />
+    <path d="M104 44 L138 2 L168 2 L154 44 Z" className="tpw-wing" />
+    <path d="M206 64 C215 67 221 73 224 80" className="tpw-line" />
+    <circle cx="136" cy="80" r="25" className="tpw-port" />
+  </g>
+);
 
 export default function Paths() {
   return (
-    <section id="paths" className="py-20 md:py-28" style={{ background: "linear-gradient(var(--color-honey-soft), var(--color-honey-soft))" }}>
-      <div className="wrap">
-        <h2 className="mx-auto max-w-[14ch] text-center text-[clamp(2.4rem,6vw,5rem)] leading-[0.95]">Two ways to meet your puppy</h2>
-        <div aria-hidden className="relative mx-auto mt-8 hidden w-fit items-center gap-1 md:flex">
-          <span className="border-y-2 border-cocoa px-8 py-2 text-xl font-bold text-cocoa" style={{ background: "linear-gradient(var(--color-honey), var(--color-toffee))", clipPath: "polygon(8% 0,100% 0,100% 100%,8% 100%,0 50%)" }}>Puppies in Dubai</span>
-          <span className="border-y-2 border-cocoa px-8 py-2 text-xl font-bold text-cocoa" style={{ background: "linear-gradient(var(--color-honey), var(--color-toffee))", clipPath: "polygon(0 0,92% 0,100% 50%,92% 100%,0 100%)" }}>Imported for you</span>
-        </div>
-        <div className="relative mt-6 grid gap-8 md:mt-0 md:grid-cols-2 md:gap-10">
-          <span aria-hidden className="absolute inset-y-0 left-1/2 hidden w-3 -translate-x-1/2 rounded-b border-x-[3px] border-cocoa bg-toffee md:block" />
-          <article className="card flex flex-col overflow-hidden bg-milk/70 p-6 md:p-8">
-            <div aria-hidden className="-mx-6 -mt-6 mb-6 h-12 md:-mx-8 md:-mt-8" style={{ background: stripes, maskImage: scallop, maskSize: "3rem 100%", WebkitMaskImage: scallop, WebkitMaskSize: "3rem 100%" }} />
-            <svg aria-hidden viewBox="0 0 400 110" className="h-28 w-full" fill="none" stroke="var(--color-cocoa-soft)" strokeOpacity=".45" strokeWidth="4">
-              <path d="M4 106H396M20 106V60H50V106M70 106V30L82 14L94 30V106M110 106V50L140 62V106M160 106V40H190V106M210 106V70H240V106M260 106V20H290V106" />
-            </svg>
-            <h3 className="mt-4 text-3xl">In our showroom</h3>
-            <p className="mt-2 flex-1 text-cocoa-soft">See them, love them, take them home. Come meet our locally available puppies before you decide.</p>
-            <Link href="/puppies?origin=local" className="btn btn-primary mt-6 self-start">Meet local puppies</Link>
+    <section id="paths" aria-labelledby="paths-title" className="tpw" style={{ "--sky-top": "#fbe3b4", "--sky-bottom": "#f7d18d" } as React.CSSProperties}>
+      <div className="gutter mx-auto max-w-[110rem]">
+        <h2 id="paths-title" className="tpw-title text-[clamp(2.6rem,6.4vw,6.25rem)] leading-[0.95]">Two ways to meet your puppy</h2>
+        <div className="tpw-fork">
+          <div aria-hidden className="tpw-post" />
+          <article className="tpw-way tpw-way--left" aria-labelledby="way-local">
+            <h3 id="way-local" className="tpw-sign tpw-sign--left">Puppies in Dubai</h3>
+            <div className="tpw-scene">
+              <svg viewBox="0 0 300 120" className="tpw-sky" aria-hidden>
+                <path d="M4 116h292M20 116V78h16v38M44 116V60h18v56M70 116V84h12v32M150 116V36l4-6v-14l3-4 3 4v14l4 6v80M118 116V70l12-8v54M174 116V64l14 8v44M200 116V82h18v34M226 116V56h14v60M248 116V88h22v28" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <figure className="tpw-window">
+                <span className="tpw-glass"><Img src="/media/FHyoHcIosLZE/60f6e7e00a/showroom.jpg" alt="A tiny apricot teddy bear puppy held up in the TeddyPups showroom" className="!object-[54.3%_48.3%]" /></span>
+                <figcaption className="hand">In our showroom</figcaption>
+              </figure>
+            </div>
+            <p className="tpw-text">See them, love them, take them home. Come meet our locally available puppies before you decide.</p>
+            <Link href="/puppies?origin=local" className="btn btn-primary">Meet local puppies</Link>
           </article>
-          <article className="card flex flex-col bg-milk/70 p-6 md:p-8">
-            <span className="mb-6 self-start border-y-2 border-cocoa px-6 py-2 pr-10 text-xl text-milk" style={{ background: "linear-gradient(var(--color-toffee), var(--color-toffee-deep))", clipPath: "polygon(0 0,88% 0,100% 50%,88% 100%,0 100%)" }}>Puppies from Korea</span>
-            <svg role="img" aria-label="Korea to Dubai" viewBox="0 0 400 140" className="h-36 w-full">
-              <path d="M40 120 Q200 -30 360 100" fill="none" stroke="var(--color-toffee-deep)" strokeWidth="3" strokeDasharray="2 9" strokeLinecap="round" />
-              <circle cx="40" cy="120" r="6" fill="var(--color-toffee-deep)" />
-              <circle cx="360" cy="100" r="6" fill="var(--color-toffee-deep)" />
-              <text x="40" y="138" textAnchor="middle" fontSize="14" fill="var(--color-cocoa)">Korea</text>
-              <text x="360" y="124" textAnchor="middle" fontSize="14" fill="var(--color-cocoa)">Dubai</text>
-              <g className="motion-safe:hidden" transform="translate(205 28) rotate(8)" stroke="var(--color-cocoa)" strokeWidth="2.5" strokeLinejoin="round">
-                <path d="M-8 0L-18 -16L-8 -16L6 0Z" fill="var(--color-toffee)" />
-                <path d="M-8 0L-18 16L-8 16L6 0Z" fill="var(--color-toffee)" />
-                <ellipse rx="26" ry="9" fill="var(--color-milk)" />
-              </g>
-              <g className="motion-reduce:hidden" stroke="var(--color-cocoa)" strokeWidth="2.5" strokeLinejoin="round">
-                <g>
-                <path d="M-8 0L-18 -16L-8 -16L6 0Z" fill="var(--color-toffee)" />
-                <path d="M-8 0L-18 16L-8 16L6 0Z" fill="var(--color-toffee)" />
-                <ellipse rx="26" ry="9" fill="var(--color-milk)" />
-              </g>
-                <animateMotion dur="7s" repeatCount="indefinite" rotate="auto" path="M40 120 Q200 -30 360 100" />
-              </g>
-            </svg>
-            <h3 className="mt-4 text-3xl">Imported for you</h3>
-            <p className="mt-2 flex-1 text-cocoa-soft">Exclusive Korean teacup puppies, delivered. Order from the world&apos;s most reputable breeders and let us handle the import.</p>
-            <Link href="/puppies?origin=imported" className="btn btn-primary mt-6 self-start">See imported puppies</Link>
+          <article className="tpw-way tpw-way--right" aria-labelledby="way-imported">
+            <h3 id="way-imported" className="tpw-sign tpw-sign--right">Imported for you</h3>
+            <div className="tpw-scene">
+              <div className="tpw-flight">
+                <svg viewBox="0 0 660 300" role="img" aria-label="A plane bringing a Korean teacup puppy from Korea to Dubai">
+                  <path d={ROUTE} className="tpw-route" />
+                  <circle cx="40" cy="250" r="7" className="tpw-dot" /><circle cx="620" cy="168" r="7" className="tpw-dot" />
+                  <text x="40" y="284" textAnchor="middle" className="tpw-label">Korea</text>
+                  <text x="620" y="202" textAnchor="middle" className="tpw-label">Dubai</text>
+                  <g className="motion-safe:hidden" transform="translate(331.5 73.8) rotate(-5.4)"><Plane /></g>
+                  <g className="motion-reduce:hidden"><Plane /><animateMotion dur="9s" repeatCount="indefinite" rotate="auto" path={ROUTE} /></g>
+                </svg>
+              </div>
+            </div>
+            <p className="tpw-text">Exclusive Korean teacup puppies, delivered. Order from the world&apos;s most reputable breeders and let us handle the import.</p>
+            <Link href="/puppies?origin=imported" className="btn btn-primary">See imported puppies</Link>
           </article>
         </div>
-        <Mascot pose="sit" className="mx-auto mt-8 w-24 md:hidden" />
       </div>
     </section>
   );

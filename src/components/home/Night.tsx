@@ -2,39 +2,34 @@ import Link from "next/link";
 import Mascot from "./Mascot";
 import { faqs } from "@/data";
 
-// Deterministic scatter so server and client agree.
-const stars = Array.from({ length: 40 }, (_, i) => ({ x: (i * 61.8) % 100, y: (i * 37.3 + 11) % 100, d: (i * 0.37) % 3, s: 4 + (i % 3) * 2 }));
+// Star positions, sizes and delays are the reference's own (11 sparkles).
+const STARS: [number, number, number][] = [[8, 12, 16.2], [22, 30, 9], [41, 8, 12.6], [57, 22, 8.1], [72, 6, 14.4], [88, 18, 10.8], [95, 42, 9], [4, 58, 10.8], [34, 70, 7.2], [63, 84, 9.9], [83, 66, 12.6]];
+const Spark = ({ className = "", style }: { className?: string; style?: React.CSSProperties }) => (
+  <svg viewBox="0 0 40 40" className={className} style={style} aria-hidden><path d="M20 3c1.6 9.4 7.6 15.4 17 17-9.4 1.6-15.4 7.6-17 17-1.6-9.4-7.6-15.4-17-17 9.4-1.6 15.4-7.6 17-17z" fill="currentColor" /></svg>
+);
 
 export default function Night() {
   return (
-    <section id="night" className="relative overflow-hidden bg-cocoa py-16 text-milk md:py-24">
-      <div aria-hidden className="absolute inset-0">
-        {stars.map((s, i) => (
-          <span key={i} className="absolute rounded-full bg-honey motion-safe:animate-[tp-twinkle_3s_ease-in-out_infinite]" style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.s, height: s.s, animationDelay: `${s.d}s` }} />
+    <section id="night" aria-labelledby="questions-title" className="tpn" style={{ "--sky-top": "#4d2b19", "--sky-bottom": "#2f1a10" } as React.CSSProperties}>
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        {STARS.map(([x, y, w], i) => (
+          <Spark key={i} className="absolute text-honey motion-safe:animate-[tp-twinkle_3s_ease-in-out_infinite]" style={{ left: `${x}%`, top: `${y}%`, width: w, animationDelay: `${(i * 0.4).toFixed(2)}s` }} />
         ))}
       </div>
-      {[["8%", "20%", 0], ["88%", "35%", 1.2], ["70%", "78%", 2.1]].map(([l, t, d], i) => (
-        <span key={i} aria-hidden className="tp-float hand absolute text-3xl text-honey/70" style={{ left: l as string, top: t as string, animationDelay: `${d}s` }}>?</span>
-      ))}
-      <div className="wrap relative grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+      <div className="tpn-grid gutter">
         <div>
-          <div className="flex items-center gap-4">
-            <h2 className="text-[clamp(2.6rem,6.5vw,6rem)] leading-[.92]">Questions, answered</h2>
-            <Mascot pose="sit" className="hidden w-32 shrink-0 sm:block" />
-          </div>
+          <h2 id="questions-title" className="text-[clamp(2.6rem,6.4vw,6.25rem)] leading-[.95]">Questions, answered</h2>
           <Link href="/faq" className="btn btn-outline-light mt-8">Read all questions</Link>
+          <Mascot pose="sit" className="mt-9 w-[clamp(9.5rem,30vw,13rem)] lg:hidden" />
         </div>
-        <ul className="space-y-8">
+        <dl className="tpn-list">
           {faqs.slice(0, 3).map((f) => (
-            <li key={f.question} className="grid grid-cols-[auto_1fr] gap-x-3">
-              <span aria-hidden className="text-honey">✦</span>
-              <div>
-                <h3 className="text-xl md:text-2xl">{f.question}</h3>
-                <p className="mt-2 text-milk/75">{f.answer}</p>
-              </div>
-            </li>
+            <div key={f.question}>
+              <dt className="tpn-q"><Spark className="tpn-star" />{f.question}</dt>
+              <dd className="tpn-a">{f.answer}</dd>
+            </div>
           ))}
-        </ul>
+        </dl>
       </div>
     </section>
   );
