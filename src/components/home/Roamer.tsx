@@ -36,5 +36,5 @@ export default function Roamer() {
     addEventListener("scroll", tick, { passive: true });
     return () => { removeEventListener("scroll", tick); clearTimeout(stop); };
   }, []);
-  return <div ref={box} aria-hidden className="pointer-events-none fixed bottom-2 left-0 z-40 hidden w-[4.5rem] transition-opacity duration-300 md:block"><Mascot pose={moving ? "walk" : "sit"} /></div>;
+  return <div ref={box} aria-hidden className="pointer-events-none fixed bottom-2 left-0 z-40 hidden w-24 transition-opacity duration-300 md:block"><Mascot pose={moving ? "walk" : "sit"} /></div>;
 }

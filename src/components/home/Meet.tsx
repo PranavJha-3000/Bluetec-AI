@@ -105,7 +105,7 @@ export default function Meet() {
           ))}
         </div>
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-[7.5rem] border-t-[3px] border-cocoa bg-toffee/70" style={{ backgroundImage: "repeating-linear-gradient(90deg, transparent 0 175px, color-mix(in srgb, var(--color-cocoa) 15%, transparent) 175px 177px)" }} />
-        <div className="tp-bob absolute bottom-3 left-[8%] z-10 w-32"><Mascot pose="walk" /></div>
+        <div className="tp-bob absolute bottom-3 left-[6%] z-10 w-44"><Mascot pose="walk" /></div>
       </div>
     </section>
   );
