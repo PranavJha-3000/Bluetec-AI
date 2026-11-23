@@ -11,8 +11,8 @@ const steps = [
 const breeds = [["Maltipoo", "maltipoo"], ["Pomeranian", "pomeranian"], ["Poodle", "poodle"], ["Cavapoo", "cavapoo"], ["Shih Tzu", "shih-tzu"]];
 const paw = "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 24 24' fill='%23f2be6b' fill-opacity='.35'%3E%3Ccircle cx='5' cy='11' r='2'/%3E%3Ccircle cx='9.5' cy='6.5' r='2'/%3E%3Ccircle cx='14.5' cy='6.5' r='2'/%3E%3Ccircle cx='19' cy='11' r='2'/%3E%3Cpath d='M12 12c-3 0-6 3-6 6 0 2 2 2.5 6 2.5s6-.5 6-2.5c0-3-3-6-6-6z'/%3E%3C/svg%3E\")";
 // hidden until its step; always shown under reduced motion or without JS
-const css = `.tp-b{opacity:0;transform:translateY(12px);transition:opacity .5s,transform .5s}.tp-b[data-on=true]{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){.tp-b{opacity:1!important;transform:none!important;transition:none}}`;
+const css = `.tp-b{opacity:0;transform:translateY(12px);visibility:hidden;transition:opacity .5s,transform .5s,visibility 0s .5s}.tp-b[data-on=true]{opacity:1;transform:none;visibility:visible;transition-delay:0s}
+@media (prefers-reduced-motion:reduce){.tp-b{opacity:1!important;transform:none!important;visibility:visible!important;transition:none}}`;
 
 export default function Chat() {
   const [step, setStep] = useState(0);
@@ -31,7 +31,7 @@ export default function Chat() {
   return (
     <section id="chat" className="relative py-16 md:py-24" style={{ background: "linear-gradient(var(--color-honey-soft), var(--color-honey))" }}>
       <style>{css}</style>
-      <noscript><style>{".tp-b{opacity:1!important;transform:none!important}"}</style></noscript>
+      <noscript><style>{".tp-b{opacity:1!important;transform:none!important;visibility:visible!important}"}</style></noscript>
       <div aria-hidden className="pointer-events-none absolute inset-0 flex flex-col">
         {steps.map((_, i) => <div key={i} ref={(el) => { marks.current[i] = el; }} className="flex-1" />)}
       </div>
@@ -41,7 +41,7 @@ export default function Chat() {
           <p className="mt-5 max-w-[34ch] text-lg">A premium, step-by-step concierge experience. We make adoption simple, secure, and purely joyful.</p>
           <ol className="mt-10 space-y-8">
             {steps.map(([t, d], i) => (
-              <li key={t} aria-current={i === step ? "step" : undefined} className={`flex gap-4 transition-opacity duration-500 ${i === step ? "opacity-100" : "opacity-40"}`}>
+              <li key={t} aria-current={i === step ? "step" : undefined} className={`flex gap-4 transition-opacity duration-500 ${i === step ? "opacity-100" : "opacity-60"}`}>
                 <span className={`grid size-12 shrink-0 place-items-center rounded-full border-[3px] border-cocoa text-xl font-bold ${i === step ? "bg-toffee-deep text-milk" : "bg-honey-soft"}`}>{i + 1}</span>
                 <div><h3 className="text-2xl">{t}</h3><p className="mt-1 max-w-[38ch] text-cocoa-soft">{d}</p></div>
               </li>
