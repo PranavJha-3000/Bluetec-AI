@@ -13,3 +13,8 @@ test-results/
 playwright-report/
 recon/parity/
 recon/video/
+
+# local recon scratch
+recon/js
+recon/rea
+recon/mascot
