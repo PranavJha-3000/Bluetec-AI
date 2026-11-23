@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { puppies, SITE } from "@/data";
 import Img from "@/components/Img";
 import Mascot from "./Mascot";
@@ -11,12 +12,11 @@ const shapes = [
   { h: "h-[9.5rem] md:h-[12.5rem]", r: 0 },
   { h: "h-[11rem] md:h-[15rem]", r: 3 },
   { h: "h-[9rem] md:h-[11rem]", r: -3 },
-  { h: "h-[8rem] md:h-[10.5rem]", r: 2 },
 ];
-const lattice = "linear-gradient(45deg, transparent 48%, rgb(194 98 43 / .14) 49% 51%, transparent 52%), linear-gradient(-45deg, transparent 48%, rgb(194 98 43 / .14) 49% 51%, transparent 52%)";
+const lattice = "linear-gradient(45deg, transparent 48%, color-mix(in srgb, var(--color-toffee) 14%, transparent) 49% 51%, transparent 52%), linear-gradient(-45deg, transparent 48%, color-mix(in srgb, var(--color-toffee) 14%, transparent) 49% 51%, transparent 52%)";
 
 export default function Hero() {
-  const pups = puppies.slice(0, 7);
+  const pups = puppies.slice(0, 6);
   // tag shows the cycling breed/name of each of the 7 puppies
   const labels = pups.map((p) => p.name ? `${p.name} · ${p.breed}` : p.breed);
   return (
@@ -27,7 +27,7 @@ export default function Hero() {
         <h1 className="mt-3 max-w-[11ch] text-[clamp(2.6rem,6.9vw,6.2rem)] leading-[0.92] md:max-w-[12ch]">Premium teacup puppies in Dubai</h1>
         <p className="mt-4 max-w-[34rem] text-balance text-[1.05rem] text-cocoa-soft md:mt-6 md:text-lg">Meet your new best friend in our Dubai showroom, or order a rare miniature breed from trusted breeders worldwide.</p>
         <div className="mt-6 flex flex-col items-center gap-4 md:mt-9 md:flex-row">
-          <a href="/puppies" className="btn btn-primary">View available puppies</a>
+          <Link href="/puppies" className="btn btn-primary">View available puppies</Link>
           <a href={SITE.whatsapp} className="btn btn-ghost">Enquire on WhatsApp</a>
         </div>
       </div>
@@ -37,7 +37,7 @@ export default function Hero() {
           {pups.map((p, i) => (
             <div key={p.slug} className="contents">
               {i === 3 && <Mascot pose="peek" className="relative z-10 -mb-3 w-[5.5rem] shrink-0 md:-mb-5 md:w-[13rem]" />}
-              <div className={`relative w-[3.6rem] shrink-0 md:w-[8.5rem] ${i > 5 ? "hidden md:block" : ""}`} style={{ transform: `rotate(${shapes[i].r}deg)` }}>
+              <div className={`relative w-[3.6rem] shrink-0 md:w-[8.5rem]`} style={{ transform: `rotate(${shapes[i].r}deg)` }}>
                 {i === 5 && <HeroTag labels={labels} />}
                 <div className={`${shapes[i].h} w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa bg-honey-soft`}>
                   <Img m={p.cover} alt={p.name || p.breed} eager />
