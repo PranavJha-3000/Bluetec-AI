@@ -8,15 +8,15 @@ export default function Roamer() {
   const [moving, setMoving] = useState(false);
   useEffect(() => {
     const el = box.current!;
-    if (!matchMedia("(min-width:768px) and (prefers-reduced-motion:no-preference)").matches) return;
+    if (!matchMedia("(prefers-reduced-motion:no-preference)").matches) return;
     let last = scrollY, dir = 1, stop = 0, lastDot = -999;
     const tick = () => {
       const max = document.documentElement.scrollHeight - innerHeight;
-      const x = max > 0 ? (scrollY / max) * (innerWidth - 90) : 0;
+      const x = max > 0 ? (scrollY / max) * (innerWidth - el.offsetWidth) : 0;
       if (scrollY !== last) dir = scrollY > last ? 1 : -1;
       last = scrollY;
       const meet = document.getElementById("meet")?.getBoundingClientRect();
-      const hide = !!meet && meet.top <= 0 && meet.bottom > innerHeight; // Meet has its own mascot
+      const hide = innerWidth >= 768 && !!meet && meet.top <= 0 && meet.bottom > innerHeight; // Meet has its own mascot
       el.style.opacity = hide ? "0" : "1";
       el.style.transform = `translateX(${x}px) scaleX(${dir})`;
       el.classList.add("is-walking");
@@ -36,5 +36,5 @@ export default function Roamer() {
     addEventListener("scroll", tick, { passive: true });
     return () => { removeEventListener("scroll", tick); clearTimeout(stop); };
   }, []);
-  return <div ref={box} aria-hidden className="pointer-events-none tp-walker fixed bottom-2 left-0 z-40 hidden w-24 transition-opacity duration-300 md:block"><Mascot pose={moving ? "walk" : "sit"} /></div>;
+  return <div ref={box} aria-hidden className="pointer-events-none tp-walker fixed bottom-[4.5rem] left-0 z-40 w-16 transition-opacity duration-300 md:bottom-2 md:w-24"><Mascot pose={moving ? "walk" : "sit"} /></div>;
 }
