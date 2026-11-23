@@ -51,7 +51,13 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing:
   @keyframes tp-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px) rotate(-2deg); } }
   .tp-bob { animation: tp-bob .55s ease-in-out infinite; }
   @keyframes tp-door { from { transform: perspective(700px) rotateY(0deg); } to { transform: perspective(700px) rotateY(-100deg); } }
+  @keyframes tp-hmk { 0%, 55% { opacity: 0; transform: translate(-50%, 6px) scale(.8); } 62%, 90% { opacity: 1; transform: translate(-50%, 0) scale(1); } 100% { opacity: 0; } }
+  .tp-hm { animation: tp-hmk 7s ease-in-out infinite; opacity: 0; }
+  @keyframes tp-floatk { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-14px) rotate(8deg); } }
+  .tp-float { animation: tp-floatk 4s ease-in-out infinite; }
+  @keyframes tp-sunk { from { transform: translateY(70%); opacity: .5; } to { transform: none; opacity: 1; } }
   @supports (animation-timeline: view()) {
+    .tp-sun { animation: tp-sunk linear both; animation-timeline: view(); animation-range: entry 0% cover 40%; }
     .tp-door { animation: tp-door linear both; animation-timeline: view(); animation-range: entry 30% cover 45%; }
   }
 }

@@ -11,7 +11,7 @@ export default function Dusk() {
   return (
     <section id="dusk" className="overflow-hidden bg-toffee-deep text-milk">
       <div aria-hidden className="relative h-28 border-b border-milk/15 md:h-32">
-        <div className="absolute top-0 right-[18%] size-32 rounded-t-full bg-honey/90 shadow-[0_0_60px_20px_color-mix(in_srgb,var(--color-honey)_45%,transparent)] md:size-36" />
+        <div className="tp-sun absolute top-0 right-[18%] size-32 rounded-t-full bg-honey/90 shadow-[0_0_60px_20px_color-mix(in_srgb,var(--color-honey)_45%,transparent)] md:size-36" />
         <svg viewBox="0 0 480 100" preserveAspectRatio="none" className="absolute inset-x-0 bottom-0 h-full w-full" fill="var(--color-toffee-ink)" fillOpacity=".7"><path d={skyline} /></svg>
       </div>
       <div className="wrap pt-12 md:pt-16">

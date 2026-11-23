@@ -13,6 +13,9 @@ export default function Night() {
           <span key={i} className="absolute rounded-full bg-honey motion-safe:animate-[tp-twinkle_3s_ease-in-out_infinite]" style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.s, height: s.s, animationDelay: `${s.d}s` }} />
         ))}
       </div>
+      {[["8%", "20%", 0], ["88%", "35%", 1.2], ["70%", "78%", 2.1]].map(([l, t, d], i) => (
+        <span key={i} aria-hidden className="tp-float hand absolute text-3xl text-honey/70" style={{ left: l as string, top: t as string, animationDelay: `${d}s` }}>?</span>
+      ))}
       <div className="wrap relative grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
         <div>
           <div className="flex items-center gap-4">

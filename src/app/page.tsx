@@ -6,6 +6,7 @@ import Passport from "@/components/home/Passport";
 import Dusk from "@/components/home/Dusk";
 import Night from "@/components/home/Night";
 import HomeDoor from "@/components/home/HomeDoor";
+import Roamer from "@/components/home/Roamer";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Dusk />
       <Night />
       <HomeDoor />
+      <Roamer />
     </>
   );
 }
