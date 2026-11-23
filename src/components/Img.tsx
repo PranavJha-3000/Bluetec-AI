@@ -1,6 +1,6 @@
 import { mediaUrl, type Media } from "@/data";
 
-// Plain <img>: media lives on the reference origin; the focal point drives object-position.
+// Plain <img>: the focal point drives object-position.
 export default function Img({ m, src, alt, className = "", eager }: { m?: Media; src?: string; alt?: string; className?: string; eager?: boolean }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element

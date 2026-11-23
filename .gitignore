@@ -11,3 +11,4 @@ playwright-report
 .superpowers
 test-results/
 playwright-report/
+recon/parity/

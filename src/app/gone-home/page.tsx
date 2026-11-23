@@ -14,7 +14,7 @@ export default function GoneHome() {
           <li key={g.slug}>
             <Link href={`/puppies/${g.slug}`} className="card flex items-center gap-4 p-4">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={`https://puppy.instabizweb.com${g.cover}`} alt="" loading="lazy" className="h-24 w-24 rounded-2xl border-2 border-cocoa object-cover" />
+              <img src={g.cover} alt="" loading="lazy" className="h-24 w-24 rounded-2xl border-2 border-cocoa object-cover" />
               <div>
                 <p className="hand text-xs tracking-widest text-toffee-ink">{g.origin === "imported" ? "TEDDYPUPS → HOME ♥" : "DUBAI SHOWROOM → HOME ♥"}</p>
                 <p className="font-display text-2xl font-extrabold">{puppyLabel(g)}</p>

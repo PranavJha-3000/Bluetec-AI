@@ -4,8 +4,8 @@ import familiesJson from "./families.json";
 import faqJson from "./faq.json";
 import journeysJson from "./journeys.json";
 
-// Reference media is served from the original origin (rights confirmed by the user for this assignment).
-export const MEDIA_BASE = "https://puppy.instabizweb.com";
+// Media is self-hosted under public/media (fetched by scripts/fetch-media.mjs; rights confirmed by the user for this assignment).
+export const MEDIA_BASE = "";
 export const mediaUrl = (u: string) => (u.startsWith("http") ? u : MEDIA_BASE + u);
 
 export type Media = { url: string; kind: "image" | "video"; w: number; h: number; alt: string; fx: number; fy: number; color: string; poster?: string; dur?: number };
