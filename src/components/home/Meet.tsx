@@ -1,109 +1,103 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { puppies, puppyLabel, type Puppy } from "@/data";
+import { puppies, type Puppy } from "@/data";
 import Img from "@/components/Img";
 
-const doorTones = ["bg-[#7a4a2b]", "bg-[#a24a1a]", "bg-[#5a3a2a]"];
+// Door colours, label rules and scene mechanics follow the reference's own Meet component.
+const DOOR = ["#a24a1a", "#5a3a28", "#d4893f", "#b8644a", "#7a4a2e"];
 const hasVideo = (p: Puppy) => p.media.some((m) => m.kind === "video");
-const detail = (p: Puppy) => `${p.breed} · ${p.genderLabel} · ${p.age}${hasVideo(p) ? " · with video" : ""}`;
+const title = (p: Puppy) => p.name || p.breed;
+const meta = (p: Puppy) => [p.name ? p.breed : "", p.genderLabel.toLowerCase(), p.age].filter(Boolean).join(", ") + (hasVideo(p) ? ", with video" : "");
 
-function Door({ p, open, i, active }: { p: Puppy; open: boolean; i: number; active?: boolean }) {
-  return (
-    <Link href={`/puppies/${p.slug}`} className="group flex w-full flex-col items-center text-center">
-      <h3 className={`text-[1.65rem] leading-[0.95] transition-colors duration-500 md:text-[1.8rem] ${active ? "text-toffee-ink" : ""}`}>{puppyLabel(p)}</h3>
-      <p className="mt-2 mb-4 min-h-10 text-sm text-cocoa-soft">{detail(p)}</p>
-      <div className="relative w-full">
-      <div className="relative aspect-[3/4] w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa bg-honey-soft">
-        <Img m={p.cover} alt={puppyLabel(p)} />
-        {/* door leaf swings on its left hinge to reveal the photo */}
-        <div aria-hidden className={`absolute inset-0 origin-left transition-transform duration-700 ease-[var(--ease-silk)] ${doorTones[i % 3]}`} style={{ transform: `perspective(900px) rotateY(${open ? -72 : 0}deg)` }}>
-          <div className="absolute inset-x-[12%] bottom-0 top-[12%] rounded-t-full border-2 border-milk/25" />
-          <svg viewBox="0 0 24 24" className="absolute left-1/2 top-[22%] w-9 -translate-x-1/2 fill-milk/40"><circle cx="5" cy="11" r="2.3" /><circle cx="9.5" cy="6.5" r="2.3" /><circle cx="14.5" cy="6.5" r="2.3" /><circle cx="19" cy="11" r="2.3" /><path d="M12 12c-3 0-6 3-6 6 0 2 2 2.5 6 2.5s6-.5 6-2.5c0-3-3-6-6-6z" /></svg>
-          <span className="absolute right-[8%] top-[62%] size-3 rounded-full border-2 border-cocoa bg-honey" />
-        </div>
-      </div>
-        <span className="hand absolute -right-2 top-[8%] z-10 rotate-6 rounded-full border-2 border-cocoa bg-milk px-3 py-0.5 text-sm shadow">Available</span>
-      </div>
-    </Link>
-  );
+function Paw() {
+  return <svg viewBox="0 0 24 24" className="md-peep fill-current" aria-hidden><circle cx="5" cy="11" r="2.3" /><circle cx="9.5" cy="6.5" r="2.3" /><circle cx="14.5" cy="6.5" r="2.3" /><circle cx="19" cy="11" r="2.3" /><path d="M12 12c-3 0-6 3-6 6 0 2 2 2.5 6 2.5s6-.5 6-2.5c0-3-3-6-6-6z" /></svg>;
 }
 
 export default function Meet() {
-  const outer = useRef<HTMLElement>(null);
-  const stage = useRef<HTMLDivElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-  const [open, setOpen] = useState<boolean[]>(() => puppies.map((_, i) => i < 3));
+  const sect = useRef<HTMLElement>(null), range = useRef<HTMLDivElement>(null), hall = useRef<HTMLDivElement>(null), track = useRef<HTMLOListElement>(null);
+  const [pinned, setPinned] = useState(false);
 
   useEffect(() => {
-    const o = outer.current!, s = stage.current!, t = track.current!;
-    let raf = 0, last = "", h = "";
+    const mq = matchMedia("(min-width:1024px) and (prefers-reduced-motion:no-preference)");
+    const on = () => setPinned(mq.matches);
+    on(); mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
+  }, []);
+
+  useEffect(() => {
+    const r = range.current!, h = hall.current!, t = track.current!;
+    if (!pinned) { r.style.height = ""; h.style.removeProperty("--door-w"); h.style.removeProperty("--floor-x"); t.style.transform = ""; t.querySelectorAll<HTMLElement>(".md-door").forEach((d) => (d.dataset.open = "true")); return; }
     const doors = Array.from(t.children) as HTMLElement[];
-    const geom = () => {
-      const travel = Math.max(0, t.scrollWidth - window.innerWidth);
-      return { travel, scrollLen: travel / 1.25, top: o.getBoundingClientRect().top + window.scrollY }; // ~1.25px travel per scrolled px
+    let travel = 0, raf = 0;
+    const measure = () => {
+      const stage = r.firstElementChild as HTMLElement, head = stage.querySelector<HTMLElement>(".md-head")!;
+      const plate = Math.max(64, ...Array.from(t.querySelectorAll<HTMLElement>(".md-plate")).map((e) => e.offsetHeight));
+      const floor = h.querySelector<HTMLElement>(".md-floor")?.offsetHeight ?? 0;
+      const w = Math.max(128, Math.min(256, 0.15 * innerWidth, (stage.clientHeight - (head.offsetTop + head.offsetHeight) - floor - plate - 40) / 1.3));
+      h.style.setProperty("--door-w", `${w.toFixed(0)}px`);
+      travel = Math.max(0, t.scrollWidth - innerWidth);
+      r.style.height = `calc(100vh + ${Math.round(0.8 * travel)}px)`;
     };
     const update = () => {
       raf = 0;
-      if (getComputedStyle(s).display === "none") { // mobile / reduced motion: plain grid
-        if (h) { o.style.height = ""; t.style.transform = ""; h = ""; }
-        return;
-      }
-      const { travel, scrollLen, top } = geom();
-      const nh = `${s.offsetHeight + scrollLen}px`;
-      if (nh !== h) { h = nh; o.style.height = nh; }
-      const p = scrollLen ? Math.min(1, Math.max(0, (window.scrollY - top) / scrollLen)) : 0;
-      const x = -p * travel;
+      const top = sect.current!.getBoundingClientRect().top + scrollY, len = r.offsetHeight - innerHeight;
+      const p = len > 0 ? Math.min(1, Math.max(0, (scrollY - top) / len)) : 0, x = -p * travel;
       t.style.transform = `translate3d(${x}px,0,0)`;
-      const next = doors.map((d) => { const c = d.offsetLeft + d.offsetWidth / 2 + x; return c < window.innerWidth * 0.6; }); // doors left of the mascot stay open once passed
-      const k = next.join();
-      if (k !== last) { last = k; setOpen(next); }
+      h.style.setProperty("--floor-x", `${x.toFixed(1)}px`); // the floor planks travel with the doors
+      const edge = 0.36 * innerWidth;
+      for (const d of doors) { const o = String(d.offsetLeft + x < edge); if (d.dataset.open !== o) d.dataset.open = o; }
     };
     const req = () => { if (!raf) raf = requestAnimationFrame(update); };
-    // focusing an off-screen door would scroll the overflow:hidden stage natively; scroll the page instead
+    const remeasure = () => { measure(); req(); };
+    for (const d of doors) d.dataset.open = "false";
+    measure(); update();
+    addEventListener("scroll", req, { passive: true }); addEventListener("resize", remeasure);
+    const ro = new ResizeObserver(remeasure); ro.observe(t);
+    // keyboard focus on an off-screen door: scroll the page (not the clipped stage) to it
     const onFocus = (e: FocusEvent) => {
-      s.scrollLeft = 0;
-      const d = (e.target as HTMLElement).closest("[data-door]") as HTMLElement | null;
-      const { travel, scrollLen, top } = geom();
+      (r.firstElementChild as HTMLElement).scrollLeft = 0;
+      const d = (e.target as HTMLElement).closest<HTMLElement>(".md-door");
       if (!d || !travel) return;
-      const p = Math.min(1, Math.max(0, (d.offsetLeft + d.offsetWidth / 2 - window.innerWidth / 2) / travel));
-      window.scrollTo(0, top + p * scrollLen);
+      const p = Math.min(1, Math.max(0, (d.offsetLeft + d.offsetWidth / 2 - innerWidth / 2) / travel));
+      scrollTo(0, sect.current!.getBoundingClientRect().top + scrollY + p * (r.offsetHeight - innerHeight));
     };
-    update();
-    window.addEventListener("scroll", req, { passive: true });
-    window.addEventListener("resize", req);
     t.addEventListener("focusin", onFocus);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("scroll", req); window.removeEventListener("resize", req); t.removeEventListener("focusin", onFocus); };
-  }, []);
-
-  const head = (
-    <div className="wrap w-full flex flex-wrap items-end justify-between gap-6">
-      <div>
-        <h2 className="text-[clamp(2.6rem,6.3vw,5.7rem)] leading-[0.95]">Meet the pups</h2>
-        <p className="mt-3 text-lg text-cocoa-soft">Real puppies, real photos, looking for their families right now.</p>
-      </div>
-      <Link href="/puppies" className="btn btn-primary">See all available puppies</Link>
-    </div>
-  );
+    return () => { cancelAnimationFrame(raf); removeEventListener("scroll", req); removeEventListener("resize", remeasure); ro.disconnect(); t.removeEventListener("focusin", onFocus); };
+  }, [pinned]);
 
   return (
-    <section id="meet" ref={outer} className="relative bg-honey-soft md:motion-safe:h-[3735px]">
-      {/* mobile: plain grid */}
-      <div className="py-14 md:motion-safe:hidden">
-        {head}
-        <div className="wrap mt-10 grid grid-cols-2 gap-x-4 gap-y-10">
-          {puppies.map((p, i) => <Door key={p.slug} p={p} open i={i} />)}
+    <section id="meet" ref={sect} aria-labelledby="meet-title" className="md bg-[#fdebc7]" data-pinned={pinned || undefined}>
+      <div ref={range}>
+        <div className="md-stage">
+          <header className="md-head wrap">
+            <div>
+              <h2 id="meet-title" className="text-[clamp(2.6rem,6.4vw,6.25rem)] leading-[0.95]">Meet the pups</h2>
+              <p className="mt-3 max-w-[44ch] text-[clamp(1.125rem,1.4vw,1.375rem)] leading-normal text-cocoa-soft">Real puppies, real photos, looking for their families right now.</p>
+            </div>
+            <Link href="/puppies" className="btn btn-primary shrink-0">See all available puppies</Link>
+          </header>
+          <div ref={hall} className="md-hall">
+            <ol ref={track} className="md-track" aria-label="Puppies looking for a family">
+              {puppies.map((p, i) => (
+                <li key={p.slug} className="md-door" data-open="true">
+                  <Link href={`/puppies/${p.slug}`} className="md-link" style={{ "--door": DOOR[i % DOOR.length] } as React.CSSProperties}>
+                    <span className="md-plate"><span className="md-name">{title(p)}</span><span className="md-meta">{meta(p)}</span></span>
+                    <span className="md-frame">
+                      <span className="md-room"><Img m={p.cover} alt={`${title(p)}, ${p.genderLabel.toLowerCase()} ${p.breed} puppy`} /></span>
+                      <span aria-hidden className="md-way"><span className="md-leaf"><Paw /><span className="md-knob" /></span></span>
+                      <span className="md-tag hand">Available</span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+              <li className="md-door md-door--all" data-open="true">
+                <Link href="/puppies" className="md-link"><span className="md-frame md-frame--all"><span className="md-all">Meet them all</span></span></Link>
+              </li>
+            </ol>
+            <div aria-hidden className="md-floor" />
+          </div>
         </div>
-      </div>
-      {/* desktop: sticky stage */}
-      <div ref={stage} className="sticky top-0 hidden h-screen min-h-[560px] flex-col justify-between overflow-hidden pt-[calc(var(--header-h,76px)+1rem)] md:motion-safe:flex">
-        {head}
-        <div ref={track} className="flex w-max gap-12 px-[var(--gutter)] pb-[7.5rem] will-change-transform">
-          {puppies.map((p, i) => (
-            <div key={p.slug} data-door className="w-[280px] shrink-0"><Door p={p} open={open[i]} i={i} active={open[i] && !open[i + 1]} /></div>
-          ))}
-        </div>
-        <div aria-hidden className="absolute inset-x-0 bottom-0 h-[7.5rem] border-t-[3px] border-cocoa bg-toffee/70" style={{ backgroundImage: "repeating-linear-gradient(90deg, transparent 0 175px, color-mix(in srgb, var(--color-cocoa) 15%, transparent) 175px 177px)" }} />
       </div>
     </section>
   );
