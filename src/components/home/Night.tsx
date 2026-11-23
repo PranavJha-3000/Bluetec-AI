@@ -19,7 +19,7 @@ export default function Night() {
             <h2 className="text-[clamp(2.6rem,6.5vw,6rem)] leading-[.92]">Questions, answered</h2>
             <Mascot pose="sit" className="hidden w-32 shrink-0 sm:block" />
           </div>
-          <Link href="/faq" className="btn mt-8 border-milk bg-transparent text-milk shadow-none">Read all questions</Link>
+          <Link href="/faq" className="btn btn-outline-light mt-8">Read all questions</Link>
         </div>
         <ul className="space-y-8">
           {faqs.slice(0, 3).map((f) => (

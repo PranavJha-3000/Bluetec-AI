@@ -6,7 +6,7 @@ const scallop = "radial-gradient(circle at 1.5rem 0.2rem, #000 1.45rem, transpar
 
 export default function Paths() {
   return (
-    <section id="paths" className="py-20 md:py-28" style={{ background: "linear-gradient(var(--color-milk), var(--color-honey-soft))" }}>
+    <section id="paths" className="py-20 md:py-28" style={{ background: "linear-gradient(var(--color-honey-soft), var(--color-honey-soft))" }}>
       <div className="wrap">
         <h2 className="mx-auto max-w-[14ch] text-center text-[clamp(2.4rem,6vw,5rem)] leading-[0.95]">Two ways to meet your puppy</h2>
         <div className="mt-12 grid gap-8 md:grid-cols-2 md:gap-10">

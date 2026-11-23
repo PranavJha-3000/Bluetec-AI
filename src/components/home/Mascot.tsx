@@ -3,7 +3,7 @@ export default function Mascot({ pose = "peek", className }: { pose?: "peek" | "
   const sw = { stroke: "var(--color-cocoa)", strokeWidth: 5, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
   const tilt = pose === "walk" ? -4 : 0;
   return (
-    <svg viewBox="0 0 200 190" className={className} role="img" aria-label="Teddy the poodle mascot">
+    <svg viewBox="0 0 200 190" className={className} aria-hidden>
       <g transform={`rotate(${tilt} 100 100)`}>
         <circle cx="100" cy="28" r="22" fill="var(--color-honey)" {...sw} />
         <circle cx="100" cy="100" r="82" fill="var(--color-honey)" {...sw} />

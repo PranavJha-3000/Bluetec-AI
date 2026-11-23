@@ -33,12 +33,12 @@ export default function Hero() {
       </div>
       <div className="relative mt-14 md:mt-10">
         <div aria-hidden className="absolute inset-x-0 bottom-0 top-[60%] bg-honey-soft" style={{ backgroundImage: lattice, backgroundSize: "56px 56px" }} />
-        <div className="relative flex items-end justify-center gap-1.5 overflow-hidden px-2 pt-12 md:gap-6 md:px-6">
+        <div className="relative flex items-end justify-center gap-1.5 overflow-hidden px-2 pt-12 md:gap-3 md:px-6 lg:gap-5 xl:gap-6">
           {pups.map((p, i) => (
             <div key={p.slug} className="contents">
-              {i === 3 && <Mascot pose="peek" className="relative z-10 -mb-3 w-[5.5rem] shrink-0 md:-mb-5 md:w-[13rem]" />}
-              <div className={`relative w-[3.6rem] shrink-0 md:w-[8.5rem]`} style={{ transform: `rotate(${shapes[i].r}deg)` }}>
-                {i === 5 && <HeroTag labels={labels} />}
+              {i === 3 && <Mascot pose="peek" className="relative z-10 -mb-3 w-[4.5rem] shrink-0 md:-mb-5 md:w-[9rem] lg:w-[11rem] xl:w-[13rem]" />}
+              <div className={`relative w-[3.1rem] shrink-0 md:w-[5.5rem] lg:w-[7.25rem] xl:w-[8.5rem]`} style={{ transform: `rotate(${shapes[i].r}deg)` }}>
+                {i === 3 && <HeroTag labels={labels} />}
                 <div className={`${shapes[i].h} w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa bg-honey-soft`}>
                   <Img m={p.cover} alt={p.name || p.breed} eager />
                 </div>

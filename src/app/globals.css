@@ -25,7 +25,7 @@
 @media (min-width: 64rem) { :root { --header-h: 4.75rem; } }
 
 html { scroll-behavior: smooth; }
-body { background: var(--color-milk); color: var(--color-cocoa); font-family: var(--font-sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+body { overflow-x: clip; background: var(--color-milk); color: var(--color-cocoa); font-family: var(--font-sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 @media (max-width: 767px) { body { padding-bottom: var(--bar-h); } }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.025em; font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144; }
 ::selection { background: var(--color-honey); color: var(--color-cocoa); }
@@ -36,6 +36,7 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing:
 .btn { display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; padding: .85rem 1.6rem; font-weight: 650; border: 2.5px solid var(--color-cocoa); box-shadow: 0 8px 0 -2.4px var(--color-cocoa); transition: transform .25s var(--ease-pounce), box-shadow .25s var(--ease-pounce); }
 .btn:hover { transform: translateY(-2px); }
 .btn:active { transform: translateY(4px); box-shadow: 0 3px 0 -2.4px var(--color-cocoa); }
+.btn-outline-light { border-color: var(--color-milk); color: var(--color-milk); background: transparent; box-shadow: none; }
 .btn-primary { background: var(--color-toffee-deep); color: #fff; }
 .btn-ghost { background: var(--color-milk); color: var(--color-cocoa); }
 .btn-wa { background: var(--color-wa); color: #fff; }

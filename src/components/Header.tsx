@@ -38,7 +38,7 @@ export default function Header() {
           ))}
         </nav>
         <div className="flex items-center gap-3">
-          <a href={SITE.whatsapp} className="rounded-full border-2 border-cocoa bg-wa px-5 py-2 font-bold text-white shadow-[0_4px_0_-1px_var(--color-cocoa)]">WhatsApp us</a>
+          <a href={SITE.whatsapp} className="hidden whitespace-nowrap rounded-full border-2 border-cocoa bg-wa px-5 sm:inline-flex py-2 font-bold text-white shadow-[0_4px_0_-1px_var(--color-cocoa)]">WhatsApp us</a>
           <button className="rounded-full border-2 border-cocoa px-4 py-2 font-bold lg:hidden" aria-expanded={open} aria-controls="menu" onClick={() => setOpen(!open)}>
             {open ? "Close" : "Menu"}
           </button>

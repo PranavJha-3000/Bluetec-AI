@@ -14,6 +14,7 @@ function Door({ p, open, i }: { p: Puppy; open: boolean; i: number }) {
     <Link href={`/puppies/${p.slug}`} className="group flex w-full flex-col items-center text-center">
       <h3 className="text-[1.65rem] leading-[0.95] md:text-[1.8rem]">{puppyLabel(p)}</h3>
       <p className="mt-2 mb-4 min-h-10 text-sm text-cocoa-soft">{detail(p)}</p>
+      <div className="relative w-full">
       <div className={`relative aspect-[3/4] w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa ${open ? "bg-honey-soft" : doorTones[i % 3]}`}>
         {open ? (
           <Img m={p.cover} alt={puppyLabel(p)} />
@@ -24,7 +25,8 @@ function Door({ p, open, i }: { p: Puppy; open: boolean; i: number }) {
             <span aria-hidden className="absolute right-[8%] top-[62%] size-3 rounded-full border-2 border-cocoa bg-honey" />
           </>
         )}
-        <span className="hand absolute right-2 top-[8%] z-10 rotate-6 rounded-full border-2 border-cocoa bg-milk px-3 py-0.5 text-sm shadow">Available</span>
+      </div>
+        <span className="hand absolute -right-2 top-[8%] z-10 rotate-6 rounded-full border-2 border-cocoa bg-milk px-3 py-0.5 text-sm shadow">Available</span>
       </div>
     </Link>
   );
@@ -78,7 +80,7 @@ export default function Meet() {
   }, []);
 
   const head = (
-    <div className="wrap flex flex-wrap items-end justify-between gap-6">
+    <div className="wrap w-full flex flex-wrap items-end justify-between gap-6">
       <div>
         <h2 className="text-[clamp(2.6rem,6.3vw,5.7rem)] leading-[0.95]">Meet the pups</h2>
         <p className="mt-3 text-lg text-cocoa-soft">Real puppies, real photos, looking for their families right now.</p>
@@ -88,7 +90,7 @@ export default function Meet() {
   );
 
   return (
-    <section id="meet" ref={outer} className="relative bg-honey-soft md:motion-safe:h-[4100px]">
+    <section id="meet" ref={outer} className="relative bg-honey-soft md:motion-safe:h-[3735px]">
       {/* mobile: plain grid */}
       <div className="py-14 md:motion-safe:hidden">
         {head}
@@ -97,7 +99,7 @@ export default function Meet() {
         </div>
       </div>
       {/* desktop: sticky stage */}
-      <div ref={stage} className="sticky top-0 hidden h-screen max-h-[900px] min-h-[560px] flex-col justify-between overflow-hidden pt-[calc(var(--header-h,76px)+1rem)] md:motion-safe:flex">
+      <div ref={stage} className="sticky top-0 hidden h-screen min-h-[560px] flex-col justify-between overflow-hidden pt-[calc(var(--header-h,76px)+1rem)] md:motion-safe:flex">
         {head}
         <div ref={track} className="flex w-max gap-12 px-[var(--gutter)] pb-[7.5rem] will-change-transform">
           {puppies.map((p, i) => (
