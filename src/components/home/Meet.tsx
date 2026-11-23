@@ -9,10 +9,10 @@ const doorTones = ["bg-[#7a4a2b]", "bg-[#a24a1a]", "bg-[#5a3a2a]"];
 const hasVideo = (p: Puppy) => p.media.some((m) => m.kind === "video");
 const detail = (p: Puppy) => `${p.breed} · ${p.genderLabel} · ${p.age}${hasVideo(p) ? " · with video" : ""}`;
 
-function Door({ p, open, i }: { p: Puppy; open: boolean; i: number }) {
+function Door({ p, open, i, active }: { p: Puppy; open: boolean; i: number; active?: boolean }) {
   return (
     <Link href={`/puppies/${p.slug}`} className="group flex w-full flex-col items-center text-center">
-      <h3 className={`text-[1.65rem] leading-[0.95] transition-colors duration-500 md:text-[1.8rem] ${open ? "text-toffee-ink" : ""}`}>{puppyLabel(p)}</h3>
+      <h3 className={`text-[1.65rem] leading-[0.95] transition-colors duration-500 md:text-[1.8rem] ${active ? "text-toffee-ink" : ""}`}>{puppyLabel(p)}</h3>
       <p className="mt-2 mb-4 min-h-10 text-sm text-cocoa-soft">{detail(p)}</p>
       <div className="relative w-full">
       <div className="relative aspect-[3/4] w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa bg-honey-soft">
@@ -34,11 +34,12 @@ export default function Meet() {
   const outer = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
-  const [open, setOpen] = useState<boolean[]>(() => puppies.map((_, i) => i === 1));
+  const [open, setOpen] = useState<boolean[]>(() => puppies.map((_, i) => i < 3));
+  const walker = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const o = outer.current!, s = stage.current!, t = track.current!;
-    let raf = 0, last = "", h = "";
+    let raf = 0, last = "", h = "", walkT = 0;
     const doors = Array.from(t.children) as HTMLElement[];
     const geom = () => {
       const travel = Math.max(0, t.scrollWidth - window.innerWidth);
@@ -56,7 +57,9 @@ export default function Meet() {
       const p = scrollLen ? Math.min(1, Math.max(0, (window.scrollY - top) / scrollLen)) : 0;
       const x = -p * travel;
       t.style.transform = `translate3d(${x}px,0,0)`;
-      const next = doors.map((d) => { const c = d.offsetLeft + d.offsetWidth / 2 + x; return c > window.innerWidth * 0.08 && c < window.innerWidth * 0.45; });
+      const w = walker.current; // legs swing while the page is scrolling
+      if (w) { w.classList.add("is-walking"); clearTimeout(walkT); walkT = window.setTimeout(() => w.classList.remove("is-walking"), 180); }
+      const next = doors.map((d) => { const c = d.offsetLeft + d.offsetWidth / 2 + x; return c < window.innerWidth * 0.6; }); // doors left of the mascot stay open once passed
       const k = next.join();
       if (k !== last) { last = k; setOpen(next); }
     };
@@ -101,11 +104,11 @@ export default function Meet() {
         {head}
         <div ref={track} className="flex w-max gap-12 px-[var(--gutter)] pb-[7.5rem] will-change-transform">
           {puppies.map((p, i) => (
-            <div key={p.slug} data-door className="w-[280px] shrink-0"><Door p={p} open={open[i]} i={i} /></div>
+            <div key={p.slug} data-door className="w-[280px] shrink-0"><Door p={p} open={open[i]} i={i} active={open[i] && !open[i + 1]} /></div>
           ))}
         </div>
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-[7.5rem] border-t-[3px] border-cocoa bg-toffee/70" style={{ backgroundImage: "repeating-linear-gradient(90deg, transparent 0 175px, color-mix(in srgb, var(--color-cocoa) 15%, transparent) 175px 177px)" }} />
-        <div className="tp-bob absolute bottom-3 left-[6%] z-10 w-44"><Mascot pose="walk" /></div>
+        <div ref={walker} className="tp-walker absolute bottom-3 left-[14%] z-10 w-44"><Mascot pose="walk" /></div>
       </div>
     </section>
   );

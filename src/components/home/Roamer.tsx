@@ -19,7 +19,7 @@ export default function Roamer() {
       const hide = !!meet && meet.top <= 0 && meet.bottom > innerHeight; // Meet has its own mascot
       el.style.opacity = hide ? "0" : "1";
       el.style.transform = `translateX(${x}px) scaleX(${dir})`;
-      el.classList.add("tp-bob");
+      el.classList.add("is-walking");
       setMoving(true);
       if (!hide && Math.abs(x - lastDot) > 56) { // paw print dot left behind
         lastDot = x;
@@ -30,11 +30,11 @@ export default function Roamer() {
         document.body.append(d);
       }
       clearTimeout(stop);
-      stop = window.setTimeout(() => { el.classList.remove("tp-bob"); setMoving(false); }, 400);
+      stop = window.setTimeout(() => { el.classList.remove("is-walking"); setMoving(false); }, 400);
     };
     tick();
     addEventListener("scroll", tick, { passive: true });
     return () => { removeEventListener("scroll", tick); clearTimeout(stop); };
   }, []);
-  return <div ref={box} aria-hidden className="pointer-events-none fixed bottom-2 left-0 z-40 hidden w-24 transition-opacity duration-300 md:block"><Mascot pose={moving ? "walk" : "sit"} /></div>;
+  return <div ref={box} aria-hidden className="pointer-events-none tp-walker fixed bottom-2 left-0 z-40 hidden w-24 transition-opacity duration-300 md:block"><Mascot pose={moving ? "walk" : "sit"} /></div>;
 }

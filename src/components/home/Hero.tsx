@@ -21,7 +21,7 @@ export default function Hero() {
   const labels = pups.map((p) => p.name ? `${p.name} · ${p.breed}` : p.breed);
   return (
     <section id="hero" className="relative overflow-hidden" style={{ background: "radial-gradient(ellipse 60% 45% at 50% 62%, var(--color-honey-soft), transparent 70%), var(--color-milk)" }}>
-      <div className="wrap relative z-10 flex flex-col items-center pt-10 text-center md:pt-14">
+      <div className="wrap relative z-10 flex flex-col items-center pt-8 text-center md:pt-6">
         <p className="hand text-lg text-toffee-ink md:text-3xl">every puppy is family</p>
         <svg aria-hidden viewBox="0 0 252 10" className="-mt-1 w-40 text-toffee-ink md:w-64"><path d="M2 5q15-7 30 0t30 0 30 0 30 0 30 0 30 0 30 0 30 0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
         <h1 className="mt-3 max-w-[11ch] text-[clamp(2.6rem,6.9vw,6.2rem)] leading-[0.92] md:max-w-[12ch]">Premium teacup puppies in Dubai</h1>
@@ -39,11 +39,11 @@ export default function Hero() {
               {i === 3 && (
                 <div className="relative z-10 -mb-3 w-[4.5rem] shrink-0 md:-mb-5 md:w-[9rem] lg:w-[11rem] xl:w-[13rem]">
                   <span aria-hidden className="tp-hm motion-reduce:hidden hand absolute -top-7 left-1/2 rounded-full border-2 border-cocoa bg-milk px-3 text-xs md:-top-10 md:text-base">hm?</span>
-                  <Mascot pose="peek" className="w-full" />
+                  <Mascot pose="peek" className="-mb-[16%] -ml-[105%] w-[220%] max-w-none" />
                 </div>
               )}
               <div className={`relative w-[3.1rem] shrink-0 md:w-[5.5rem] lg:w-[7.25rem] xl:w-[8.5rem]`} style={{ transform: `rotate(${shapes[i].r}deg)` }}>
-                {i === 3 && <HeroTag labels={labels} />}
+                {i === 2 && <HeroTag labels={labels} />}
                 <div style={{ "--i": i } as React.CSSProperties} className={`tp-rise ${shapes[i].h} w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa bg-honey-soft`}>
                   <Img m={p.cover} alt={p.name || p.breed} eager />
                 </div>

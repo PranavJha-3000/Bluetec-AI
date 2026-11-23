@@ -48,6 +48,15 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing:
 @media (prefers-reduced-motion: no-preference) {
   @keyframes tp-rise { from { transform: translateY(110%); } to { transform: none; } }
   .tp-rise { animation: tp-rise .9s var(--ease-pounce) both; animation-delay: calc(var(--i, 0) * 120ms + 250ms); }
+  /* leg swing for the standing mascot; runs only while the page scrolls (.is-walking) */
+  @keyframes tp-legA { 0%, 100% { transform: translate(var(--lx), var(--ly)) rotate(-22deg); } 50% { transform: translate(var(--lx), var(--ly)) rotate(22deg); } }
+  @keyframes tp-legB { 0%, 100% { transform: translate(var(--lx), var(--ly)) rotate(22deg); } 50% { transform: translate(var(--lx), var(--ly)) rotate(-22deg); } }
+  .tp-walker [data-p="ff"], .tp-walker [data-p="bf"], .tp-walker [data-p="fn"], .tp-walker [data-p="bn"] { animation-duration: .5s; animation-iteration-count: infinite; animation-timing-function: ease-in-out; animation-play-state: paused; }
+  .tp-walker [data-p="bf"] { --lx: 94px; --ly: 192px; animation-name: tp-legA; }
+  .tp-walker [data-p="bn"] { --lx: 110px; --ly: 194px; animation-name: tp-legB; }
+  .tp-walker [data-p="ff"] { --lx: 168px; --ly: 192px; animation-name: tp-legB; }
+  .tp-walker [data-p="fn"] { --lx: 186px; --ly: 194px; animation-name: tp-legA; }
+  .tp-walker.is-walking [data-p] { animation-play-state: running; }
   @keyframes tp-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px) rotate(-2deg); } }
   @keyframes tp-dotk { from { opacity: .8; transform: scale(1); } to { opacity: 0; transform: scale(.4); } }
   .tp-dot { animation: tp-dotk 1.4s ease-out forwards; }
