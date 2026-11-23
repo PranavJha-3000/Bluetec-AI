@@ -13,7 +13,13 @@ export default function HomeDoor() {
         <p className="mx-auto mt-6 max-w-xl text-lg text-milk/80">Bring home a healthy, happy teacup or designer puppy with expert guidance every step of the way. We help you find the right match and ensure a smooth, safe delivery across the UAE.</p>
         <div aria-hidden className="relative mx-auto mt-12 h-[26rem] max-w-[38rem] overflow-hidden rounded-t-3xl bg-cocoa-soft" style={{ backgroundImage: "repeating-linear-gradient(transparent 0 3.5rem, rgb(0 0 0/.18) 3.5rem calc(3.5rem + 2px))" }}>
           <div className="absolute top-12 left-1/2 size-80 -translate-x-1/2 rounded-full" style={{ background: "radial-gradient(color-mix(in srgb, var(--color-honey) 35%, transparent), transparent 70%)" }} />
-          <div className="absolute bottom-6 left-1/2 h-72 w-48 -translate-x-1/2 overflow-hidden rounded-t-full border-[6px] border-toffee bg-honey-soft"><Img m={m} /><div className="tp-door absolute inset-0 origin-left bg-toffee" style={{ transform: "perspective(700px) rotateY(-100deg)" }} /></div>
+          <div className="absolute bottom-6 left-1/2 h-72 w-48 -translate-x-1/2">
+            <div className="absolute inset-0 overflow-hidden rounded-t-full border-[6px] border-toffee bg-honey-soft"><Img m={m} /></div>
+            <div className="tp-door absolute inset-0 z-10 origin-left rounded-t-full border-2 border-cocoa bg-toffee" style={{ transform: "perspective(700px) rotateY(-100deg)" }}>
+              <i className="absolute top-[18%] left-1/2 block h-20 w-9 -translate-x-1/2 rounded-full border-2 border-cocoa bg-honey" />
+              <i className="absolute top-[60%] right-3 block size-3 rounded-full border-2 border-cocoa bg-honey" />
+            </div>
+          </div>
           <span className="absolute right-[18%] bottom-40 h-10 w-7 rounded-t-md rounded-b-xl border-2 border-cocoa bg-honey-soft shadow-[0_0_30px_12px_color-mix(in_srgb,var(--color-honey)_40%,transparent)]" />
           <span className="hand absolute bottom-6 left-1/2 z-10 -translate-x-1/2 rounded-md border-2 border-cocoa bg-honey px-4 text-sm text-cocoa">welcome home</span>
           <span className="absolute right-[10%] bottom-6 h-10 w-14 rounded-b-lg bg-toffee"><i className="absolute -top-14 left-1/2 block h-16 w-12 -translate-x-1/2 rounded-t-full bg-[#5b9a4f]" /></span>
