@@ -24,21 +24,22 @@ export default function PawTrail() {
     const cv = ref.current;
     const ctx = cv?.getContext("2d");
     if (!on || !cv || !ctx) return;
-    const dpr = Math.min(devicePixelRatio || 1, 2);
+    const dpr = () => Math.min(devicePixelRatio || 1, 2);
     const pad = new Path2D(PAD), toes = new Path2D();
-    TOES.forEach(([x, y, rx, ry, r]) => toes.ellipse(x, y, rx, ry, r, 0, Math.PI * 2));
+    TOES.forEach(([x, y, rx, ry, r]) => { toes.moveTo(x + rx * Math.cos(r), y + rx * Math.sin(r)); toes.ellipse(x, y, rx, ry, r, 0, Math.PI * 2); });
     let prints: Print[] = [], raf = 0, last: { x: number; y: number } | null = null, side = 1;
 
-    const resize = () => { cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; };
+    const resize = () => { cv.width = innerWidth * dpr(); cv.height = innerHeight * dpr(); };
     const frame = (now: number) => {
       raf = 0;
       prints = prints.filter((p) => now - p.t < LIFE);
       ctx.clearRect(0, 0, cv.width, cv.height);
+      const k = 0.27 * dpr();
       ctx.fillStyle = "#8e3f15"; // --color-toffee-ink
       for (const p of prints) {
         const age = now - p.t;
         ctx.globalAlpha = 0.42 * (age < HOLD ? 1 : 1 - (age - HOLD) / (LIFE - HOLD));
-        ctx.setTransform(0.27 * dpr, 0, 0, 0.27 * dpr, 0, 0);
+        ctx.setTransform(k, 0, 0, k, 0, 0);
         ctx.translate(p.x / 0.27, p.y / 0.27);
         ctx.rotate(p.a);
         ctx.translate(-32, -32);
@@ -49,16 +50,20 @@ export default function PawTrail() {
     };
     const move = (e: PointerEvent) => {
       if (!last) { last = { x: e.clientX, y: e.clientY }; return; }
-      const dx = e.clientX - last.x, dy = e.clientY - last.y;
-      if (Math.hypot(dx, dy) < GAP) return;
-      const a = Math.atan2(dy, dx), off = 7 * (side = -side);
-      prints.push({ x: (last.x = e.clientX) - Math.sin(a) * off, y: (last.y = e.clientY) + Math.cos(a) * off, a: a + Math.PI / 2, t: performance.now() });
-      if (!raf) raf = requestAnimationFrame(frame);
+      const dx = e.clientX - last.x, dy = e.clientY - last.y, d = Math.hypot(dx, dy), a = Math.atan2(dy, dx);
+      for (let n = Math.floor(d / GAP); n > 0; n--) { // one print per GAP px travelled, even on fast jumps
+        const off = 7 * (side = -side);
+        last.x += (dx / d) * GAP; last.y += (dy / d) * GAP;
+        prints.push({ x: last.x - Math.sin(a) * off, y: last.y + Math.cos(a) * off, a: a + Math.PI / 2, t: performance.now() });
+      }
+      if (prints.length && !raf) raf = requestAnimationFrame(frame);
     };
+    const leave = () => { last = null; };
     resize();
     addEventListener("resize", resize);
     addEventListener("pointermove", move, { passive: true });
-    return () => { removeEventListener("resize", resize); removeEventListener("pointermove", move); cancelAnimationFrame(raf); };
+    document.documentElement.addEventListener("pointerleave", leave);
+    return () => { removeEventListener("resize", resize); removeEventListener("pointermove", move); document.documentElement.removeEventListener("pointerleave", leave); cancelAnimationFrame(raf); };
   }, [on]);
 
   return on ? <canvas ref={ref} aria-hidden="true" className="pointer-events-none fixed inset-0 z-[70] h-screen w-screen" /> : null;
