@@ -12,19 +12,17 @@ const detail = (p: Puppy) => `${p.breed} · ${p.genderLabel} · ${p.age}${hasVid
 function Door({ p, open, i }: { p: Puppy; open: boolean; i: number }) {
   return (
     <Link href={`/puppies/${p.slug}`} className="group flex w-full flex-col items-center text-center">
-      <h3 className="text-[1.65rem] leading-[0.95] md:text-[1.8rem]">{puppyLabel(p)}</h3>
+      <h3 className={`text-[1.65rem] leading-[0.95] transition-colors duration-500 md:text-[1.8rem] ${open ? "text-toffee-ink" : ""}`}>{puppyLabel(p)}</h3>
       <p className="mt-2 mb-4 min-h-10 text-sm text-cocoa-soft">{detail(p)}</p>
       <div className="relative w-full">
-      <div className={`relative aspect-[3/4] w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa ${open ? "bg-honey-soft" : doorTones[i % 3]}`}>
-        {open ? (
-          <Img m={p.cover} alt={puppyLabel(p)} />
-        ) : (
-          <>
-            <div aria-hidden className="absolute inset-x-[12%] bottom-0 top-[12%] rounded-t-full border-2 border-milk/25" />
-            <svg aria-hidden viewBox="0 0 24 24" className="absolute left-1/2 top-[22%] w-9 -translate-x-1/2 fill-milk/40"><circle cx="5" cy="11" r="2.3" /><circle cx="9.5" cy="6.5" r="2.3" /><circle cx="14.5" cy="6.5" r="2.3" /><circle cx="19" cy="11" r="2.3" /><path d="M12 12c-3 0-6 3-6 6 0 2 2 2.5 6 2.5s6-.5 6-2.5c0-3-3-6-6-6z" /></svg>
-            <span aria-hidden className="absolute right-[8%] top-[62%] size-3 rounded-full border-2 border-cocoa bg-honey" />
-          </>
-        )}
+      <div className="relative aspect-[3/4] w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa bg-honey-soft">
+        <Img m={p.cover} alt={puppyLabel(p)} />
+        {/* door leaf swings on its left hinge to reveal the photo */}
+        <div aria-hidden className={`absolute inset-0 origin-left transition-transform duration-700 ease-[var(--ease-silk)] ${doorTones[i % 3]}`} style={{ transform: `perspective(900px) rotateY(${open ? -72 : 0}deg)` }}>
+          <div className="absolute inset-x-[12%] bottom-0 top-[12%] rounded-t-full border-2 border-milk/25" />
+          <svg viewBox="0 0 24 24" className="absolute left-1/2 top-[22%] w-9 -translate-x-1/2 fill-milk/40"><circle cx="5" cy="11" r="2.3" /><circle cx="9.5" cy="6.5" r="2.3" /><circle cx="14.5" cy="6.5" r="2.3" /><circle cx="19" cy="11" r="2.3" /><path d="M12 12c-3 0-6 3-6 6 0 2 2 2.5 6 2.5s6-.5 6-2.5c0-3-3-6-6-6z" /></svg>
+          <span className="absolute right-[8%] top-[62%] size-3 rounded-full border-2 border-cocoa bg-honey" />
+        </div>
       </div>
         <span className="hand absolute -right-2 top-[8%] z-10 rotate-6 rounded-full border-2 border-cocoa bg-milk px-3 py-0.5 text-sm shadow">Available</span>
       </div>
@@ -36,7 +34,7 @@ export default function Meet() {
   const outer = useRef<HTMLElement>(null);
   const stage = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
-  const [open, setOpen] = useState<boolean[]>(() => puppies.map((_, i) => i < 3));
+  const [open, setOpen] = useState<boolean[]>(() => puppies.map((_, i) => i === 1));
 
   useEffect(() => {
     const o = outer.current!, s = stage.current!, t = track.current!;
@@ -58,7 +56,7 @@ export default function Meet() {
       const p = scrollLen ? Math.min(1, Math.max(0, (window.scrollY - top) / scrollLen)) : 0;
       const x = -p * travel;
       t.style.transform = `translate3d(${x}px,0,0)`;
-      const next = doors.map((d) => { const c = d.offsetLeft + d.offsetWidth / 2 + x; return c > 0 && c < window.innerWidth; });
+      const next = doors.map((d) => { const c = d.offsetLeft + d.offsetWidth / 2 + x; return c > window.innerWidth * 0.08 && c < window.innerWidth * 0.45; });
       const k = next.join();
       if (k !== last) { last = k; setOpen(next); }
     };
@@ -107,7 +105,7 @@ export default function Meet() {
           ))}
         </div>
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-[7.5rem] border-t-[3px] border-cocoa bg-toffee/70" style={{ backgroundImage: "repeating-linear-gradient(90deg, transparent 0 175px, color-mix(in srgb, var(--color-cocoa) 15%, transparent) 175px 177px)" }} />
-        <Mascot pose="walk" className="absolute bottom-3 left-[16%] z-10 w-32" />
+        <div className="tp-bob absolute bottom-3 left-[8%] z-10 w-32"><Mascot pose="walk" /></div>
       </div>
     </section>
   );

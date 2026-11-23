@@ -39,7 +39,7 @@ export default function Hero() {
               {i === 3 && <Mascot pose="peek" className="relative z-10 -mb-3 w-[4.5rem] shrink-0 md:-mb-5 md:w-[9rem] lg:w-[11rem] xl:w-[13rem]" />}
               <div className={`relative w-[3.1rem] shrink-0 md:w-[5.5rem] lg:w-[7.25rem] xl:w-[8.5rem]`} style={{ transform: `rotate(${shapes[i].r}deg)` }}>
                 {i === 3 && <HeroTag labels={labels} />}
-                <div className={`${shapes[i].h} w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa bg-honey-soft`}>
+                <div style={{ "--i": i } as React.CSSProperties} className={`tp-rise ${shapes[i].h} w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa bg-honey-soft`}>
                   <Img m={p.cover} alt={p.name || p.breed} eager />
                 </div>
               </div>

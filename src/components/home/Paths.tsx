@@ -27,10 +27,18 @@ export default function Paths() {
               <circle cx="360" cy="100" r="6" fill="var(--color-toffee-deep)" />
               <text x="40" y="138" textAnchor="middle" fontSize="14" fill="var(--color-cocoa)">Korea</text>
               <text x="360" y="124" textAnchor="middle" fontSize="14" fill="var(--color-cocoa)">Dubai</text>
-              <g transform="translate(205 28) rotate(8)" stroke="var(--color-cocoa)" strokeWidth="2.5" strokeLinejoin="round">
+              <g className="motion-safe:hidden" transform="translate(205 28) rotate(8)" stroke="var(--color-cocoa)" strokeWidth="2.5" strokeLinejoin="round">
                 <path d="M-8 0L-18 -16L-8 -16L6 0Z" fill="var(--color-toffee)" />
                 <path d="M-8 0L-18 16L-8 16L6 0Z" fill="var(--color-toffee)" />
                 <ellipse rx="26" ry="9" fill="var(--color-milk)" />
+              </g>
+              <g className="motion-reduce:hidden" stroke="var(--color-cocoa)" strokeWidth="2.5" strokeLinejoin="round">
+                <g>
+                <path d="M-8 0L-18 -16L-8 -16L6 0Z" fill="var(--color-toffee)" />
+                <path d="M-8 0L-18 16L-8 16L6 0Z" fill="var(--color-toffee)" />
+                <ellipse rx="26" ry="9" fill="var(--color-milk)" />
+              </g>
+                <animateMotion dur="7s" repeatCount="indefinite" rotate="auto" path="M40 120 Q200 -30 360 100" />
               </g>
             </svg>
             <h3 className="mt-4 text-3xl">Imported for you</h3>
