@@ -41,3 +41,4 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing:
 .btn-wa { background: var(--color-wa); color: #fff; }
 .hand { font-family: var(--font-hand); }
 .card { border: 3px solid var(--color-cocoa); border-radius: 1.5rem; background: #fff; }
+@keyframes tp-twinkle { 0%, 100% { opacity: .25; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.15); } }
