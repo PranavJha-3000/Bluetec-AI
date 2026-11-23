@@ -1,0 +1,302 @@
+[
+ {
+  "slug": "maltipoo-max-male",
+  "name": "Max",
+  "breed": "Maltipoo",
+  "gender": "male",
+  "age": "3 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,video",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "korean-teacup-maltipoo-female",
+  "name": "",
+  "breed": "Korean Teacup Maltipoo",
+  "gender": "female",
+  "age": "2 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image,image,image,image,image,image,image,image,image,video",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "korean-teacup-poodle-female",
+  "name": "",
+  "breed": "Korean Teacup Poodle",
+  "gender": "female",
+  "age": "2 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image,image,image",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "maltipoo-cavapoo-male",
+  "name": "",
+  "breed": "Maltipoo & Cavapoo",
+  "gender": "male",
+  "age": "3 months Maltipoo & 2 months Cavapoo",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image,video",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "toy-poodle-male-female",
+  "name": "",
+  "breed": "Toy Poodle",
+  "gender": "male-female",
+  "age": "2 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image,image",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "maltipoo-female-2",
+  "name": "",
+  "breed": "Maltipoo",
+  "gender": "female",
+  "age": "3 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image,image,image,video,video,video",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "pomeranian-female",
+  "name": "",
+  "breed": "Pomeranian",
+  "gender": "female",
+  "age": "3 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image,image",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "copper-male",
+  "name": "Copper",
+  "breed": "Cavapoo",
+  "gender": "male",
+  "age": "2 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image,image,image",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "shitzu-female",
+  "name": "",
+  "breed": "Shih Tzu",
+  "gender": "female",
+  "age": "2 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "shitzu-male",
+  "name": "",
+  "breed": "Shih Tzu",
+  "gender": "male",
+  "age": "2 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "maltipoo-female-1",
+  "name": "",
+  "breed": "Maltipoo",
+  "gender": "female",
+  "age": "2.5 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image,image,image",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "maltipoo-female",
+  "name": "",
+  "breed": "Maltipoo",
+  "gender": "female",
+  "age": "2 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image,image,image",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "korean-teacup-pomeranian-1",
+  "name": "",
+  "breed": "Korean Teacup Pomeranian",
+  "gender": "female",
+  "age": "2 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "korean-teacup-pomeranian",
+  "name": "",
+  "breed": "Korean Teacup Pomeranian",
+  "gender": "female",
+  "age": "2 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ },
+ {
+  "slug": "korean-teacup-pomeranian-male",
+  "name": "",
+  "breed": "Korean Teacup Pomeranian",
+  "gender": "male",
+  "age": "2 months",
+  "status": "available",
+  "featured": false,
+  "origin": {
+   "slug": "imported",
+   "name": "Imported"
+  },
+  "media": "image,image,image,image",
+  "extra": [
+   "origin",
+   "collections",
+   "breeds",
+   "published"
+  ]
+ }
+]
