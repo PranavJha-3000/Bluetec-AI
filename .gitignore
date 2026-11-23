@@ -8,3 +8,4 @@ next-env.d.ts
 recon/screenshots
 test-results
 playwright-report
+.superpowers
