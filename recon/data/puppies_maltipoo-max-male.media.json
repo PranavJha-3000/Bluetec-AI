@@ -1,0 +1,46 @@
+[
+ {
+  "id": "Z0ToauDx7Eve",
+  "url": "/media/Z0ToauDx7Eve/5fffe4d022/b942a5_4b8cfb8204d24eadaf524332aba1dc15-mv2.webp",
+  "kind": "image",
+  "width": 607,
+  "height": 700,
+  "alt": "Max, male Maltipoo puppy",
+  "caption": "",
+  "focalX": 0.538,
+  "focalY": 0.443,
+  "color": "#785838",
+  "blurDataUrl": "<omitted>",
+  "durationS": null,
+  "poster": null
+ },
+ {
+  "id": "jNYYlZcF2IuE",
+  "url": "/media/jNYYlZcF2IuE/61af7a5e09/b942a5_a1fa75c7bf2f4d688ec0ce0344baef67.mp4",
+  "kind": "video",
+  "width": 576,
+  "height": 1024,
+  "alt": "Video of Max, male Maltipoo puppy",
+  "caption": "",
+  "focalX": 0.5,
+  "focalY": 0.42,
+  "color": "#f2be6b",
+  "blurDataUrl": null,
+  "durationS": 3.97,
+  "poster": {
+   "id": "RH7J577OfQ7f",
+   "url": "/media/RH7J577OfQ7f/e776d07dbd/b942a5_a1fa75c7bf2f4d688ec0ce0344baef67f000.jpg",
+   "kind": "image",
+   "width": 576,
+   "height": 1024,
+   "alt": "Max, male Maltipoo puppy",
+   "caption": "",
+   "focalX": 0.571,
+   "focalY": 0.446,
+   "color": "#c8c8b8",
+   "blurDataUrl": "<omitted>",
+   "durationS": null,
+   "poster": null
+  }
+ }
+]

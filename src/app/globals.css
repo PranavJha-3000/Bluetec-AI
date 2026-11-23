@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-toffee: #c2622b;
+  --color-toffee-deep: #a24a1a;
+  --color-toffee-ink: #8e3f15;
+  --color-honey: #f2be6b;
+  --color-honey-soft: #fbe3b4;
+  --color-cocoa: #2a170e;
+  --color-cocoa-soft: #5a3a28;
+  --color-milk: #fffdf8;
+  --color-sky: #bfddf5;
+  --color-sky-deep: #2f6e9e;
+  --color-blush: #f9cdbf;
+  --color-wa: #1f7a4d;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-figtree), system-ui, sans-serif;
+  --font-hand: var(--font-shantell), "Comic Sans MS", cursive;
+  --ease-pounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-silk: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snap: cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+:root { --gutter: clamp(1rem, 4vw, 3.5rem); --header-h: 4rem; --bar-h: calc(4rem + env(safe-area-inset-bottom)); }
+@media (min-width: 64rem) { :root { --header-h: 4.75rem; } }
+
+html { scroll-behavior: smooth; }
+body { background: var(--color-milk); color: var(--color-cocoa); font-family: var(--font-sans); font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+@media (max-width: 767px) { body { padding-bottom: var(--bar-h); } }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing: -0.025em; font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144; }
+::selection { background: var(--color-honey); color: var(--color-cocoa); }
+@media (hover: hover) and (pointer: fine) { html { cursor: url(/cursor/paw.svg) 9 6, auto; } a, button { cursor: url(/cursor/paw.svg) 9 6, pointer; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, ::before, ::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+.wrap { padding-inline: var(--gutter); max-width: 112rem; margin-inline: auto; }
+.btn { display: inline-flex; align-items: center; gap: .5rem; border-radius: 999px; padding: .85rem 1.6rem; font-weight: 650; border: 2.5px solid var(--color-cocoa); box-shadow: 0 8px 0 -2.4px var(--color-cocoa); transition: transform .25s var(--ease-pounce), box-shadow .25s var(--ease-pounce); }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(4px); box-shadow: 0 3px 0 -2.4px var(--color-cocoa); }
+.btn-primary { background: var(--color-toffee-deep); color: #fff; }
+.btn-ghost { background: var(--color-milk); color: var(--color-cocoa); }
+.btn-wa { background: var(--color-wa); color: #fff; }
+.hand { font-family: var(--font-hand); }
+.card { border: 3px solid var(--color-cocoa); border-radius: 1.5rem; background: #fff; }
