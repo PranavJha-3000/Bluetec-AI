@@ -14,7 +14,7 @@ function Door({ p, open, i }: { p: Puppy; open: boolean; i: number }) {
     <Link href={`/puppies/${p.slug}`} className="group flex w-full flex-col items-center text-center">
       <h3 className="text-[1.65rem] leading-[0.95] md:text-[1.8rem]">{puppyLabel(p)}</h3>
       <p className="mt-2 mb-4 min-h-10 text-sm text-cocoa-soft">{detail(p)}</p>
-      <div className={`relative aspect-[3/4] w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa transition-colors duration-500 ${open ? "bg-honey-soft" : doorTones[i % 3]}`}>
+      <div className={`relative aspect-[3/4] w-full overflow-hidden rounded-t-full border-[3px] border-b-0 border-cocoa ${open ? "bg-honey-soft" : doorTones[i % 3]}`}>
         {open ? (
           <Img m={p.cover} alt={puppyLabel(p)} />
         ) : (
@@ -38,15 +38,21 @@ export default function Meet() {
 
   useEffect(() => {
     const o = outer.current!, s = stage.current!, t = track.current!;
-    if (getComputedStyle(t).display === "none") return;
-    let raf = 0, last = "";
+    let raf = 0, last = "", h = "";
     const doors = Array.from(t.children) as HTMLElement[];
+    const geom = () => {
+      const travel = Math.max(0, t.scrollWidth - window.innerWidth);
+      return { travel, scrollLen: travel / 1.25, top: o.getBoundingClientRect().top + window.scrollY }; // ~1.25px travel per scrolled px
+    };
     const update = () => {
       raf = 0;
-      const travel = Math.max(0, t.scrollWidth - window.innerWidth);
-      const scrollLen = s.offsetHeight ? travel / 1.25 : 0; // ~1.25px of travel per scrolled px
-      o.style.height = `${s.offsetHeight + scrollLen}px`;
-      const top = o.getBoundingClientRect().top + window.scrollY;
+      if (getComputedStyle(s).display === "none") { // mobile / reduced motion: plain grid
+        if (h) { o.style.height = ""; t.style.transform = ""; h = ""; }
+        return;
+      }
+      const { travel, scrollLen, top } = geom();
+      const nh = `${s.offsetHeight + scrollLen}px`;
+      if (nh !== h) { h = nh; o.style.height = nh; }
       const p = scrollLen ? Math.min(1, Math.max(0, (window.scrollY - top) / scrollLen)) : 0;
       const x = -p * travel;
       t.style.transform = `translate3d(${x}px,0,0)`;
@@ -55,10 +61,20 @@ export default function Meet() {
       if (k !== last) { last = k; setOpen(next); }
     };
     const req = () => { if (!raf) raf = requestAnimationFrame(update); };
+    // focusing an off-screen door would scroll the overflow:hidden stage natively; scroll the page instead
+    const onFocus = (e: FocusEvent) => {
+      s.scrollLeft = 0;
+      const d = (e.target as HTMLElement).closest("[data-door]") as HTMLElement | null;
+      const { travel, scrollLen, top } = geom();
+      if (!d || !travel) return;
+      const p = Math.min(1, Math.max(0, (d.offsetLeft + d.offsetWidth / 2 - window.innerWidth / 2) / travel));
+      window.scrollTo(0, top + p * scrollLen);
+    };
     update();
     window.addEventListener("scroll", req, { passive: true });
     window.addEventListener("resize", req);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("scroll", req); window.removeEventListener("resize", req); };
+    t.addEventListener("focusin", onFocus);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener("scroll", req); window.removeEventListener("resize", req); t.removeEventListener("focusin", onFocus); };
   }, []);
 
   const head = (
@@ -72,20 +88,20 @@ export default function Meet() {
   );
 
   return (
-    <section id="meet" ref={outer} className="relative bg-honey-soft md:h-[4100px]">
+    <section id="meet" ref={outer} className="relative bg-honey-soft md:motion-safe:h-[4100px]">
       {/* mobile: plain grid */}
-      <div className="py-14 md:hidden">
+      <div className="py-14 md:motion-safe:hidden">
         {head}
         <div className="wrap mt-10 grid grid-cols-2 gap-x-4 gap-y-10">
           {puppies.map((p, i) => <Door key={p.slug} p={p} open i={i} />)}
         </div>
       </div>
       {/* desktop: sticky stage */}
-      <div ref={stage} className="sticky top-0 hidden h-screen max-h-[900px] min-h-[560px] flex-col justify-between overflow-hidden pt-[calc(var(--header-h,76px)+1rem)] md:flex">
+      <div ref={stage} className="sticky top-0 hidden h-screen max-h-[900px] min-h-[560px] flex-col justify-between overflow-hidden pt-[calc(var(--header-h,76px)+1rem)] md:motion-safe:flex">
         {head}
         <div ref={track} className="flex w-max gap-12 px-[var(--gutter)] pb-[7.5rem] will-change-transform">
           {puppies.map((p, i) => (
-            <div key={p.slug} className="w-[280px] shrink-0"><Door p={p} open={open[i]} i={i} /></div>
+            <div key={p.slug} data-door className="w-[280px] shrink-0"><Door p={p} open={open[i]} i={i} /></div>
           ))}
         </div>
         <div aria-hidden className="absolute inset-x-0 bottom-0 h-[7.5rem] border-t-[3px] border-cocoa bg-toffee/70" style={{ backgroundImage: "repeating-linear-gradient(90deg, transparent 0 175px, color-mix(in srgb, var(--color-cocoa) 15%, transparent) 175px 177px)" }} />
