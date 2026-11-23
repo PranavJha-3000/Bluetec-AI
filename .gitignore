@@ -9,3 +9,5 @@ recon/screenshots
 test-results
 playwright-report
 .superpowers
+test-results/
+playwright-report/
