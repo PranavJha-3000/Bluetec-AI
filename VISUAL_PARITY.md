@@ -1,4 +1,4 @@
-# Visual parity audit
+# Visual parity
 
 Method: Playwright (Chromium) against https://puppy.instabizweb.com/ and the local build at 1440x900 and 390x844. Section heights and geometry come from `getBoundingClientRect`; the reference's own CSS and markup were dumped and transcribed (no guessed values). Screenshot pairs (ref / mine, after the fixes) are in `docs/parity-shots/`. REA was run on the reference bundle only as a module inventory, as it targets native/Electron apps.
 
@@ -14,7 +14,7 @@ Caveat for every height below: headless Chromium draws a 15px scrollbar on the r
 | 4 | Passport | Tilted open book, dotted page pattern, 4 scroll-in ink stamps, sunset skyline | cream cards | 688 -> 922 (exact) | P0 | Rebuilt (`.tpb-*`) | Done |
 | 5 | Hero | min-height 100svh - header, lineup seats positioned by % and peek, quilt scallop edge, sunrise glow | stacked arches, 954px | 954 -> 824 (exact) | P0 | Rebuilt (`.tph-*`) | Done |
 | 6 | Night FAQ | Sky gradient, 11 sparkle stars, 5fr/7fr grid, narrower answers, no in-section dog on desktop | flat colour, dots, second dog | 512 -> 582 vs 636 | P1 | Rebuilt (`.tpn-*`) | Done (remaining 54px is wrap difference from scrollbar) |
-| 7 | Home (welcome door) | Door scene | +44px | 1065 vs 1021 | P1 | Not changed | Open |
+| 7 | Home (welcome door) | House scene: wood wall, arched doorway with scroll-driven door (`rotateY` 0 to -102deg, `view()` timeline), lamp, plants, mat, bowing dog | +44px, different art | 1065 -> 1027 vs 1021 | P1 | Rebuilt (`.tph2-*`) from the reference's computed rules | Done (mobile 978 vs 992) |
 | 8 | Dusk | Street scene | -13px | 1562 vs 1575 | P2 | - | Open |
 | 9 | Chat | - | -5px | 1692 vs 1697 | P2 | - | Open |
 | 10 | Mascot extras | Gaze to cursor, woof, spin, hop, cue choreography, per-stop poses | sit/walk only | n/a | P1 | Rig ported; cues not | Open |
@@ -34,3 +34,33 @@ Caveat for every height below: headless Chromium draws a 15px scrollbar on the r
 4. (P2) Mobile docked peek dog, curtain intro, smooth-scroll and view transitions.
 5. (P2) Dusk/Chat few-pixel differences; Meet name font weight.
 6. Hero puppy order inside the lineup is reference-seeded, but the reference reshuffles it at runtime; not replicated.
+
+## Page-by-page (coarse, from `scripts/parity.mjs`)
+Earlier coarse run (mean per-channel difference of 200px-wide downscales, plus page height). Not pixel-exact; it ranks pages only. Heights are ours vs the reference screenshot:
+
+| Page | 1440 height (ours / ref) | 390 height (ours / ref) | Coarse diff d / m |
+|---|---|---|---|
+| Home hero | viewport | viewport | 13.9% / 16.1% |
+| /faq | 2183 / 2372 | 2871 / 3082 | 37.4% / 33.4% |
+| /contact | 1788 / 1952 | 2834 / 3579 | 19.9% / 38.6% |
+| /how-it-works | 2323 / 4506 | 3843 / 7972 | 34.7% / 34.2% |
+| /puppies | 3514 / 3673 | 4545 / 5643 | 24.4% / 45.6% |
+| /happy-families | 8075 / 8787 | 9287 / 32314 | 33.8% / 33.8% |
+| /gone-home | 2579 / 3063 | 5761 / 7234 | 32.7% / 36.9% |
+| /puppies/[slug] | 2656 / 3274 | 3700 / 5223 | 38.6% / 44.0% |
+| 404 | 1319 / 1606 | 1811 / 2099 | 29.0% / 26.5% |
+
+These numbers predate the home-page rebuilds and were not re-run in the final pass. **Inner pages are 5-50% shorter than the reference, with /how-it-works (about half) and mobile /happy-families (about 30%) the largest gaps.** The cause was not investigated; part of it may be reference content that only appears after scroll-triggered animations, part may be missing sections. This is the biggest known remaining discrepancy.
+
+## Motion summary
+| Scene | Mechanism | Reduced motion |
+|---|---|---|
+| Hero entrance | `tp-rise` keyframes, staggered `--i` | static |
+| Meet | pinned track, translateX from scroll progress, doors open by position, dog walks on the spot | unpinned, doors open |
+| Home door | `animation-timeline: view()`, range `entry 80% cover 52%` (reference values) | door stays open |
+| Passport stamps | `view()` timeline scale-in | static |
+| Roaming dog | position = scroll progress, rig stride by distance, hop arc driven by the footer basket's position, one layout read per frame | hidden; basket pup stays |
+| Paw trail | canvas, fine pointers only | off |
+
+## Not reproduced
+Mascot gaze/woof/spin cues; mobile docked peek dog; curtain intro, Lenis smooth scroll and view transitions; hero lineup reshuffle at runtime. The "mobile heights" artifact (15px reference scrollbar changing wraps and grid columns) explains some, not all, mobile gaps.

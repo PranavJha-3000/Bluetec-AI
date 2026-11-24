@@ -236,3 +236,32 @@ main:has(#home) + footer { margin-top: 0; } /* home ends dark: no milk strip bef
 
 html[data-basket] .tpf-pup { opacity: 0; transition: opacity .15s; }
 html[data-basket="in"] .tpf-pup { opacity: 1; }
+
+/* Home welcome-door scene: values read from the reference's tp-home / tp-house computed rules */
+.tph2 { background: linear-gradient(#2f1a10, #24130b); color: var(--color-milk); text-align: center; padding-top: 10vh; }
+.tph2-copy h2 { font-size: clamp(2.6rem, 6.4vw, 7rem); line-height: .92; letter-spacing: -.025em; font-weight: 800; max-width: 15ch; margin-inline: auto; }
+.tph2-copy p { max-width: 52ch; margin: 1.2rem auto 0; color: color-mix(in srgb, var(--color-milk) 80%, transparent); font-size: clamp(1.05rem, 1.3vw, 1.3rem); line-height: 1.55; }
+.tph2-house { --dw: clamp(8.5rem, 15vw, 11.5rem); width: min(100%, 44rem); height: clamp(21rem, 46vh, 29rem); margin: clamp(2.5rem, 6vh, 4rem) auto 0; position: relative; }
+.tph2-house::before { content: ""; position: absolute; inset: 0 6% 2.2rem; border-radius: 1.4rem 1.4rem 0 0; background: repeating-linear-gradient(0deg, transparent 0 30px, rgb(0 0 0 / .14) 30px 32px), linear-gradient(#5c3622, #4a2a19); }
+.tph2-house::after { content: ""; position: absolute; inset: auto 0 0; height: 2.4rem; border: 3px solid var(--color-cocoa); border-radius: .6rem .6rem 0 0; background: #3a2114; }
+.tph2-doorway { position: absolute; bottom: 2.2rem; left: 50%; translate: -50%; z-index: 1; width: var(--dw); aspect-ratio: 1 / 1.62; border-radius: 999px 999px 0 0; perspective: 1000px; box-shadow: 0 0 0 7px #b2733f, 0 0 0 10px var(--color-cocoa), 0 0 60px 18px #ffcd7859; }
+.tph2-inside { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; background: radial-gradient(circle at 50% 70%, #ffe4a8, #e9a95a); }
+.tph2-inside img { position: absolute; inset: 0; }
+.tph2-door { position: absolute; inset: -3px -3px 0; border-radius: 999px 999px 0 0; transform-origin: 0 center; transform: rotateY(-102deg);
+  background: linear-gradient(90deg, transparent calc(50% - 1.5px), #2a170e59 calc(50% - 1.5px) calc(50% + 1.5px), transparent calc(50% + 1.5px)), var(--color-toffee-deep); }
+.tph2-peep { position: absolute; top: 14%; left: 50%; translate: -50%; width: 34%; aspect-ratio: 1; border: 3px solid var(--color-cocoa); border-radius: 50%; background: #ffd98f; }
+.tph2-knob { position: absolute; top: 58%; right: 12%; width: .9rem; aspect-ratio: 1; border: 2.5px solid var(--color-cocoa); border-radius: 50%; background: var(--color-honey); }
+.tph2-lamp { position: absolute; bottom: calc(2.2rem + var(--dw)); left: calc(50% + clamp(6.5rem, 11vw, 8.5rem)); width: 1.9rem; height: 2.6rem; border: 3px solid var(--color-cocoa); border-radius: .5rem .5rem 1rem 1rem; background: #ffd27f; box-shadow: 0 0 46px 22px #ffcd6e66; }
+.tph2-plant { position: absolute; bottom: 2.2rem; width: clamp(3.4rem, 6vw, 4.6rem); aspect-ratio: 1 / 1.5; clip-path: polygon(0 0, 100% 0, 100% 52%, 88% 100%, 12% 100%, 0 52%);
+  background: radial-gradient(ellipse 34% 30% at 30% 30%, #5f8f4a 96%, transparent 100%), radial-gradient(ellipse 34% 30% at 70% 26%, #6fa356 96%, transparent 100%), radial-gradient(ellipse 30% 34% at 50% 14%, #7bb060 96%, transparent 100%), linear-gradient(transparent 52%, var(--color-toffee) 52%); }
+.tph2-plant--l { left: calc(50% - clamp(9.5rem, 16vw, 12.5rem)); }
+.tph2-plant--r { right: calc(50% - clamp(9.5rem, 16vw, 12.5rem)); }
+.tph2-mat { position: absolute; bottom: .25rem; left: 50%; translate: -50%; z-index: 1; width: clamp(10rem, 16vw, 13rem); height: 1.9rem; border: 3px solid var(--color-cocoa); border-radius: .45rem; color: var(--color-cocoa); font-size: .95rem; line-height: 1.55rem; background: repeating-linear-gradient(90deg, var(--color-honey) 0 .6rem, #e7a957 .6rem 1.2rem); }
+.tph2-teddy { position: absolute; bottom: .4rem; left: calc(50% - clamp(15rem, 24vw, 19rem)); z-index: 1; width: clamp(8.5rem, 13vw, 11.5rem); }
+.tph2-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; padding-block: clamp(2rem, 4vh, 2.75rem) clamp(5rem, 11vh, 8rem); }
+.tph2-ghost { background: transparent; color: var(--color-milk); border-color: var(--color-milk); box-shadow: none; }
+.tph2-ghost:hover { background: var(--color-milk); color: var(--color-cocoa); }
+@media (max-width: 639px) { .tph2-teddy { width: 7.25rem; left: 0; } .tph2-plant--l { display: none; } }
+@keyframes tph2-open { from { transform: rotateY(0deg); } to { transform: rotateY(-102deg); } }
+@media (prefers-reduced-motion: no-preference) { @supports (animation-timeline: view()) {
+  .tph2-door { animation: tph2-open linear both; animation-timeline: view(); animation-range: entry 80% cover 52%; } } }

@@ -18,7 +18,7 @@ export default function Dusk() {
         <div className="grid items-end gap-8 lg:grid-cols-[1.1fr_1fr]">
           <div>
             <h2 className="text-[clamp(2.6rem,6.5vw,6rem)] leading-[.92]">Happy families &amp; puppies</h2>
-            <p className="mt-5 max-w-xl text-lg text-milk/80">We are truly honored to see our puppies become cherished members of loving families. These heartwarming moments were shared by clients who welcomed a Teddy Pup into their homes and hearts.</p>
+            <p className="mt-5 max-w-xl text-lg text-milk/95">We are truly honored to see our puppies become cherished members of loving families. These heartwarming moments were shared by clients who welcomed a Teddy Pup into their homes and hearts.</p>
           </div>
           <figure className="relative -rotate-1 rounded-3xl border-[3px] border-cocoa bg-milk p-6 text-cocoa shadow-[6px_8px_0_var(--color-cocoa)]">
             <blockquote className="font-display text-lg leading-snug md:text-xl">“TeddyPups truly made our dream a reality. They supported us at every step of the import journey. Our Maltipoo arrived healthy, cheerful, and absolutely perfect.”</blockquote>

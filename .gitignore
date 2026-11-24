@@ -24,3 +24,7 @@ ovf.tmp.mjs
 dumpf.tmp.mjs
 footer.tmp.css
 basket.tmp.mjs
+recon/mascot
+*.tmp.json
+recon/audit
+recon/css

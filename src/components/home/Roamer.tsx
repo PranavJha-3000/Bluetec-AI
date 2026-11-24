@@ -9,7 +9,8 @@ export default function Roamer() {
   const box = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = box.current!, svg = el.querySelector("svg");
-    if (!svg || !matchMedia("(prefers-reduced-motion:no-preference)").matches) return;
+    if (!svg) return;
+    if (!matchMedia("(prefers-reduced-motion:no-preference)").matches) { el.style.display = "none"; return; } // static page: no roaming dog, the basket pup stays
     const rig = new Rig(svg, "sit", 1);
     let lastY = scrollY, lastX = 0, lastDot = -999, stopAt = 0, raf = 0, prev = 0, started = false;
     const loop = (now: number) => {
@@ -29,9 +30,9 @@ export default function Roamer() {
       } else { el.style.width = ""; el.style.bottom = ""; }
       const w = el.offsetWidth;
       let x = pinned ? 0.14 * innerWidth : max > 0 ? (scrollY / max) * (innerWidth - w) : 0;
-      const foot = document.querySelector("footer")?.getBoundingClientRect(), bk = document.getElementById("footer-basket")?.getBoundingClientRect();
-      // near the footer the dog leaves its lane, hops along an arc and lands in the basket (the basket pup appears on landing)
-      const t = foot && bk && !pinned ? Math.min(1, Math.max(0, (innerHeight - foot.top - 150) / 350)) : 0, e = t * t * (3 - 2 * t);
+      const bk = document.getElementById("footer-basket")?.getBoundingClientRect();
+      // the hop is driven by the basket itself: it starts 350px before the basket is fully on screen and lands as it arrives
+      const t = bk && !pinned ? Math.min(1, Math.max(0, 1 - (bk.top + bk.height * 0.9 + 20 - innerHeight) / 350)) : 0, e = t * t * (3 - 2 * t);
       let y = 0;
       if (t > 0 && bk) {
         const bottom = parseFloat(getComputedStyle(el).bottom) || 0;
@@ -60,10 +61,13 @@ export default function Roamer() {
         document.body.append(d);
       }
     };
+    let queued = 0;
+    const onScrollFrame = () => { if (!queued) queued = requestAnimationFrame(() => { queued = 0; onScroll(); }); }; // at most one layout read per frame
     onScroll();
-    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("scroll", onScrollFrame, { passive: true });
+    addEventListener("resize", onScrollFrame);
     rig.tick(0.016, 0); // apply the sit pose
-    return () => { removeEventListener("scroll", onScroll); cancelAnimationFrame(raf); };
+    return () => { removeEventListener("scroll", onScrollFrame); removeEventListener("resize", onScrollFrame); cancelAnimationFrame(raf); cancelAnimationFrame(queued); };
   }, []);
-  return <div ref={box} aria-hidden className="pointer-events-none fixed bottom-[4.5rem] left-0 z-40 w-24 transition-opacity duration-300 md:bottom-2 md:w-36"><Mascot pose="walk" /></div>;
+  return <div ref={box} data-roamer aria-hidden className="pointer-events-none fixed bottom-[4.5rem] left-0 z-40 w-24 transition-opacity duration-300 md:bottom-2 md:w-36"><Mascot pose="walk" /></div>;
 }

@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PuppyCard from "@/components/PuppyCard";
 import { puppies } from "@/data";
 
@@ -13,8 +12,13 @@ const GROUPS: { key: keyof F; label: string; opts: [string, string][] }[] = [
 ];
 
 export default function Browser() {
-  const sp = useSearchParams();
-  const [f, setF] = useState<F>({ breed: sp.get("breed") ?? undefined, gender: sp.get("gender") ?? undefined, origin: sp.get("origin") ?? undefined });
+  // Server HTML holds the full grid (no layout shift, works without JS); URL filters are applied right after mount.
+  const [f, setF] = useState<F>({});
+  useEffect(() => {
+    const sp = new URLSearchParams(location.search);
+    const url: F = { breed: sp.get("breed") ?? undefined, gender: sp.get("gender") ?? undefined, origin: sp.get("origin") ?? undefined };
+    if (url.breed || url.gender || url.origin) setF(url);
+  }, []);
 
   function toggle(k: keyof F, v: string) {
     const next = { ...f, [k]: f[k] === v ? undefined : v };
@@ -43,7 +47,7 @@ export default function Browser() {
         {filtered && <button onClick={() => { setF({}); window.history.replaceState(null, "", window.location.pathname); }} className="ml-3 underline">Clear filters</button>}
       </p>
       {list.length ? (
-        <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">{list.map((p) => <PuppyCard key={p.slug} p={p} />)}</div>
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">{list.map((p, i) => <PuppyCard key={p.slug} p={p} eager={i < 4} />)}</div>
       ) : (
         <div className="card mt-6 p-10 text-center">
           <p className="font-display text-3xl font-extrabold">Nobody here yet</p>

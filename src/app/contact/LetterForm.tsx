@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
-import { puppies, puppyLabel } from "@/data";
+import { puppies, puppyLabel, SITE } from "@/data";
 
-// Log-only by decision: the reference's submit endpoint was never observed, so nothing leaves the browser.
+// Demo form by decision: the reference's submit endpoint was never observed and there is no backend, so nothing is sent.
+// After a valid submit it says so plainly instead of pretending the message went out.
 export default function LetterForm({ puppyId, id }: { puppyId?: string; id?: string }) {
   const [sent, setSent] = useState(false);
 
@@ -10,15 +11,14 @@ export default function LetterForm({ puppyId, id }: { puppyId?: string; id?: str
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
     if (data.website) return; // honeypot
-    console.log("[enquiry]", data);
     setSent(true);
   }
 
   if (sent) {
     return (
       <div id={id} role="status" className="card bg-honey-soft p-10 text-center">
-        <p className="font-display text-4xl font-extrabold">Letter posted!</p>
-        <p className="mt-2">Thank you, we&apos;ll be in touch soon.</p>
+        <p className="font-display text-4xl font-extrabold">This demo doesn&apos;t send messages yet</p>
+        <p className="mt-2">Your letter was not delivered. To reach us now, message us on <a className="underline" href={SITE.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a> or email <a className="underline" href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
       </div>
     );
   }

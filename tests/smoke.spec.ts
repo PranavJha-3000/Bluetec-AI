@@ -27,3 +27,92 @@ test("pomeranian filter shows 4", async ({ page }) => {
   await page.goto("/puppies?breed=pomeranian");
   await expect(page.locator("main a[href^='/puppies/']")).toHaveCount(4);
 });
+
+// ---- regression checks (added in the final QA pass) ----
+test("no console or page errors on any route", async ({ page }) => {
+  const errs: string[] = [];
+  page.on("pageerror", (e) => errs.push(e.message));
+  page.on("console", (m) => m.type() === "error" && errs.push(m.text()));
+  for (const r of routes) { await page.goto(r); await page.waitForLoadState("load"); }
+  expect(errs).toEqual([]);
+});
+
+test("faq search filters and accordion toggles", async ({ page }) => {
+  await page.goto("/faq");
+  const all = await page.locator("main button[aria-expanded]").count();
+  await page.getByPlaceholder(/sniff out/).fill("vaccin");
+  const some = await page.locator("main button[aria-expanded]").count();
+  expect(some).toBeGreaterThan(0);
+  expect(some).toBeLessThan(all);
+  const b = page.locator("main button[aria-expanded]").first();
+  const was = await b.getAttribute("aria-expanded");
+  await b.click();
+  await expect(b).toHaveAttribute("aria-expanded", was === "true" ? "false" : "true");
+});
+
+test("puppy gallery next button changes the photo", async ({ page }) => {
+  await page.goto("/puppies/maltipoo-max-male");
+  const img = page.locator("main img").first();
+  const before = await img.getAttribute("src");
+  await page.getByRole("button", { name: "Next photo" }).click();
+  await expect.poll(() => page.locator("main img").first().getAttribute("src")).not.toBe(before);
+});
+
+test("enquiry form validates and is honest that nothing is sent", async ({ page }) => {
+  await page.goto("/contact");
+  await page.getByRole("button", { name: "Post the letter" }).click();
+  await expect(page.getByText("This demo doesn't send messages yet")).toHaveCount(0); // required fields block submit
+  await page.getByLabel(/Your name/).fill("Test");
+  await page.getByLabel(/Phone/).fill("0500000000");
+  await page.getByRole("button", { name: "Post the letter" }).click();
+  await expect(page.getByText("This demo doesn't send messages yet")).toBeVisible();
+  await expect(page.getByText("Letter posted")).toHaveCount(0);
+});
+
+test("mobile menu opens and navigates", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Menu" }).click();
+  await expect(page.getByRole("dialog", { name: "Menu" })).toBeVisible();
+  await page.getByRole("dialog", { name: "Menu" }).getByRole("link", { name: "FAQ" }).click();
+  await expect(page).toHaveURL(/\/faq$/);
+});
+
+test("back/forward and nested refresh work", async ({ page }) => {
+  await page.goto("/puppies?breed=pomeranian");
+  await page.goto("/faq");
+  await page.goBack();
+  await expect(page).toHaveURL(/breed=pomeranian/);
+  await expect(page.locator("main a[href^='/puppies/']")).toHaveCount(4);
+  await page.goForward();
+  await expect(page).toHaveURL(/\/faq$/);
+  await page.goto("/puppies/maltipoo-max-male");
+  await page.reload();
+  await expect(page.locator("h1").first()).toBeVisible();
+});
+
+test("keyboard: tab reaches a focusable nav link", async ({ page }) => {
+  await page.goto("/faq");
+  for (let i = 0; i < 6; i++) await page.keyboard.press("Tab");
+  const tag = await page.evaluate(() => document.activeElement?.tagName);
+  expect(["A", "BUTTON", "INPUT"]).toContain(tag);
+});
+
+for (const [w, h] of [[390, 844], [768, 1024], [1440, 900]] as const) {
+  test(`roaming dog lands in the footer basket at ${w}`, async ({ page }) => {
+    await page.setViewportSize({ width: w, height: h });
+    await page.goto("/");
+    await expect.poll(() => page.evaluate(() => { scrollTo(0, document.documentElement.scrollHeight); return document.documentElement.dataset.basket; })).toBe("in");
+  });
+}
+
+test.describe("reduced motion", () => {
+  test.use({ reducedMotion: "reduce" });
+  test("home renders without overflow and the basket pup stays visible", async ({ page }) => {
+    await page.goto("/");
+    await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
+    await expect(page.locator(".tpf-pup")).toBeVisible();
+    await expect(page.locator("[data-roamer]")).toBeHidden(); // no roaming dog under reduced motion
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+  });
+});
