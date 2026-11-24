@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Gallery from "./Gallery";
+import Mascot from "@/components/home/Mascot";
+import "./detail.css";
 import Img from "@/components/Img";
 import LetterForm from "../../contact/LetterForm";
 import { allSlugs, findGone, findPuppy, puppies, puppyLabel, SITE } from "@/data";
@@ -39,23 +41,27 @@ export default async function Detail({ params }: { params: Promise<{ slug: strin
   const wa = `${SITE.whatsapp.split("?")[0]}?text=${encodeURIComponent(`Hi! I'd like to know more about ${puppyLabel(sub)}.`)}`;
 
   return (
+    <div className="pd-scene">
     <article className="wrap py-10">
-      <nav aria-label="Breadcrumb" className="hand text-sm text-cocoa-soft">
-        <Link href="/">Home</Link> / <Link href={gone ? "/gone-home" : "/puppies"}>{gone ? "Gone home" : "Puppies"}</Link> / {puppyLabel(sub)}
+      <nav aria-label="Breadcrumb" className="pd-crumb text-base">
+        <Link href={gone ? "/gone-home" : "/puppies"}>{gone ? "Gone home" : "Available puppies"}</Link> / {puppyLabel(sub)}
       </nav>
-      <div className="mt-6 grid gap-10 lg:grid-cols-2">
-        {p ? <Gallery media={p.media} /> : <div className="card aspect-[4/5] overflow-hidden"><Img src={g!.cover} alt={`${puppyLabel(sub)}, ${sub.breed} puppy`} eager /></div>}
-        <div>
-          <p className="hand text-xl text-toffee-ink">{gone ? "the day they went home" : "looking for a home"}</p>
-          <h1 className="text-[clamp(2.5rem,6vw,5rem)] leading-none">{puppyLabel(sub)}</h1>
-          <span className="hand mt-3 inline-block -rotate-2 rounded-full border-2 border-cocoa bg-honey px-4 py-1">{gone ? "Gone home ♥" : "Available"}</span>
-          <dl className="mt-6 grid grid-cols-2 gap-3">
+      <p className="pd-mark"><b>1</b>hello, it&apos;s me</p>
+      <div className="mt-5 grid gap-14 lg:grid-cols-[1.4fr_1fr]">
+        <div className="pd-photo">{p ? <Gallery media={p.media} /> : <div className="card aspect-[4/5] overflow-hidden"><Img src={g!.cover} alt={`${puppyLabel(sub)}, ${sub.breed} puppy`} eager /></div>}</div>
+        <div className="pd-card">
+          <span aria-hidden className="pd-card__pin" />
+          <Mascot pose="peek" className="pd-card__peek" />
+          <span className="pd-chip">{gone ? "Gone home ♥" : "Available"}</span>
+          <h1 className="mt-4 text-[clamp(2.5rem,6vw,4.5rem)] leading-none">{puppyLabel(sub)}</h1>
+          <p className="mt-2 text-cocoa-soft">{sub.breed}</p>
+          <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5">
             {[["Breed", sub.breed], ["Boy or girl", sub.gender === "male" ? "Boy" : "Girl"], ...(p ? [["Age", p.age]] : []), ["Where", sub.origin === "imported" ? "Imported for you" : "In Dubai"]].map(([k, v]) => (
-              <div key={k} className="card p-4"><dt className="hand text-sm text-toffee-ink">{k}</dt><dd className="font-semibold">{v}</dd></div>
+              <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
             ))}
           </dl>
           {p?.description && <p className="mt-5 text-cocoa-soft">{p.description}</p>}
-          <div className="mt-8 flex flex-wrap gap-4">
+          <div className="mt-8 grid gap-3">
             {gone ? <Link href="/puppies" className="btn btn-primary">Meet the puppies still waiting</Link> : (<>
               <a href={wa} className="btn btn-wa">Ask about {puppyLabel(sub)} on WhatsApp</a>
               <a href="#enquire" className="btn btn-ghost">Send an enquiry</a>
@@ -95,5 +101,6 @@ export default async function Detail({ params }: { params: Promise<{ slug: strin
       )}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
     </article>
+    </div>
   );
 }

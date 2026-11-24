@@ -38,17 +38,20 @@ Caveat for every height below: headless Chromium draws a 15px scrollbar on the r
 ## Page-by-page (coarse, from `scripts/parity.mjs`)
 Inner pages were rebuilt from the reference's DOM/CSS (Playwright dump, `tp-` classes renamed per page). Full-page heights, ours / reference, measured with `scrollHeight` against a production build; the coarse pixel-diff numbers from the earlier run are dropped because they predate the rebuild.
 
-| Page | 1440 (ours / ref) | 390 (ours / ref) |
-|---|---|---|
-| /how-it-works | 4471 / 4544 | n/m |
-| /gone-home | 3053 / 3071 | 7297 / 7253 |
-| /contact | 1964 / 1956 | 3654 / 3580 |
-| /faq | 2385 / 2383 | 3136 / 3088 |
-| /happy-families | 8872 / 8793 | 10792 / 32337 |
-| /puppies | 3851 / 3679 | 5948 / 5656 |
-| /puppies/maltipoo-max-male | 3080 / 3277 | not re-measured |
+| Page | 1440 | 768 | 390 |
+|---|---|---|---|
+| /how-it-works | 4471 / 4544 | 5695 / 5743 | 7859 / 7978 |
+| /gone-home | 3053 / 3071 | 6291 / 6296 | 7297 / 7253 |
+| /contact | 1964 / 1956 | 2521 / 2525 | 3654 / 3580 |
+| /faq | 2385 / 2383 | 2290 / 2296 | 3136 / 3088 |
+| /happy-families | 8872 / 8793 | not measured | 10792 / 32337 |
+| /puppies | 3851 / 3679 | 5835 / 5697 | 5948 / 5656 |
+| /puppies/maltipoo-max-male | not re-measured | 4068 / 4490 | 5120 / 5227 |
+| 404 (lost-poster) | not re-measured | 1585 / 1605 | 2119 / 2100 |
 
-Notes: the reference's /happy-families 390 height is a headless-capture artifact (its CSS `columns: 10.5rem 2` collapses to one column once a 15px scrollbar is subtracted); ours renders two columns. /puppies cards reuse one hand-drawn outline/wash shape instead of the reference's per-card shapes. /puppies/[slug] has the "Every Teddy Pup comes" and "Coming home from abroad" sections but not the reference's full header block. 404, home and 768px were not re-measured. n/m = not measured.
+(ours / reference; `scrollHeight`, production build.) No horizontal overflow at 390 or 768 on any measured page.
+
+Notes: the reference's /happy-families 390 height is a headless-capture artifact (its CSS `columns: 10.5rem 2` collapses to one column once a 15px scrollbar is subtracted); ours renders two columns. /puppies cards reuse one hand-drawn outline/wash shape instead of the reference's per-card shapes. /puppies/[slug] now has the scrapbook header (breadcrumb, numbered marker, tilted card, stacked photo) and both extra sections; 768 is still ~9% shorter than the reference. Home was not re-measured.
 
 ## Motion summary
 | Scene | Mechanism | Reduced motion |

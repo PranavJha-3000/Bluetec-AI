@@ -1,0 +1,16 @@
+.nf-wrap { padding: clamp(2rem, 5vw, 3rem) var(--gutter) clamp(4rem, 8vw, 6rem); }
+.nf-poster { position: relative; margin-inline: auto; max-width: 34.5rem; rotate: 1.1deg; text-align: center; border: 3px solid var(--color-cocoa); border-radius: .5rem; background: linear-gradient(#fff8ec, #fff3d9); padding: 3rem 2rem 0; box-shadow: rgba(42, 23, 14, .15) 8px 10px; overflow: hidden; }
+.nf-tape { position: absolute; top: .4rem; width: 6.5rem; height: 1.8rem; background: rgb(248, 219, 174); opacity: .85; }
+.nf-tape--l { left: 3.5rem; rotate: -5deg; }
+.nf-tape--r { right: 3.5rem; rotate: 4deg; }
+.nf-kicker { color: var(--color-toffee-ink); font-size: 1.35rem; }
+.nf-lost { font-size: clamp(4.5rem, 16vw, 8.5rem); line-height: 1; letter-spacing: -.02em; }
+.nf-photo { margin: .6rem auto 0; width: 50%; aspect-ratio: 1.24; display: grid; place-items: center; border: 2.5px dashed #8a8580; border-radius: .6rem; background: var(--color-milk); }
+.nf-dog { width: 70%; }
+.nf-copy { margin: 1.6rem auto 0; max-width: 36ch; color: var(--color-cocoa-soft); }
+.nf-found { margin-top: 1.4rem; color: var(--color-toffee-ink); font-size: 1.2rem; }
+.nf-tabs { display: grid; grid-template-columns: repeat(5, 1fr); margin: 1.1rem -2rem 0; border-top: 2px dashed #8a8580; }
+.nf-tabs li + li { border-left: 2px dashed #8a8580; }
+.nf-tabs a { display: block; height: 7rem; padding: .9rem .4rem; writing-mode: vertical-rl; font-weight: 700; font-size: .9rem; text-align: start; }
+.nf-tabs a:hover { background: var(--color-honey-soft); }
+@media (max-width: 520px) { .nf-poster { padding-inline: 1rem; } .nf-tabs { margin-inline: -1rem; } }

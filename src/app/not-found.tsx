@@ -1,16 +1,23 @@
 import Link from "next/link";
+import Mascot from "@/components/home/Mascot";
+import "./not-found.css";
+
+const tabs = [["/", "Home"], ["/puppies", "Puppies"], ["/how-it-works", "How it works"], ["/faq", "Questions"], ["/contact", "Contact"]];
 
 export default function NotFound() {
-  const tabs = [["/", "Home"], ["/puppies", "Puppies"], ["/happy-families", "Happy families"], ["/faq", "FAQ"], ["/contact", "Contact"]];
   return (
-    <section className="wrap py-20 text-center">
-      <div className="mx-auto max-w-xl rotate-1 rounded-lg border-[3px] border-cocoa bg-honey-soft p-8 shadow-[0_8px_0_-2px_var(--color-cocoa)]">
-        <p className="hand text-toffee-ink">have you seen this pup?</p>
-        <h1 className="text-[clamp(4rem,15vw,9rem)] leading-none">LOST</h1>
-        <p className="mt-2 text-cocoa-soft">This page wandered off. Tear off a tab to find your way back.</p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          {tabs.map(([h, l]) => <Link key={h} href={h} className="rounded-b-lg border-2 border-cocoa bg-white px-3 py-2 font-semibold">{l}</Link>)}
-        </div>
+    <section className="nf-wrap">
+      <div className="nf-poster">
+        <span aria-hidden className="nf-tape nf-tape--l" />
+        <span aria-hidden className="nf-tape nf-tape--r" />
+        <p className="font-scrawl nf-kicker">have you seen this page?</p>
+        <h1 className="font-plush nf-lost">LOST</h1>
+        <div className="nf-photo"><Mascot pose="walk" className="nf-dog" /></div>
+        <p className="nf-copy">One page, last seen wandering off. It answers to the address you typed, but it isn&apos;t here any more. Teddy is on the case.</p>
+        <p className="font-scrawl nf-found">if found, take a tab:</p>
+        <ul className="nf-tabs">
+          {tabs.map(([h, l]) => <li key={h}><Link href={h}>{l}</Link></li>)}
+        </ul>
       </div>
     </section>
   );
