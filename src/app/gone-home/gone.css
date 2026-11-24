@@ -1,0 +1,28 @@
+.gh-boothhead { align-items: end; gap: 2.5rem; display: grid; }
+.gh-booth { --bw: clamp(11rem, 30vw, 15rem); width: var(--bw); justify-self: end; position: relative; }
+.gh-booth__teddy { z-index: 1; width: 100%; position: relative; }
+.gh-booth__counter { z-index: 2; height: calc(var(--bw) * .42); margin-top: calc(var(--bw) * -.272); border: 3px solid var(--color-cocoa); background: linear-gradient(var(--color-cocoa), var(--color-cocoa)) 0 2.05rem / 100% 3px no-repeat, repeating-linear-gradient(90deg, var(--color-toffee) 0 1.3rem, var(--color-milk) 1.3rem 2.6rem) 0 0 / 100% 2.05rem no-repeat, linear-gradient(#fff1d8, #fbe3b4); border-radius: 0.9rem 0.9rem 0.4rem 0.4rem; place-items: center; padding-top: 2rem; display: grid; position: relative; box-shadow: rgba(42, 23, 14, 0.14) 6px 8px; }
+.gh-booth__counter span { color: var(--color-toffee-ink); font-size: clamp(1.1rem, 2vw, 1.4rem); }
+.gh-tickets { grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr)); gap: 2.25rem 1.75rem; margin-top: clamp(3rem, 7vw, 5rem); display: grid; }
+.gh-ticket { rotate: var(--tilt); transition: rotate .45s var(--ease-pounce); }
+.gh-ticket:hover { rotate: 0deg; }
+.gh-ticket__link { filter: drop-shadow(rgba(42, 23, 14, 0.16) 5px 7px); min-height: 9.5rem; transition: translate .45s var(--ease-pounce), filter .45s var(--ease-silk); border-radius: 1rem; display: flex; position: relative; }
+.gh-ticket__link:hover { filter: drop-shadow(rgba(42, 23, 14, 0.18) 8px 12px); translate: 0px -4px; }
+.gh-ticket__main, .gh-ticket__stub { border: 3px solid var(--color-cocoa); background: rgb(255, 248, 234); position: relative; }
+.gh-ticket__main { border-right: 0px; border-radius: 1rem 0px 0px 1rem; flex: 1 1 0%; align-items: center; gap: 1rem; min-width: 0px; padding: 0.95rem 1rem 0.95rem 0.95rem; display: flex; mask: radial-gradient(circle at 100% 0px, rgba(0, 0, 0, 0) 0.62rem, rgb(0, 0, 0) 0.66rem) 100% 0px / 51% 51% no-repeat, radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 0) 0.62rem, rgb(0, 0, 0) 0.66rem) 100% 100% / 51% 51% no-repeat, linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0)) 0px center / 50% 100% no-repeat; }
+.gh-ticket__photo { aspect-ratio: 1 / 1; border: 3px solid var(--color-cocoa); background: var(--color-honey-soft); border-radius: 50%; flex: 0 0 auto; width: clamp(5.4rem, 22vw, 6.6rem); position: relative; overflow: hidden; }
+.gh-ticket__body { gap: 0.1rem; min-width: 0px; display: grid; }
+.gh-ticket__kicker { color: var(--color-toffee-ink); font-size: 0.9rem; }
+.gh-ticket__name { text-overflow: ellipsis; font-size: clamp(1.4rem, 2vw, 1.75rem); line-height: 1.05; overflow: hidden; }
+.gh-ticket__meta { color: var(--color-cocoa-soft); font-size: 0.9rem; font-weight: 600; }
+.gh-ticket__route { letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-cocoa); align-items: center; gap: 0.45rem; margin-top: 0.4rem; font-size: 0.82rem; font-weight: 700; display: flex; }
+.gh-ticket__route svg { fill: none; width: 2.6rem; stroke: var(--color-toffee-deep); stroke-width: 2.4px; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 3, 4; }
+.gh-ticket__route svg path + path { stroke-dasharray: none; }
+.gh-ticket__stub { background: var(--color-honey); transform-origin: 0px 0px; width: 3.4rem; transition: rotate .5s var(--ease-pounce); border-left: 3px dashed rgba(42, 23, 14, 0.55); border-radius: 0px 1rem 1rem 0px; flex: 0 0 auto; place-items: center; display: grid; mask: radial-gradient(circle at 0px 0px, rgba(0, 0, 0, 0) 0.62rem, rgb(0, 0, 0) 0.66rem) 0px 0px / 51% 51% no-repeat, radial-gradient(circle at 0px 100%, rgba(0, 0, 0, 0) 0.62rem, rgb(0, 0, 0) 0.66rem) 0px 100% / 51% 51% no-repeat, linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0)) 100% center / 50% 100% no-repeat; }
+.gh-ticket__stub span { writing-mode: vertical-rl; letter-spacing: 0.06em; color: var(--color-cocoa); font-size: 1rem; rotate: 180deg; }
+.gh-ticket__link:hover .gh-ticket__stub { rotate: 7deg; }
+.gh-ticket[data-armed]:not([data-revealed]) .gh-ticket__link { clip-path: inset(0px 0px 100%); translate: 0px -0.9rem; }
+.gh-ticket[data-armed] .gh-ticket__link { transition: clip-path .7s var(--ease-silk) calc(var(--i) * 80ms), translate .7s var(--ease-silk) calc(var(--i) * 80ms), filter .45s var(--ease-silk); }
+.gh-ticket[data-revealed] .gh-ticket__link { clip-path: inset(-2rem); }
+@media (min-width: 768px) { .gh-boothhead { grid-template-columns: minmax(0px, 1fr) auto; } }
+@media (prefers-reduced-motion: reduce) { .gh-ticket, .gh-ticket__link, .gh-ticket__stub { transition: none !important; } }

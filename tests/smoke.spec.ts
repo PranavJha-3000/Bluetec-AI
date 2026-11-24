@@ -60,11 +60,11 @@ test("puppy gallery next button changes the photo", async ({ page }) => {
 
 test("enquiry form validates and is honest that nothing is sent", async ({ page }) => {
   await page.goto("/contact");
-  await page.getByRole("button", { name: "Post the letter" }).click();
+  await page.getByRole("button", { name: "Post my letter" }).click();
   await expect(page.getByText("This demo doesn't send messages yet")).toHaveCount(0); // required fields block submit
   await page.getByLabel(/Your name/).fill("Test");
   await page.getByLabel(/Phone/).fill("0500000000");
-  await page.getByRole("button", { name: "Post the letter" }).click();
+  await page.getByRole("button", { name: "Post my letter" }).click();
   await expect(page.getByText("This demo doesn't send messages yet")).toBeVisible();
   await expect(page.getByText("Letter posted")).toHaveCount(0);
 });

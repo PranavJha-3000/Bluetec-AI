@@ -20,7 +20,8 @@ export const faqs = faqJson as Faq[];
 export const journeys = (journeysJson as unknown as Journey[]).map((j) => ({ ...j, note: j.note === "$undefined" ? "" : j.note }));
 export const families = familiesJson as { url: string; w: number; h: number; alt: string; fx: number; fy: number; color: string }[];
 
-// name/breed/gender from the reference /gone-home roster. Origin per slug is NOT verified (assumption: Pomeranian/Poodle/Pomsky imported, rest local).
+// name/breed/gender/origin from the reference /gone-home tickets ("Dubai showroom" vs "TeddyPups" route label).
+const showroom = new Set(["maltipoo-mia-girl","maltipoo-bruno-boy","maltese-buddy-male","pomeranian-daisy-girl","poodle-molly-female","pomsky-rosie-girl","pomeranian-leo-boy","maltipoo-sophie-girl","maltipoo-lola-girl","pomeranian-mimi-girl","bichon-bailey-boy","maltipo"]);
 const roster: Record<string, [string, string, "male" | "female"]> = {
   "pomeranian-ace-boy": ["Ace", "Pomeranian", "male"], "poodle-leo-male": ["Leo", "Poodle", "male"], "maltipoo-mia-girl": ["Mia", "Maltipoo", "female"],
   "maltipoo-sadie-girl": ["Sadie", "Maltipoo", "female"], "blue-marle-pomeranian": ["", "Pomeranian", "male"], "pomsky-ollie-boy": ["Ollie", "Pomsky", "male"],
@@ -34,7 +35,7 @@ const roster: Record<string, [string, string, "male" | "female"]> = {
 };
 export const gone: Gone[] = (goneRaw as { slug: string; cover: string }[]).map((g) => {
   const [name, breed, gender] = roster[g.slug];
-  return { slug: g.slug, name, breed, gender, origin: /^(pomeranian|poodle|pomsk)/.test(g.slug) ? "imported" : "local", cover: g.cover };
+  return { slug: g.slug, name, breed, gender, origin: showroom.has(g.slug) ? "local" : "imported", cover: g.cover };
 });
 
 export const puppyLabel = (p: { name: string; breed: string; gender: string }) => p.name || `${p.breed} (${p.gender === "male" ? "boy" : "girl"})`;

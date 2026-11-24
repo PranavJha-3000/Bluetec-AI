@@ -1,0 +1,61 @@
+@keyframes ct-letter-fold { 
+  55% { opacity: 0.7; transform: perspective(1100px) rotateX(62deg) scale(0.8); }
+  100% { opacity: 0; transform: perspective(1100px) rotateX(80deg) scale(0.35) translateY(30%); }
+}
+@keyframes ct-env-in { 
+  0% { opacity: 0; scale: 0.4; }
+}
+@keyframes ct-flap { 
+  0% { transform: scaleY(-1); }
+}
+@keyframes ct-env-post { 
+  0% { translate: -50%; scale: 1; }
+  35% { translate: -50% -1.2rem; scale: 0.92; }
+  100% { translate: -50% 12.5rem; scale: 0.55; }
+}
+@keyframes ct-box-up { 
+  100% { translate: -50%; }
+}
+@keyframes ct-flag { 
+  100% { rotate: 0deg; }
+}
+@keyframes ct-sent-in { 
+  0% { opacity: 0; transform: translateY(1rem) scale(0.96); }
+}
+.ct-shopfront { border: 3px solid var(--color-cocoa); color: var(--color-cocoa); background: linear-gradient(rgb(255, 241, 216), rgb(251, 227, 180)); border-radius: 1.2rem; position: relative; overflow: hidden; }
+.ct-shopfront::before { content: ""; border-bottom: 3px solid var(--color-cocoa); background: repeating-linear-gradient(90deg, var(--color-toffee) 0 1.4rem, var(--color-milk) 1.4rem 2.8rem); height: 1.9rem; display: block; }
+.ct-post { position: relative; }
+.ct-post[data-phase="sealing"], .ct-post[data-phase="posting"] { overflow: clip; }
+.ct-letterform { border: 3px solid var(--color-cocoa); background: linear-gradient(90deg, transparent 0 calc(clamp(1.5rem, 4vw, 2.75rem) - .9rem), #c2622b47 calc(clamp(1.5rem, 4vw, 2.75rem) - .9rem) calc(clamp(1.5rem, 4vw, 2.75rem) - .75rem), transparent 0), var(--color-milk); color: var(--color-cocoa); transform-origin: 50% 0px; border-radius: 1.6rem; padding: clamp(1.5rem, 4vw, 2.75rem); position: relative; box-shadow: rgba(42, 23, 14, 0.16) 8px 10px; }
+.ct-letterform__greeting { color: var(--color-toffee-ink); font-size: clamp(1.4rem, 2.4vw, 1.75rem); }
+.ct-letterform__line { margin-top: 0.9rem; font-size: clamp(1.05rem, 1.5vw, 1.2rem); line-height: 2.55; }
+.ct-blank { width: min(var(--size), 100%); vertical-align: baseline; display: inline-block; }
+.ct-blank :is(input, select) { width: 100%; height: 2.2rem; color: var(--color-toffee-ink); font-family: var(--font-hand); background: 0px 0px; border-width: 0px 0px 2.5px; border-style: none none dashed; border-color: currentcolor currentcolor rgba(42, 23, 14, 0.45); border-image: none; border-radius: 0.3rem 0.3rem 0px 0px; outline: none; padding: 0px 0.25rem; font-size: 1.12rem; transition: background-color 0.25s, border-color 0.25s; }
+.ct-blank--select { width: min(20ch, 100%); }
+.ct-blank select { appearance: none; background: linear-gradient(45deg, transparent 50%, var(--color-toffee-deep) 50%) right .55rem center / .45rem .45rem no-repeat, linear-gradient(-45deg, transparent 50%, var(--color-toffee-deep) 50%) right .2rem center / .45rem .45rem no-repeat; text-overflow: ellipsis; padding-right: 1.4rem; }
+.ct-blank :is(input, select)::placeholder { color: rgba(90, 58, 40, 0.5); }
+.ct-blank :is(input, select):focus-visible { border-bottom-style: solid; border-bottom-color: var(--color-toffee-deep); background-color: rgba(251, 227, 180, 0.6); }
+.ct-blank :is(input, select)[aria-invalid="true"] { background-color: rgba(249, 205, 191, 0.45); border-bottom: 2.5px solid rgb(179, 38, 30); }
+.ct-letterform__note { width: 100%; color: var(--color-toffee-ink); font-family: var(--font-hand); resize: vertical; background: repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) calc(-2px + 2.3rem), rgba(42, 23, 14, 0.16) calc(-2px + 2.3rem), rgba(42, 23, 14, 0.16) 2.3rem) local; border: 0px; outline: none; margin-top: 1.1rem; padding: 0px 0.25rem; font-size: 1.1rem; line-height: 2.3rem; display: block; }
+.ct-letterform__note:focus-visible { background-color: rgba(251, 227, 180, 0.35); border-radius: 0.4rem; }
+.ct-letterform__alert { background: var(--color-blush); border-radius: 1rem; margin-top: 1rem; padding: 0.9rem 1.1rem; }
+.ct-letterform__alert ul { margin-top: 0.35rem; padding-left: 1.1rem; font-size: 0.95rem; list-style: outside; }
+.ct-letterform__sign { flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem 1.5rem; margin-top: 1.6rem; display: flex; }
+.ct-letterform__sign p { color: var(--color-cocoa-soft); font-size: 1.1rem; }
+.ct-post[data-phase="sealing"] .ct-letterform, .ct-post[data-phase="posting"] .ct-letterform { animation: ct-letter-fold .65s var(--ease-snap) forwards; }
+.ct-post__scene { pointer-events: none; width: 14rem; height: 26rem; position: absolute; bottom: 0.5rem; left: 50%; translate: -50%; }
+.ct-post__envelope { z-index: 1; width: 11rem; animation: ct-env-in .45s .3s var(--ease-pounce) both; position: absolute; top: 0px; left: 50%; translate: -50%; }
+.ct-post__flap { transform-box: fill-box; transform-origin: 50% 0px; animation: 0.3s ease-in 0.55s 1 normal both running ct-flap; }
+.ct-post[data-phase="posting"] .ct-post__envelope { animation: ct-env-post .85s var(--ease-snap) forwards; }
+.ct-post__box { z-index: 2; width: 13rem; position: absolute; bottom: 0px; left: 50%; translate: -50% 120%; }
+.ct-post[data-phase="posting"] .ct-post__box { animation: ct-box-up .5s var(--ease-pounce) forwards; }
+.ct-post__flag { transform-box: fill-box; transform-origin: 0px 100%; rotate: 90deg; }
+.ct-post[data-phase="posting"] .ct-post__flag { animation: ct-flag .4s .75s var(--ease-pounce) forwards; }
+.ct-post__sent { border: 3px solid var(--color-cocoa); background: var(--color-honey); color: var(--color-cocoa); text-align: center; animation: ct-sent-in .55s var(--ease-pounce) both; border-radius: 1.6rem; outline: none; padding: clamp(2rem, 5vw, 3rem) 1.5rem; }
+.ct-post__box--sent { width: 9rem; margin-inline: auto; position: static; translate: none; }
+.ct-visit { gap: 1.25rem; display: grid; }
+.ct-visit__photo { aspect-ratio: 4 / 3; border: 3px solid var(--color-cocoa); background: var(--color-honey-soft); border-radius: 999px 999px 1rem 1rem; position: relative; overflow: hidden; }
+@media (min-width: 640px) { .ct-visit { grid-template-columns: minmax(0px, 1fr) 11rem; align-items: end; } }
+@media (min-width: 640px) { .ct-visit__photo { aspect-ratio: 3 / 4; } }
+@media (prefers-reduced-motion: reduce) { .ct-post *, .ct-post__sent { animation: auto ease 0s 1 normal none running none !important; } }
+.ct-letter__stamp { aspect-ratio: 1 / 1; border: 3px dashed var(--color-toffee-deep); background: var(--color-honey-soft); width: 4.75rem; color: var(--color-toffee-deep); border-radius: 0.5rem; place-items: center; display: grid; position: absolute; top: -1.25rem; right: 2rem; rotate: 6deg; }
