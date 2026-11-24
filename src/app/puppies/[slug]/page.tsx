@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import Gallery from "./Gallery";
 import Img from "@/components/Img";
 import LetterForm from "../../contact/LetterForm";
-import { allSlugs, findGone, findPuppy, puppies, puppyLabel, SITE, journeys } from "@/data";
+import { allSlugs, findGone, findPuppy, puppies, puppyLabel, SITE } from "@/data";
+
+const ABROAD = [["Reserve your puppy", "Tell us which puppy has captured your heart."], ["Personalized consultation", "We finalize details with you and share updates on your puppy's journey."], ["Import and arrival", "We manage health checks, travel arrangements, and documentation."], ["Welcome home", "We help your new puppy settle in and ensure a smooth transition into your home."]];
 
 export const dynamicParams = false;
 export const generateStaticParams = () => allSlugs().map((slug) => ({ slug }));
@@ -59,12 +61,26 @@ export default async function Detail({ params }: { params: Promise<{ slug: strin
               <a href="#enquire" className="btn btn-ghost">Send an enquiry</a>
             </>)}
           </div>
-          {sub.origin === "imported" && !gone && (
-            <div className="card mt-8 bg-sky/40 p-5"><b className="font-display text-xl">Coming home from abroad</b>
-              <ol className="mt-2 list-decimal pl-5 text-cocoa-soft">{journeys[1].steps.map((s) => <li key={s.title}>{s.title}</li>)}</ol></div>
-          )}
         </div>
       </div>
+      {!gone && (
+        <>
+          <section className="mt-16" aria-labelledby="comes-title">
+            <p className="hand text-xl text-toffee-ink">what comes with {puppyLabel(sub)}</p>
+            <h2 id="comes-title" className="mt-1 text-4xl">Every Teddy Pup comes</h2>
+            <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {["Vaccinated", "Dewormed", "Verified health certificate from licensed vets", "Thoroughly checked before joining your family"].map((t) => <li key={t} className="card p-5 font-semibold">{t}</li>)}
+            </ul>
+          </section>
+          <section className="mt-16" aria-labelledby="abroad-title">
+            <p className="hand text-xl text-toffee-ink">the way home</p>
+            <h2 id="abroad-title" className="mt-1 text-4xl">Coming home from abroad</h2>
+            <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {ABROAD.map(([t, d], i) => <li key={t} className="card p-5"><span className="hand text-toffee-ink">Step {i + 1}</span><h3 className="text-xl">{t}</h3><p className="mt-1 text-cocoa-soft">{d}</p></li>)}
+            </ol>
+          </section>
+        </>
+      )}
       {!gone && (
         <section id="enquire" className="mt-16 scroll-mt-24">
           <h2 className="mb-6 text-4xl">Send an enquiry about {puppyLabel(sub)}</h2>

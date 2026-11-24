@@ -18,7 +18,7 @@ Scope: whole repo, final QA pass. Evidence for each fix is in `TEST_REPORT.md` a
 | 11 | P2 | Scraped reference HTML/CSS tracked in git, scratch files in root | Untracked `recon/mascot`, deleted `*.tmp.*` scratch, ignore rules added | `git status` |
 
 ## Known gaps (not fixed)
-1. **Inner pages are shorter than the reference** (see `VISUAL_PARITY.md`): /how-it-works about half, mobile /happy-families about 30%, others 5-30%. Cause not investigated. Largest remaining discrepancy.
+1. **Inner pages now within about 0-6% of reference height at 1440** (see `VISUAL_PARITY.md`). Remaining: /puppies/[slug] header block, per-card /puppies art, 768px and 404 not re-measured.
 2. Mascot cue choreography (gaze, woof, spin) and mobile docked peek dog.
 3. Curtain intro, Lenis smooth scroll, view transitions.
 4. `/puppies` Lighthouse performance 81-87 because covers are unresized ~250 KB JPEGs in plain `<img>`; `next/image` would fix it.

@@ -36,21 +36,19 @@ Caveat for every height below: headless Chromium draws a 15px scrollbar on the r
 6. Hero puppy order inside the lineup is reference-seeded, but the reference reshuffles it at runtime; not replicated.
 
 ## Page-by-page (coarse, from `scripts/parity.mjs`)
-Earlier coarse run (mean per-channel difference of 200px-wide downscales, plus page height). Not pixel-exact; it ranks pages only. Heights are ours vs the reference screenshot:
+Inner pages were rebuilt from the reference's DOM/CSS (Playwright dump, `tp-` classes renamed per page). Full-page heights, ours / reference, measured with `scrollHeight` against a production build; the coarse pixel-diff numbers from the earlier run are dropped because they predate the rebuild.
 
-| Page | 1440 height (ours / ref) | 390 height (ours / ref) | Coarse diff d / m |
-|---|---|---|---|
-| Home hero | viewport | viewport | 13.9% / 16.1% |
-| /faq | 2183 / 2372 | 2871 / 3082 | 37.4% / 33.4% |
-| /contact | 1788 / 1952 | 2834 / 3579 | 19.9% / 38.6% |
-| /how-it-works | 2323 / 4506 | 3843 / 7972 | 34.7% / 34.2% |
-| /puppies | 3514 / 3673 | 4545 / 5643 | 24.4% / 45.6% |
-| /happy-families | 8075 / 8787 | 9287 / 32314 | 33.8% / 33.8% |
-| /gone-home | 2579 / 3063 | 5761 / 7234 | 32.7% / 36.9% |
-| /puppies/[slug] | 2656 / 3274 | 3700 / 5223 | 38.6% / 44.0% |
-| 404 | 1319 / 1606 | 1811 / 2099 | 29.0% / 26.5% |
+| Page | 1440 (ours / ref) | 390 (ours / ref) |
+|---|---|---|
+| /how-it-works | 4471 / 4544 | n/m |
+| /gone-home | 3053 / 3071 | 7297 / 7253 |
+| /contact | 1964 / 1956 | 3654 / 3580 |
+| /faq | 2385 / 2383 | 3136 / 3088 |
+| /happy-families | 8872 / 8793 | 10792 / 32337 |
+| /puppies | 3851 / 3679 | 5948 / 5656 |
+| /puppies/maltipoo-max-male | 3080 / 3277 | not re-measured |
 
-These numbers predate the home-page rebuilds and were not re-run in the final pass. **Inner pages are 5-50% shorter than the reference, with /how-it-works (about half) and mobile /happy-families (about 30%) the largest gaps.** The cause was not investigated; part of it may be reference content that only appears after scroll-triggered animations, part may be missing sections. This is the biggest known remaining discrepancy.
+Notes: the reference's /happy-families 390 height is a headless-capture artifact (its CSS `columns: 10.5rem 2` collapses to one column once a 15px scrollbar is subtracted); ours renders two columns. /puppies cards reuse one hand-drawn outline/wash shape instead of the reference's per-card shapes. /puppies/[slug] has the "Every Teddy Pup comes" and "Coming home from abroad" sections but not the reference's full header block. 404, home and 768px were not re-measured. n/m = not measured.
 
 ## Motion summary
 | Scene | Mechanism | Reduced motion |
