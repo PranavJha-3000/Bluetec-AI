@@ -18,10 +18,13 @@ Everything was built with Claude Code (Claude Sonnet 5.5) in one long session, w
 6. *(paraphrased)* Make the roaming dog bigger and make it hop into the footer basket.
 7. *(verbatim, abridged)* "FINAL MISSION: Complete Website Audit, Correction & Production Verification … Audit → Prioritize → Fix → Test → Compare → Refine → Verify … Do not claim deployment, recording, or external verification succeeded unless actually performed."
 8. *(paraphrased)* Fix the audit findings: honest demo form, the four deliverable docs, README, remove unused dependencies, add tests, verify and fix the mobile basket landing, fix the home door section.
+9. *(paraphrased)* Fix the remaining gaps and push to main; the author had already deployed to Vercel.
+10. *(verbatim, abridged)* "I do not want not done anymore finish everything. It is time for final submission no cutting corners … Nothing should be left to do except pushing to main." This round added the tap acts and cues for the dog, a native View Transition around the curtain swap, wheel easing fitted to the reference's measured scroll trajectory, and the detail-page restructure.
 
 ## Significant AI-assisted decisions
 - Port the reference's mascot rig (`rig.ts`) rather than invent a walk cycle.
 - Transcribe scene CSS from the reference's computed rules; own class prefixes (`.md-`, `.tpw-`, `.tpb-`, `.tpn-`, `.tph-`, `.tph2-`, `.tpf-`).
+- Smooth-scroll constants are fitted to per-frame scrollY samples taken on the reference, not copied from its code.
 - No backend: the form says it sends nothing instead of faking success.
 - Roamer hop driven by the basket's own position (an earlier footer-based version flew off-screen on mobile).
 - `/puppies` renders the full grid on the server and applies URL filters after mount (fixed a 0.75 layout shift).

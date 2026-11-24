@@ -52,6 +52,8 @@ h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing:
   @keyframes tp-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px) rotate(-2deg); } }
   @keyframes tp-dotk { from { opacity: .8; transform: scale(1); } to { opacity: 0; transform: scale(.4); } }
   .tp-dot { animation: tp-dotk 1.4s ease-out forwards; }
+  @keyframes pup-heartk { from { opacity: 1; transform: translate(0,0) scale(.6); } to { opacity: 0; transform: translate(var(--dx), -3.5rem) scale(1.2); } }
+  .pup-heart { position: absolute; left: 62%; top: 10%; color: #d9534f; font-size: 1.1rem; pointer-events: none; animation: pup-heartk 1s ease-out forwards; }
   .tp-bob { animation: tp-bob .55s ease-in-out infinite; }
   @keyframes tp-door { from { transform: perspective(700px) rotateY(0deg); } to { transform: perspective(700px) rotateY(-100deg); } }
   @keyframes tp-hmk { 0%, 55% { opacity: 0; transform: translate(-50%, 6px) scale(.8); } 62%, 90% { opacity: 1; transform: translate(-50%, 0) scale(1); } 100% { opacity: 0; } }
@@ -265,3 +267,7 @@ html[data-basket="in"] .tpf-pup { opacity: 1; }
 @keyframes tph2-open { from { transform: rotateY(0deg); } to { transform: rotateY(-102deg); } }
 @media (prefers-reduced-motion: no-preference) { @supports (animation-timeline: view()) {
   .tph2-door { animation: tph2-open linear both; animation-timeline: view(); animation-range: entry 80% cover 52%; } } }
+
+[data-roamer] { cursor: pointer; }
+.pup-bubble { position: absolute; left: 55%; bottom: 92%; padding: .3rem .7rem; border: 2.5px solid var(--color-cocoa); border-radius: 999px; background: var(--color-milk); color: var(--color-cocoa); font-weight: 700; font-size: .95rem; white-space: nowrap; pointer-events: none; opacity: 0; scale: .6; transition: opacity .2s, scale .25s cubic-bezier(.3,1.6,.5,1); }
+.pup-bubble[data-show="true"] { opacity: 1; scale: 1; }

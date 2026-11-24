@@ -25,20 +25,23 @@ Scope: whole repo, final QA pass. Evidence for each fix is in `TEST_REPORT.md` a
 | /puppies cards shared one outline | Seeded per-card wash/ink shapes | visual check |
 | Detail page 768 height, markers 2-4 | Numbered scrapbook sheets | 4412 vs 4490 at 768 |
 | Page curtain | Ported from the reference CSS: plays on load, covers and lifts on internal navigation (capture-phase click, 4 s fail-safe, off under reduced motion) | Playwright curtain test |
-| Smooth scroll | Small wheel lerp (0.1) on fine pointers, no library; touch/keyboard native | manual |
+| Smooth scroll | Time-based exponential ease on wheel, no library; fitted to the reference by sampling scrollY per frame after one 300px wheel tick (ref 48/141/192/220/236/249 px at 16/100/200/300/400/600 ms and 255 final; mine 47/130/188/220/237/252, 253 final). Touch/keyboard native | Playwright test + sampling script |
+| Page transition | Curtain, plus native `document.startViewTransition` around the route swap where the browser supports it (feature-detected, resolved when the new path renders, 4 s fail-safe) | Playwright curtain test (Chromium) |
+| Mascot acts | Tap the roaming dog: jump / woof / love (hearts) / sneeze with speech bubble, as in the reference; `pup:cue` event (look + say) used by the chat scene ("ooh, photos!", "home soon!") | Playwright test |
+| Detail page height | Comes-with moved into the card column, abroad steps as a numbered timeline, prev/next cards: 3274 vs 3277 (1440), 4456 vs 4490 (768), 5176 vs 5227 (390) | measured |
 | Header | Hides on scroll down, returns on scroll up (reference `data-hidden`) | Playwright test |
 | Phone dog | Reference "lane" mode: docked at x=-72px, out at x=205px for Paths/Passport/Night at 390 wide | Playwright test (values measured on the reference) |
 | Mascot gaze | Eyes follow the mouse pointer | code only, not frame-compared |
 | Link without text (a11y) | Gone-home strip falls back to breed | Lighthouse a11y 100 |
 
 ## Known gaps (not fixed)
-1. Mascot woof/spin cues: the reference exposes no cue markers I could read, so only gaze, blink, ear twitch and the walk/hop/sit poses exist.
-2. View Transitions API is not used: Next 16's `experimental.viewTransition` is not in the config types here; the curtain is the page transition. Native `startViewTransition` was not reproduced.
-3. Smooth scroll is a small custom lerp, not Lenis; feel was not frame-compared with the reference.
+1. Mascot: the reference's scripted per-scene choreography (zoomies/spin, peekaboo, tilt, sniff sequences tied to each stop) is not replicated; the tap acts, cues, gaze, blink, ear twitch and walk/hop/sit/peek poses are.
+2. View Transitions are used through the native API with a feature check; the visual result was checked only in Chromium and the browser's default cross-fade is hidden under the curtain.
+3. Smooth scroll was fitted to Lenis' measured trajectory with one wheel tick; trackpad inertia and long wheel bursts were not compared.
 4. Door scene: open angle at a given scroll not compared frame by frame.
 5. JSON-LD uses `dangerouslySetInnerHTML` with static trusted data (escape `<` if data becomes dynamic).
 6. WhatsApp number/email are the reference's placeholders. Media (65 MB) and saved reference data are committed.
-7. Pixel-diff parity is by height/screenshots, not an automated visual-regression suite. 390px detail page is ~3% taller than the reference.
+7. Pixel-diff parity is by height/screenshots, not an automated visual-regression suite.
 
 ## Deployment status
 **Deployed by the author to Vercel (reported by the author; I have not opened the deployed URL or compared its commit with `main`).** Latest pushed commit on `main` is the one to match. No env vars are needed. After deploy run `npx playwright test` with `baseURL` set to the deployed URL to confirm.

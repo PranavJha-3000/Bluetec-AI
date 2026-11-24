@@ -14,6 +14,7 @@ export default function Curtain() {
   const router = useRouter();
   const pending = useRef<string | null>(null);
   const timer = useRef(0);
+  const settle = useRef<(() => void) | null>(null); // resolves the native view transition once the new route has rendered
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- media query is only readable after mount
@@ -25,6 +26,7 @@ export default function Curtain() {
   useEffect(() => {
     if (pending.current && pending.current.split(/[?#]/)[0] === path) {
       pending.current = null;
+      settle.current?.(); settle.current = null;
       setState("lifting");
       timer.current = window.setTimeout(() => setState("idle"), 480);
     }
@@ -40,9 +42,15 @@ export default function Curtain() {
       e.preventDefault(); e.stopPropagation(); // capture phase: pre-empt next/link so the curtain covers first
       pending.current = u.pathname;
       setState("covering");
-      window.setTimeout(() => { setState("covered"); router.push(u.pathname + u.search + u.hash); }, 300);
+      const go = () => router.push(u.pathname + u.search + u.hash);
+      window.setTimeout(() => {
+        setState("covered");
+        // Native View Transitions API (where supported): the browser snapshots the covered page and swaps to the new route under the curtain.
+        if ("startViewTransition" in document) document.startViewTransition(() => new Promise<void>((done) => { settle.current = done; go(); }));
+        else go();
+      }, 300);
       // fail-safe: never leave the page covered
-      window.setTimeout(() => { if (pending.current) { pending.current = null; setState("lifting"); window.setTimeout(() => setState("idle"), 480); } }, 4000);
+      window.setTimeout(() => { if (pending.current) { pending.current = null; settle.current?.(); settle.current = null; setState("lifting"); window.setTimeout(() => setState("idle"), 480); } }, 4000);
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);

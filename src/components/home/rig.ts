@@ -55,12 +55,21 @@ export class Rig {
   face(dir: number, turn = 0.07) { this.facingTarget = dir; this.turn = turn; }
   stride(v: number) { this.strideTarget = clamp(v, 0, 1); }
   gazeX = 0; gazeY = 0;
+  // one-shot acts from the reference's tap cycle (jump / woof / love / sneeze): hop = vertical spring, bark = open mouth, wagUntil = boosted wag
+  private hopY = 0; private hopV = 0; private barkUntil = 0; private wagUntil = 0; private now = 0;
+  hop(s = 1) { this.hopV = -s * 150; }
+  woof() { this.barkUntil = this.now + 0.22; this.m.ear = 10; this.hopV = -45; }
+  wag(s = 1) { this.wagUntil = this.now + 1.6 * s; }
+  jolt(s = 1) { this.m.ear = 16 * s; }
   look(x: number, y: number) { this.gazeX = clamp(x, -1, 1); this.gazeY = clamp(y, -1, 1); }
   advance(units: number) { this.m.phase += (units / 46) * Math.PI; } // one step per 46 svg units, as in the reference
   /** true while anything is still easing; the caller can stop its rAF loop when false */
-  get settled() { return Math.abs(this.gazeX - this.m.gazeX) < 0.01 && Math.abs(this.gazeY - this.m.gazeY) < 0.01 && this.m.stride === 0 && this.strideTarget === 0 && Math.abs(this.facing - this.facingTarget) < 0.01 && KEYS.every((k) => Math.abs(this.pose[k] - this.target[k]) < 0.01); }
+  get settled() { return this.hopY === 0 && this.hopV === 0 && this.now > this.barkUntil && this.now > this.wagUntil && Math.abs(this.gazeX - this.m.gazeX) < 0.01 && Math.abs(this.gazeY - this.m.gazeY) < 0.01 && this.m.stride === 0 && this.strideTarget === 0 && Math.abs(this.facing - this.facingTarget) < 0.01 && KEYS.every((k) => Math.abs(this.pose[k] - this.target[k]) < 0.01); }
   tick(dt: number, time: number) {
-    dt = Math.min(dt, 0.05); const m = this.m; m.time = time;
+    dt = Math.min(dt, 0.05); const m = this.m; m.time = time; this.now = time;
+    this.hopV += 900 * dt; this.hopY += this.hopV * dt; if (this.hopY > 0) { this.hopY = 0; this.hopV = 0; }
+    if (this.hopY > -0.05 && Math.abs(this.hopV) < 1) { this.hopY = 0; this.hopV = 0; }
+    this.wagTarget = time < this.wagUntil ? 1 : 0.35;
     this.pose = lerpPose(this.pose, this.target, ease(dt, 0.16));
     this.facing += (this.facingTarget - this.facing) * ease(dt, this.turn);
     m.stride += (this.strideTarget - m.stride) * ease(dt, 0.12); if (m.stride < 0.012 && this.strideTarget === 0) m.stride = 0;
@@ -69,7 +78,7 @@ export class Rig {
     this.earV += (-150 * m.ear - 10 * this.earV) * dt; m.ear = clamp(m.ear + this.earV * dt, -28, 28);
     if (time > this.nextBlink && this.pose.eyes > 0.6) { this.blinkAt = time; this.nextBlink = time + 2.2 + 3.8 * Math.random(); if (Math.random() < 0.18) this.nextBlink = time + 0.32; }
     const c = (time - this.blinkAt) / 0.15; m.blink = c >= 0 && c <= 1 ? Math.sin(c * Math.PI) : 0;
-    const out = frame(this.pose, m), sc = Math.abs(this.facing) < 0.02 ? 0.02 * Math.sign(this.facing || 1) : this.facing;
+    const out = frame({ ...this.pose, bodyY: this.pose.bodyY + this.hopY * 0.2, headY: this.pose.headY + this.hopY * 0.08, mouth: time < this.barkUntil ? 1 : this.pose.mouth, tongue: time < this.barkUntil ? 0 : this.pose.tongue, happy: time < this.wagUntil ? Math.max(this.pose.happy, 0.8) : this.pose.happy }, m), sc = Math.abs(this.facing) < 0.02 ? 0.02 * Math.sign(this.facing || 1) : this.facing;
     out.root = `translate(${W / 2} 0) scale(${sc.toFixed(3)} 1) translate(${-W / 2} 0)`;
     for (const [part, attr, key] of [["root", "transform", "root"], ...PARTS]) {
       const el = this.els.get(part); if (!el) continue;

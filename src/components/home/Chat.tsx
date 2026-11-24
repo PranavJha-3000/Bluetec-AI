@@ -21,7 +21,13 @@ export default function Chat() {
   useEffect(() => {
     // each sentinel is a third of the section; the one crossing the viewport middle is active
     const io = new IntersectionObserver(
-      (es) => es.forEach((e) => e.isIntersecting && setStep(marks.current.indexOf(e.target as HTMLDivElement))),
+      (es) => es.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const i = marks.current.indexOf(e.target as HTMLDivElement);
+        setStep(i);
+        // the reference's dog reacts as the chat advances ("pup:cue" is handled by the Roamer)
+        if (i === 1 || i === 2) dispatchEvent(new CustomEvent("pup:cue", { detail: { say: i === 1 ? "ooh, photos!" : "home soon!" } }));
+      }),
       { rootMargin: "-50% 0px -50% 0px" },
     );
     marks.current.forEach((m) => m && io.observe(m));

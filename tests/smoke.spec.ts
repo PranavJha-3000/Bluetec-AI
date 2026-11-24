@@ -145,3 +145,27 @@ test("phone: dog is docked at the left edge and trots out for the Paths scene", 
   await page.evaluate(() => scrollTo(0, 4200));
   await expect.poll(left).toBe(205);
 });
+
+test("tapping the roaming dog cycles its acts with a speech bubble; pup:cue also speaks", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => scrollTo({ top: 600, behavior: "instant" }));
+  const bubble = page.locator("[data-roamer] .pup-bubble");
+  await bubble.waitFor({ state: "attached" }); // created once the roamer has hydrated
+  await page.locator("[data-roamer]").dispatchEvent("click");
+  await expect(bubble).toHaveAttribute("data-show", "true");
+  await expect(bubble).toHaveText(/wheee|boing|yip/);
+  await page.locator("[data-roamer]").dispatchEvent("click");
+  await expect(bubble).toHaveText("woof!");
+  await page.evaluate(() => dispatchEvent(new CustomEvent("pup:cue", { detail: { say: "ooh, photos!" } })));
+  await expect(bubble).toHaveText("ooh, photos!");
+});
+
+test("wheel smoothing eases out instead of jumping", async ({ page }) => {
+  await page.goto("/");
+  await page.mouse.move(600, 400);
+  await page.mouse.wheel(0, 300);
+  await page.waitForTimeout(40);
+  const early = await page.evaluate(() => scrollY);
+  expect(early).toBeLessThan(250);
+  await expect.poll(() => page.evaluate(() => Math.round(scrollY)), { timeout: 3000 }).toBeGreaterThan(240);
+});

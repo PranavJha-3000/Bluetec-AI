@@ -32,3 +32,4 @@ recon/css
 *.tmp.html
 *.tmp.log
 *.tmp.css
+refjs.tmp/

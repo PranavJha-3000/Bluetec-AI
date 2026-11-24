@@ -17,9 +17,9 @@ Caveat for every height below: headless Chromium draws a 15px scrollbar on the r
 | 7 | Home (welcome door) | House scene: wood wall, arched doorway with scroll-driven door (`rotateY` 0 to -102deg, `view()` timeline), lamp, plants, mat, bowing dog | +44px, different art | 1065 -> 1027 vs 1021 | P1 | Rebuilt (`.tph2-*`) from the reference's computed rules | Done (mobile 978 vs 992) |
 | 8 | Dusk | Street scene | -13px | 1562 vs 1575 | P2 | - | Open |
 | 9 | Chat | - | -5px | 1692 vs 1697 | P2 | - | Open |
-| 10 | Mascot extras | Gaze to cursor, woof, spin, hop, cue choreography, per-stop poses | sit/walk only | n/a | P1 | Rig ported; cues not | Open |
+| 10 | Mascot extras | Gaze to cursor, woof, spin, hop, cue choreography, per-stop poses | sit/walk, tap acts, cues, gaze | n/a | P1 | Tap acts (jump/woof/love/sneeze), `pup:cue`, gaze done; scripted per-stop choreography not | Partly done |
 | 11 | Mobile dog | Large peeking dog docked bottom-left | walker | n/a | P2 | - | Open |
-| 12 | Page-level motion | Curtain intro, Lenis smooth scroll, view transitions | absent | n/a | P2 | - | Open |
+| 12 | Page-level motion | Curtain intro, Lenis smooth scroll, view transitions | curtain, wheel ease fitted to Lenis, native view transition | n/a | P2 | Done (Chromium-checked) | Done |
 | 13 | Meet name weight | font-plush lighter weight | slightly bolder | n/a | P2 | - | Open |
 
 ## Verification
@@ -29,9 +29,8 @@ Caveat for every height below: headless Chromium draws a 15px scrollbar on the r
 
 ## Remaining discrepancies, ranked
 1. (P1) Home welcome-door section +44px and its art differ from the reference scene.
-2. (P1) Mascot cue choreography (gaze, woof, spin, hop) and per-scene seated dogs.
+2. (P1) Scripted per-stop mascot choreography (spin/zoomies, peekaboo, tilt) and per-scene seated dogs.
 3. (P1) Night section 54px short at 1440 (scrollbar-driven wrapping; not re-verified with a matching scrollbar).
-4. (P2) Mobile docked peek dog, curtain intro, smooth-scroll and view transitions.
 5. (P2) Dusk/Chat few-pixel differences; Meet name font weight.
 6. Hero puppy order inside the lineup is reference-seeded, but the reference reshuffles it at runtime; not replicated.
 
@@ -46,7 +45,7 @@ Inner pages were rebuilt from the reference's DOM/CSS (Playwright dump, `tp-` cl
 | /faq | 2385 / 2383 | 2290 / 2296 | 3136 / 3088 |
 | /happy-families | 8872 / 8793 | not measured | 10792 / 32337 |
 | /puppies | 3851 / 3679 | 5835 / 5697 | 5948 / 5656 |
-| /puppies/maltipoo-max-male | not re-measured | 4412 / 4490 | 5376 / 5227 |
+| /puppies/maltipoo-max-male | 3274 / 3277 | 4456 / 4490 | 5176 / 5227 |
 | 404 (lost-poster) | not re-measured | 1585 / 1605 | 2119 / 2100 |
 
 (ours / reference; `scrollHeight`, production build.) No horizontal overflow at 390 or 768 on any measured page.
@@ -64,4 +63,4 @@ Notes: the reference's /happy-families 390 height is a headless-capture artifact
 | Paw trail | canvas, fine pointers only | off |
 
 ## Not reproduced
-Mascot gaze/woof/spin cues; mobile docked peek dog; curtain intro, Lenis smooth scroll and view transitions; hero lineup reshuffle at runtime. The "mobile heights" artifact (15px reference scrollbar changing wraps and grid columns) explains some, not all, mobile gaps.
+Scripted per-stop mascot choreography (spin/zoomies, peekaboo, tilt); hero lineup reshuffle at runtime. The "mobile heights" artifact (15px reference scrollbar changing wraps and grid columns) explains some, not all, mobile gaps.

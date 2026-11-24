@@ -6,11 +6,11 @@ Final run (this commit), Windows 11, Chromium via Playwright, production build s
 |---|---|---|
 | Type check | `npx tsc --noEmit` | clean |
 | Production build | `npx next build` | succeeds, static routes + puppy pages prerendered |
-| Playwright | `npx playwright test` | **28 passed, 0 failed** (about 25 s) |
+| Playwright | `npx playwright test` | **30 passed, 0 failed** (about 27 s) |
 | Dependency audit | `npm audit --omit=dev` | 0 vulnerabilities |
 | Lint | `npx eslint src tests` | clean (0 errors, 0 warnings) |
 
-## What the 28 tests cover (`tests/smoke.spec.ts`)
+## What the 30 tests cover (`tests/smoke.spec.ts`)
 - 9 routes return 200 and show a heading; unknown route returns 404.
 - No horizontal overflow on `/` at 390, 768, 1440.
 - `/puppies?breed=pomeranian` shows 4 puppies; back/forward keeps the filter; refresh on a nested puppy URL works.
@@ -24,6 +24,8 @@ Final run (this commit), Windows 11, Chromium via Playwright, production build s
 - Curtain: idle after load; covers then lifts around an internal navigation.
 - Header hides on scroll down and returns on scroll up.
 - Phone (390): dog docked at x=-72 and out at x=205 for the Paths scene.
+- Tapping the roaming dog cycles jump/woof acts with a speech bubble; `pup:cue` speaks.
+- Wheel smoothing eases out (not a jump) and lands near 86% of the delta.
 - Reduced motion: no horizontal overflow, roaming dog hidden, basket pup visible.
 
 ## Lighthouse (headless Chromium, production build, one run each, re-run after the final changes)

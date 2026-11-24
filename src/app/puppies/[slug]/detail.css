@@ -20,3 +20,14 @@
 .pd-sheet { border: 3px solid var(--color-cocoa); border-radius: 1.6rem; background: #fff8ec radial-gradient(circle at 1px 1px, #2a170e14 1px, transparent 1.6px) 0 0 / 22px 22px; padding: clamp(1rem, 3.5vw, 2.6rem); box-shadow: rgba(42, 23, 14, .12) 6px 8px; }
 .pd-sheet .pd-mark { margin-top: 0; }
 .pd-sheet h2 { margin-top: 1rem; }
+
+.pd-way__steps { margin-top: 1.5rem; display: grid; gap: 1.4rem; }
+.pd-way__steps li { display: grid; grid-template-columns: 4rem 1fr; gap: 1rem; align-items: start; }
+.pd-way__n { display: grid; place-items: center; width: 4rem; height: 4rem; border: 3px solid var(--color-cocoa); border-radius: 50%; background: var(--color-milk); font: 700 1.6rem var(--font-plush, inherit); }
+@media (min-width: 1024px) { .pd-way__steps { grid-template-columns: repeat(4, 1fr); } .pd-way__steps li { grid-template-columns: 1fr; } }
+.pd-nav { display: grid; gap: .25rem; padding: 1.1rem 1.3rem; }
+
+.pd-comes { margin-top: 2rem; rotate: -1deg; }
+.pd-comes .pd-mark { font-size: 1.15rem; }
+.pd-comes h2 { font-size: 1.9rem; }
+@media (max-width: 1023px) { .pd-comes { margin-top: 3.5rem; } .pd-comes h2 { font-size: 2.4rem; } .pd-comes ul { grid-template-columns: 1fr; gap: 1rem; } .pd-comes li { padding: 1.2rem; font-size: 1rem; } }

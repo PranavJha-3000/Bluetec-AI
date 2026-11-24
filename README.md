@@ -33,4 +33,4 @@ Photos, videos and illustrations in `public/media` and `public/brand` are the re
 Standard Next.js build; no environment variables required (`NEXT_PUBLIC_SITE_URL` optionally overrides the canonical URL). Deployed to Vercel by the author (not verified by the AI assistant) — see `FINAL_AUDIT.md`.
 
 ## Known gaps
-Mascot cue choreography (gaze, woof, spin), mobile docked peek dog, curtain intro / smooth scroll / view transitions, and shorter inner pages than the reference. Details in `VISUAL_PARITY.md`.
+The reference's scripted per-scene mascot choreography (spin/zoomies, peekaboo, tilt) is not replicated; tap acts, cues and gaze are. Inner-page heights are within about 1-6% of the reference. Details in `VISUAL_PARITY.md`.

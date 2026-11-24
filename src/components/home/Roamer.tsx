@@ -82,13 +82,38 @@ export default function Roamer() {
       if (!raf) raf = requestAnimationFrame(loop);
     };
     addEventListener("pointermove", onMove, { passive: true });
+    // Tap the dog: cycles jump / woof / love / sneeze with a speech bubble, like the reference. `pup:cue` events (look at an element + say something) use the same bubble.
+    const bubble = document.createElement("span");
+    bubble.className = "pup-bubble"; bubble.dataset.show = "false"; bubble.setAttribute("aria-hidden", "true");
+    el.append(bubble);
+    let hideT = 0;
+    const say = (text?: string) => { if (!text) return; bubble.textContent = text; bubble.dataset.show = "true"; clearTimeout(hideT); hideT = window.setTimeout(() => { bubble.dataset.show = "false"; }, 1600); };
+    const hearts = () => { for (let i = 0; i < 3; i++) { const h = document.createElement("span"); h.className = "pup-heart"; h.textContent = "♥"; h.style.setProperty("--dx", `${(i - 1) * 18}px`); h.style.animationDelay = `${i * 120}ms`; h.addEventListener("animationend", () => h.remove()); el.append(h); } };
+    const acts = ["jump", "woof", "love", "sneeze"]; let actI = 0;
+    const kick = () => { if (!raf) raf = requestAnimationFrame(loop); };
+    const onTap = () => {
+      const act = acts[actI++ % acts.length];
+      if (act === "jump") { rig.hop(1.35); say(["wheee!", "boing!", "yip!"][actI % 3]); setTimeout(() => rig.hop(0.7), 500); }
+      else if (act === "woof") { rig.woof(); say("woof!"); setTimeout(() => rig.woof(), 400); }
+      else if (act === "love") { rig.wag(1); rig.hop(0.5); hearts(); say("I like you!"); }
+      else { rig.jolt(1.4); rig.hop(0.4); say("achoo!"); }
+      kick();
+    };
+    const onCue = (e: Event) => {
+      const d = (e as CustomEvent<{ look?: Element; say?: string; secs?: number }>).detail || {};
+      if (d.look) { const r = d.look.getBoundingClientRect(), b = el.getBoundingClientRect(); rig.look((r.left + r.width / 2 - (b.left + b.width / 2)) / (innerWidth * 0.4), (r.top + r.height / 2 - (b.top + b.height * 0.3)) / (innerHeight * 0.4)); setTimeout(() => rig.look(0, 0), (d.secs ?? 1) * 1000); }
+      say(d.say); kick();
+    };
+    el.addEventListener("click", onTap);
+    el.addEventListener("pointerenter", (e) => { if (e.pointerType === "mouse") { rig.wag(0.5); kick(); } });
+    addEventListener("pup:cue", onCue);
     let queued = 0;
     const onScrollFrame = () => { if (!queued) queued = requestAnimationFrame(() => { queued = 0; onScroll(); }); }; // at most one layout read per frame
     onScroll();
     addEventListener("scroll", onScrollFrame, { passive: true });
     addEventListener("resize", onScrollFrame);
     rig.tick(0.016, 0); // apply the sit pose
-    return () => { removeEventListener("pointermove", onMove); removeEventListener("scroll", onScrollFrame); removeEventListener("resize", onScrollFrame); cancelAnimationFrame(raf); cancelAnimationFrame(queued); };
+    return () => { clearTimeout(hideT); el.removeEventListener("click", onTap); removeEventListener("pup:cue", onCue); removeEventListener("pointermove", onMove); removeEventListener("scroll", onScrollFrame); removeEventListener("resize", onScrollFrame); cancelAnimationFrame(raf); cancelAnimationFrame(queued); };
   }, []);
-  return <div ref={box} data-roamer aria-hidden className="pointer-events-none fixed bottom-[4.5rem] left-0 z-40 w-24 transition-opacity duration-300 md:bottom-2 md:w-36"><Mascot pose="walk" /></div>;
+  return <div ref={box} data-roamer aria-hidden className="fixed bottom-[4.5rem] left-0 z-40 w-24 transition-opacity duration-300 md:bottom-2 md:w-36"><Mascot pose="walk" /></div>;
 }
