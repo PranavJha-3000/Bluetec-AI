@@ -1,0 +1,59 @@
+.pp-sketchbook { background: radial-gradient(circle at 1px 1px, #2a170e17 1px, transparent 1.6px) 0 0 / 26px 26px, linear-gradient(180deg, #fff8ec, var(--color-milk) 60%); }
+.pp-sketchbook__head { align-items: end; gap: 2rem 3rem; display: grid; }
+@media (min-width: 768px) { .pp-sketchbook__head { grid-template-columns: minmax(0px, 1fr) auto; } }
+.pp-sketchbook__title { padding-bottom: 0.18em; display: inline-block; position: relative; }
+.pp-sketchbook__underline { width: 100%; height: 0.24em; position: absolute; bottom: -0.05em; left: 0px; overflow: visible; }
+.pp-sketchbook__underline path { fill: none; stroke: var(--color-toffee); stroke-width: 7px; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset .9s var(--ease-silk) .25s; }
+.pp-sketchbook__title[data-armed]:not([data-revealed]) .pp-sketchbook__underline path { stroke-dashoffset: 1px; }
+.pp-sketchbook__self { aspect-ratio: 1 / 1; border: 3px solid var(--color-cocoa); background: rgb(252, 235, 200); border-radius: 52% 48% 50% 50% / 50% 52% 48% 50%; justify-self: end; width: clamp(9rem, 26vw, 13rem); padding: 1.4rem 1.2rem 0.6rem; position: relative; }
+.pp-sketchbook__self::after { content: ""; pointer-events: none; border: 2px solid rgba(42, 23, 14, 0.45); border-radius: 48% 52% 47% 53% / 53% 47%; position: absolute; inset: -7px -4px -5px -6px; rotate: -6deg; }
+.pp-sketchbook__caption { white-space: nowrap; color: var(--color-cocoa-soft); position: absolute; bottom: -2rem; left: 50%; translate: -50%; }
+@media (max-width: 767px) { .pp-sketchbook__head { grid-template-columns: minmax(0px, 1fr) auto; align-items: center; gap: 0px 1rem; } }
+@media (max-width: 767px) { .pp-sketchbook__words { display: contents; } }
+@media (max-width: 767px) { .pp-sketchbook__words > * { grid-column: 1 / -1; } }
+@media (max-width: 767px) { .pp-sketchbook__words > .pp-sketchbook__lede { text-align: left; grid-column: 1; font-size: 1.0625rem; } }
+@media (max-width: 767px) { .pp-sketchbook__self { grid-column: 2; width: clamp(7.5rem, 34vw, 9.5rem); margin-top: 1.5rem; } }
+.pp-sketchpad { border: 3px solid var(--color-cocoa); background: var(--color-milk); border-radius: 1.2rem 1.6rem 1.3rem 1.5rem; padding: clamp(1.1rem, 2.6vw, 1.6rem) clamp(1.1rem, 2.6vw, 1.75rem); position: relative; rotate: -0.35deg; box-shadow: rgba(42, 23, 14, 0.12) 5px 7px; }
+.pp-sketchpad::before { content: ""; background: rgb(248, 219, 174); width: 5.5rem; height: 1.5rem; position: absolute; top: -0.85rem; left: 2.2rem; }
+.pp-sketchpad::before { opacity: 0.85; rotate: -4deg; box-shadow: rgba(42, 23, 14, 0.15) 0px 1px 2px; }
+.pp-sticker-chip { border: 2px solid var(--color-cocoa); background: var(--color-milk); min-height: 2.75rem; transition: background-color .25s, color .25s, rotate .35s var(--ease-pounce), translate .35s var(--ease-pounce), box-shadow .25s; border-radius: 999px; padding: 0.45rem 1rem; font-size: 0.95rem; font-weight: 650; box-shadow: rgba(42, 23, 14, 0.14) 2px 3px; }
+.pp-sticker-chip:hover { background: var(--color-honey-soft); translate: 0px -1px; }
+.pp-sticker-chip:active { translate: 0px 1px; box-shadow: rgba(42, 23, 14, 0.14) 0px 0px; }
+.pp-sticker-chip[aria-pressed="true"] { background: var(--color-cocoa); color: var(--color-milk); rotate: -2deg; box-shadow: rgba(42, 23, 14, 0.25) 1px 2px; }
+.pp-sketches { grid-template-columns: repeat(auto-fill, minmax(min(14.5rem, 40vw), 1fr)); gap: 3.25rem clamp(1.1rem, 3vw, 2.5rem); padding-inline: 0.4rem; display: grid; }
+@media (min-width: 640px) { .pp-sketches > li:nth-child(2n) { translate: 0px 2.4rem; } }
+@media (min-width: 640px) { .pp-sketches { padding-bottom: 2.4rem; } }
+.pp-sketch { text-align: center; border-radius: 1rem; outline: none; text-decoration: none; display: block; position: relative; }
+.pp-sketch__frame { aspect-ratio: 1 / 1; rotate: var(--tilt); transition: rotate .6s var(--ease-pounce), scale .35s var(--ease-pounce); display: block; position: relative; }
+.pp-sketch__wash { width: 100%; height: 100%; fill: var(--wash); opacity: 0.55; transition: opacity .6s ease, scale .8s var(--ease-silk); position: absolute; inset: 0px; }
+.pp-sketch__photo { background: var(--color-honey-soft); clip-path: circle(75%); transition: clip-path .85s var(--ease-silk) calc(var(--d) + .12s); display: block; position: absolute; inset: 4.5%; overflow: hidden; mask-size: 100% 100%; mask-repeat: no-repeat; }
+.pp-sketch__photo img { transition: scale .45s var(--ease-silk); }
+.pp-sketch__ink { pointer-events: none; width: 100%; height: 100%; position: absolute; inset: 0px; overflow: visible; }
+.pp-sketch__line { fill: none; stroke: var(--color-cocoa); stroke-width: 1.9px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 0; transition: stroke-dashoffset 1s var(--ease-silk) var(--d), stroke .3s; }
+.pp-sketch__line--retrace { stroke-width: 1.2px; opacity: 0.55; transition-delay: calc(var(--d) + .26s), 0s; }
+.pp-sketch__doodle { transform-box: fill-box; transform-origin: 50% center; transition: scale .5s var(--ease-pounce) calc(var(--d) + .52s), opacity .3s calc(var(--d) + .52s); }
+.pp-sketch__sticker { z-index: 2; border: 2px solid var(--color-cocoa); background: var(--color-milk); color: var(--color-cocoa); transition: scale .45s var(--ease-pounce) calc(var(--d) + .64s), opacity .3s calc(var(--d) + .64s); border-radius: 999px; padding: 0.05rem 0.7rem 0.15rem; font-size: 0.9rem; position: absolute; top: 8%; right: -0.2rem; rotate: 8deg; box-shadow: rgba(42, 23, 14, 0.2) 2px 3px; }
+.pp-sketch__sticker--home { border-color: var(--color-toffee-deep); color: var(--color-toffee-deep); white-space: nowrap; font-size: 0.78rem; inset: auto auto -0.4rem 50%; translate: -50%; rotate: -6deg; }
+.pp-sketch__video { z-index: 2; color: var(--color-milk); background: rgba(42, 23, 14, 0.82); border-radius: 999px; padding: 0.15rem 0.6rem; font-size: 0.74rem; font-weight: 700; position: absolute; bottom: 9%; left: 9%; }
+.pp-sketch__name { margin-top: 1rem; font-size: clamp(1.35rem, 2vw, 1.85rem); line-height: 1.02; transition: color 0.25s; display: block; }
+.pp-sketch__meta { color: var(--color-cocoa-soft); margin-top: 0.35rem; font-size: 0.9rem; font-weight: 600; display: block; }
+.pp-sketch[data-armed]:not([data-revealed]) .pp-sketch__line { stroke-dashoffset: 1px; }
+.pp-sketch[data-armed]:not([data-revealed]) .pp-sketch__photo { clip-path: circle(0% at 50% 55%); }
+.pp-sketch[data-armed]:not([data-revealed]) :is(.pp-sketch__doodle, .pp-sketch__sticker) { opacity: 0; scale: 0; }
+.pp-sketch[data-armed]:not([data-revealed]) .pp-sketch__wash { opacity: 0; scale: 0.85; }
+.pp-sketch:is(:hover, :focus-visible) .pp-sketch__frame { rotate: calc(var(--tilt) * -1); }
+.pp-sketch:is(:hover, :focus-visible) .pp-sketch__photo img { scale: 1.06; }
+.pp-sketch:is(:hover, :focus-visible) .pp-sketch__line { stroke: var(--color-toffee-deep); }
+.pp-sketch:is(:hover, :focus-visible) .pp-sketch__doodle { animation: pp-doodle-hop .5s var(--ease-pounce); }
+.pp-sketch:is(:hover, :focus-visible) .pp-sketch__name { color: var(--color-toffee-deep); }
+.pp-sketch:focus-visible .pp-sketch__line { stroke-width: 3px; }
+.pp-sketch:active .pp-sketch__frame { scale: 0.96; }
+.pp-sketch--small .pp-sketch__name { margin-top: 0.7rem; font-size: 1.15rem; }
+.pp-gone-strip { background: radial-gradient(circle at 1px 1px, #2a170e14 1px, transparent 1.6px) 0 0 / 26px 26px, var(--color-honey-soft); padding-block: clamp(4rem, 9vh, 6rem); }
+.pp-gone-strip__row { flex: 1 1 0%; grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr)); gap: 2rem 1.5rem; display: grid; }
+.pp-gone-strip__row .pp-sketch__photo { filter: saturate(0.75) sepia(0.12); }
+.pp-sketchbook [data-reveal]:not(.pp-sketch) { transition: opacity .6s ease, translate .7s var(--ease-silk); }
+.pp-sketchbook [data-reveal][data-armed]:not([data-revealed]):not(.pp-sketch):not(.pp-sketchbook__title) { opacity: 0; translate: 0px 1rem; }
+@media (max-width: 639px) { .pp-sketch__sticker { padding: 0px 0.5rem 0.1rem; font-size: 0.74rem; } }
+@media (max-width: 639px) { .pp-sketch__sticker:not(.pp-sketch__sticker--home) { top: 4%; } }
+@media (max-width: 639px) { .pp-sketch__video { font-size: 0.66rem; } }

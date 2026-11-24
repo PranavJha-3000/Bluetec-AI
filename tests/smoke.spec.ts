@@ -25,7 +25,7 @@ for (const w of [390, 768, 1440]) {
 
 test("pomeranian filter shows 4", async ({ page }) => {
   await page.goto("/puppies?breed=pomeranian");
-  await expect(page.locator("main a[href^='/puppies/']")).toHaveCount(4);
+  await expect(page.locator(".pp-sketches a[href^='/puppies/']")).toHaveCount(4);
 });
 
 // ---- regression checks (added in the final QA pass) ----
@@ -83,7 +83,7 @@ test("back/forward and nested refresh work", async ({ page }) => {
   await page.goto("/faq");
   await page.goBack();
   await expect(page).toHaveURL(/breed=pomeranian/);
-  await expect(page.locator("main a[href^='/puppies/']")).toHaveCount(4);
+  await expect(page.locator(".pp-sketches a[href^='/puppies/']")).toHaveCount(4);
   await page.goForward();
   await expect(page).toHaveURL(/\/faq$/);
   await page.goto("/puppies/maltipoo-max-male");
