@@ -40,7 +40,7 @@ test("no console or page errors on any route", async ({ page }) => {
 test("faq search filters and accordion toggles", async ({ page }) => {
   await page.goto("/faq");
   const all = await page.locator("main button[aria-expanded]").count();
-  await page.getByPlaceholder(/sniff out/).fill("vaccin");
+  await page.getByPlaceholder(/delivery, Korea/).fill("vaccin");
   const some = await page.locator("main button[aria-expanded]").count();
   expect(some).toBeGreaterThan(0);
   expect(some).toBeLessThan(all);
