@@ -28,3 +28,6 @@ recon/mascot
 *.tmp.json
 recon/audit
 recon/css
+*.tmp.png
+*.tmp.html
+*.tmp.log

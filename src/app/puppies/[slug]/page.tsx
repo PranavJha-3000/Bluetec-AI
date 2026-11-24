@@ -50,14 +50,14 @@ export default async function Detail({ params }: { params: Promise<{ slug: strin
           <h1 className="text-[clamp(2.5rem,6vw,5rem)] leading-none">{puppyLabel(sub)}</h1>
           <span className="hand mt-3 inline-block -rotate-2 rounded-full border-2 border-cocoa bg-honey px-4 py-1">{gone ? "Gone home ♥" : "Available"}</span>
           <dl className="mt-6 grid grid-cols-2 gap-3">
-            {[["Breed", sub.breed], ["Gender", sub.gender === "male" ? "Boy" : "Girl"], ...(p ? [["Age", p.age]] : []), ["Origin", sub.origin === "imported" ? "Imported" : "In Dubai"]].map(([k, v]) => (
+            {[["Breed", sub.breed], ["Boy or girl", sub.gender === "male" ? "Boy" : "Girl"], ...(p ? [["Age", p.age]] : []), ["Where", sub.origin === "imported" ? "Imported for you" : "In Dubai"]].map(([k, v]) => (
               <div key={k} className="card p-4"><dt className="hand text-sm text-toffee-ink">{k}</dt><dd className="font-semibold">{v}</dd></div>
             ))}
           </dl>
           {p?.description && <p className="mt-5 text-cocoa-soft">{p.description}</p>}
           <div className="mt-8 flex flex-wrap gap-4">
             {gone ? <Link href="/puppies" className="btn btn-primary">Meet the puppies still waiting</Link> : (<>
-              <a href={wa} className="btn btn-wa">Ask on WhatsApp</a>
+              <a href={wa} className="btn btn-wa">Ask about {puppyLabel(sub)} on WhatsApp</a>
               <a href="#enquire" className="btn btn-ghost">Send an enquiry</a>
             </>)}
           </div>
