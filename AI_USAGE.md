@@ -7,7 +7,7 @@ Everything was built with Claude Code (Claude Sonnet 5.5) in one long session, w
 - Playwright (Chromium): reference and local capture, geometry measurement, regression tests.
 - REA (reverse-engineer-anything): attempted for static analysis of the reference's JS bundle; it needed a newer Node and only gave a module inventory, so most work used Playwright DOM/CSS dumps instead.
 - Lighthouse: run once per page in the final pass.
-- Vercel: planned, **not performed**.
+- Vercel: deployed by the author; the assistant did not perform or verify the deployment.
 
 ## Prompts (in order)
 1. *(verbatim, abridged)* "I am completing a 48-hour technical hiring assignment for Blutec AI. Reference: https://puppy.instabizweb.com/ … recreate the complete website with maximum visual fidelity, responsiveness, and functional accuracy. We will use REA … FIRST TASK: RECONNAISSANCE ONLY … Do not implement anything yet."

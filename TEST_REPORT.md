@@ -5,7 +5,7 @@ Final run (this commit), Windows 11, Chromium via Playwright, production build s
 | Check | Command | Result |
 |---|---|---|
 | Type check | `npx tsc --noEmit` | clean |
-| Production build | `npx next build` | succeeds, 9 static routes + 42 puppy pages prerendered |
+| Production build | `npx next build` | succeeds, static routes + puppy pages prerendered |
 | Playwright | `npx playwright test` | **25 passed, 0 failed** (about 30 s) |
 | Dependency audit | `npm audit --omit=dev` | 0 vulnerabilities |
 | Lint | — | **not run**: no ESLint config in the project |
@@ -30,7 +30,7 @@ Final run (this commit), Windows 11, Chromium via Playwright, production build s
 | `/puppies` | 81-87 (60 before) | 98 | 100 | 100 | 4-5 s | 0 (0.75 before) |
 | `/faq` | 99 | 100 | 100 | 100 | 0.9 s | 0 |
 
-`/puppies` is limited by unresized ~250 KB JPEG covers in plain `<img>` tags; converting `Img` to `next/image` would fix it and was not done. Other routes were not run through Lighthouse.
+Lighthouse was run before the inner-page rebuilds (`/puppies`, `/faq`, 404 and others changed since) and was not re-run. `/puppies` was limited by unresized ~250 KB JPEG covers in plain `<img>` tags; converting `Img` to `next/image` would fix it and was not done. Other routes were not run through Lighthouse.
 
 ## Not covered
-Pixel-diff regression (screenshots are manual, in `docs/parity-shots/`); animation frame checks beyond the dog landing; Firefox/WebKit; real touch devices; the deployed URL (nothing is deployed); screen-reader testing; keyboard use of the gallery and form beyond one Tab check.
+Pixel-diff regression (screenshots are manual, in `docs/parity-shots/`); animation frame checks beyond the dog landing; Firefox/WebKit; real touch devices; the deployed URL (deployed by the author; not tested by me); screen-reader testing; keyboard use of the gallery and form beyond one Tab check.

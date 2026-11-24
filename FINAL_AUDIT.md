@@ -29,12 +29,12 @@ Scope: whole repo, final QA pass. Evidence for each fix is in `TEST_REPORT.md` a
 9. Lighthouse, 3 pages only; one run each.
 
 ## Deployment status
-**Not deployed.** No Vercel project has been created, so no URL or deployed-commit match can be claimed. The production build passes locally and routes work under `next start`. Steps: push, import into Vercel, no env vars needed, then rerun `npx playwright test` with `baseURL` set to the deployed URL.
+**Deployed by the author to Vercel (reported by the author; I have not opened the deployed URL or compared its commit with `main`).** Latest pushed commit on `main` is the one to match. No env vars are needed. After deploy run `npx playwright test` with `baseURL` set to the deployed URL to confirm.
 
 ## Technical-interviewer view
 | Area | Assessment |
 |---|---|
-| Visual accuracy | Home scenes transcribed from reference rules and close in height (hero, Meet, passport exact); inner pages visibly shorter. 6/10 overall |
+| Visual accuracy | Home scenes transcribed from reference rules and close in height (hero, Meet, passport exact); inner pages rebuilt from reference DOM/CSS and within ~0-6% of reference height at 1440/768/390 (exceptions in `VISUAL_PARITY.md`). Per-pixel diff not automated. 7.5/10 overall |
 | Motion fidelity | Scroll-driven doors, pinned Meet, stamps, walking dog with hop; mascot cues missing. 7/10 |
 | Functionality | All routes, filters, gallery, FAQ, nav work and are tested; form is honestly a demo. 8/10 |
 | Responsiveness | No overflow at 390/768/1440; mobile heights differ partly from a scrollbar artifact. 7/10 |

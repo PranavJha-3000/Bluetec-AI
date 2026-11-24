@@ -29,7 +29,7 @@ Photos, videos and illustrations in `public/media` and `public/brand` are the re
 `FINAL_AUDIT.md` (findings and fixes) · `VISUAL_PARITY.md` (page-by-page comparison) · `TEST_REPORT.md` · `AI_USAGE.md` · `docs/recon/` (original reconnaissance and plans).
 
 ## Deployment
-Standard Next.js build; no environment variables required (`NEXT_PUBLIC_SITE_URL` optionally overrides the canonical URL). **Not yet deployed** — see `FINAL_AUDIT.md`.
+Standard Next.js build; no environment variables required (`NEXT_PUBLIC_SITE_URL` optionally overrides the canonical URL). Deployed to Vercel by the author (not verified by the AI assistant) — see `FINAL_AUDIT.md`.
 
 ## Known gaps
 Mascot cue choreography (gaze, woof, spin), mobile docked peek dog, curtain intro / smooth scroll / view transitions, and shorter inner pages than the reference. Details in `VISUAL_PARITY.md`.
