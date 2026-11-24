@@ -17,3 +17,6 @@
 .pd-card dd { font-weight: 600; }
 .pd-card .btn { width: 100%; justify-content: center; }
 @media (max-width: 1023px) { .pd-card { margin-top: 2.5rem; } }
+.pd-sheet { border: 3px solid var(--color-cocoa); border-radius: 1.6rem; background: #fff8ec radial-gradient(circle at 1px 1px, #2a170e14 1px, transparent 1.6px) 0 0 / 22px 22px; padding: clamp(1rem, 3.5vw, 2.6rem); box-shadow: rgba(42, 23, 14, .12) 6px 8px; }
+.pd-sheet .pd-mark { margin-top: 0; }
+.pd-sheet h2 { margin-top: 1rem; }

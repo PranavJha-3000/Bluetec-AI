@@ -46,12 +46,12 @@ Inner pages were rebuilt from the reference's DOM/CSS (Playwright dump, `tp-` cl
 | /faq | 2385 / 2383 | 2290 / 2296 | 3136 / 3088 |
 | /happy-families | 8872 / 8793 | not measured | 10792 / 32337 |
 | /puppies | 3851 / 3679 | 5835 / 5697 | 5948 / 5656 |
-| /puppies/maltipoo-max-male | not re-measured | 4068 / 4490 | 5120 / 5227 |
+| /puppies/maltipoo-max-male | not re-measured | 4412 / 4490 | 5376 / 5227 |
 | 404 (lost-poster) | not re-measured | 1585 / 1605 | 2119 / 2100 |
 
 (ours / reference; `scrollHeight`, production build.) No horizontal overflow at 390 or 768 on any measured page.
 
-Notes: the reference's /happy-families 390 height is a headless-capture artifact (its CSS `columns: 10.5rem 2` collapses to one column once a 15px scrollbar is subtracted); ours renders two columns. /puppies cards reuse one hand-drawn outline/wash shape instead of the reference's per-card shapes. /puppies/[slug] now has the scrapbook header (breadcrumb, numbered marker, tilted card, stacked photo) and both extra sections; 768 is still ~9% shorter than the reference. Home was not re-measured.
+Notes: the reference's /happy-families 390 height is a headless-capture artifact (its CSS `columns: 10.5rem 2` collapses to one column once a 15px scrollbar is subtracted); ours renders two columns. /puppies cards reuse one hand-drawn outline/wash shape instead of the reference's per-card shapes. /puppies/[slug] now has the scrapbook header (breadcrumb, numbered marker, tilted card, stacked photo) and both extra sections; numbered sheets 2-4 added; 768 within 2%. Home was not re-measured.
 
 ## Motion summary
 | Scene | Mechanism | Reduced motion |

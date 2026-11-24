@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SITE } from "@/data";
 
 export const NAV = [
@@ -12,19 +12,29 @@ export const NAV = [
 
 export default function Header() {
   const path = usePathname();
-  const [open, setOpen] = useState(false);
-  useEffect(() => setOpen(false), [path]);
+  // Menu is open only for the path it was opened on, so navigating closes it without an effect.
+  const [openAt, setOpenAt] = useState<string | null>(null);
+  const open = openAt === path;
+  const setOpen = useCallback((v: boolean) => setOpenAt(v ? path : null), [path]);
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     const esc = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", esc);
     return () => window.removeEventListener("keydown", esc);
-  }, [open]);
+  }, [open, setOpen]);
+  // Reference behaviour: the bar slides away while scrolling down past the hero and returns on any upward scroll.
+  const [hidden, setHidden] = useState(false);
+  useEffect(() => {
+    let last = scrollY, raf = 0;
+    const on = () => { if (raf) return; raf = requestAnimationFrame(() => { raf = 0; const y = scrollY; if (Math.abs(y - last) > 4) { setHidden(y > 120 && y > last); last = y; } }); };
+    addEventListener("scroll", on, { passive: true });
+    return () => { removeEventListener("scroll", on); cancelAnimationFrame(raf); };
+  }, []);
   const active = (h: string) => (h === "/" ? path === "/" : path.startsWith(h));
 
   return (
     <>
-      <header className="sticky top-0 z-50 flex h-[var(--header-h)] items-center justify-between bg-milk/90 backdrop-blur px-[var(--gutter)]">
+      <header data-hidden={hidden && !open} className="sticky top-0 z-50 flex transition-transform duration-300 ease-[var(--ease-silk)] data-[hidden=true]:-translate-y-[120%] h-[var(--header-h)] items-center justify-between bg-milk/90 backdrop-blur px-[var(--gutter)]">
         <Link href="/" className="flex items-center gap-3 font-display text-xl font-extrabold">
           <Image src="/brand/logo.png" alt="" width={48} height={48} priority className="h-12 w-12 rounded-full" />
           TeddyPups

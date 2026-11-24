@@ -116,3 +116,32 @@ test.describe("reduced motion", () => {
     expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
   });
 });
+
+test("curtain: plays on load, then covers and lifts around an internal navigation", async ({ page }) => {
+  await page.goto("/");
+  const curtain = page.locator(".cu-curtain");
+  await expect(curtain).toHaveAttribute("data-state", "idle");
+  await page.locator("header a[href='/faq']").first().click();
+  await expect(curtain).not.toHaveAttribute("data-state", "idle"); // covering
+  await expect(page).toHaveURL(/\/faq$/);
+  await expect(curtain).toHaveAttribute("data-state", "idle");
+});
+
+test("header hides on scroll down and returns on scroll up", async ({ page }) => {
+  await page.goto("/puppies");
+  const header = page.locator("header").first();
+  await page.evaluate(() => scrollTo(0, 900));
+  await expect(header).toHaveAttribute("data-hidden", "true");
+  await page.evaluate(() => scrollTo(0, 500));
+  await expect(header).toHaveAttribute("data-hidden", "false");
+});
+
+test("phone: dog is docked at the left edge and trots out for the Paths scene", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  const left = () => page.evaluate(() => Math.round(document.querySelector("[data-roamer]")!.getBoundingClientRect().left));
+  await page.evaluate(() => scrollTo(0, 1500));
+  await expect.poll(left).toBe(-72);
+  await page.evaluate(() => scrollTo(0, 4200));
+  await expect.poll(left).toBe(205);
+});

@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Figtree, Shantell_Sans } from "next/font/google";
+import SmoothScroll from "@/components/SmoothScroll";
+import Curtain from "@/components/Curtain";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PawTrail from "@/components/PawTrail";
@@ -23,6 +25,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${fraunces.variable} ${figtree.variable} ${shantell.variable}`}>
       <body>
         <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-cocoa focus:px-4 focus:py-2 focus:text-milk">Skip to content</a>
+        <Curtain />
+        <SmoothScroll />
         <Header />
         <main id="main">{children}</main>
         <Footer />

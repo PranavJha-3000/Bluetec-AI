@@ -54,14 +54,17 @@ export class Rig {
   setPose(name: string) { this.target = POSES[name]; }
   face(dir: number, turn = 0.07) { this.facingTarget = dir; this.turn = turn; }
   stride(v: number) { this.strideTarget = clamp(v, 0, 1); }
+  gazeX = 0; gazeY = 0;
+  look(x: number, y: number) { this.gazeX = clamp(x, -1, 1); this.gazeY = clamp(y, -1, 1); }
   advance(units: number) { this.m.phase += (units / 46) * Math.PI; } // one step per 46 svg units, as in the reference
   /** true while anything is still easing; the caller can stop its rAF loop when false */
-  get settled() { return this.m.stride === 0 && this.strideTarget === 0 && Math.abs(this.facing - this.facingTarget) < 0.01 && KEYS.every((k) => Math.abs(this.pose[k] - this.target[k]) < 0.01); }
+  get settled() { return Math.abs(this.gazeX - this.m.gazeX) < 0.01 && Math.abs(this.gazeY - this.m.gazeY) < 0.01 && this.m.stride === 0 && this.strideTarget === 0 && Math.abs(this.facing - this.facingTarget) < 0.01 && KEYS.every((k) => Math.abs(this.pose[k] - this.target[k]) < 0.01); }
   tick(dt: number, time: number) {
     dt = Math.min(dt, 0.05); const m = this.m; m.time = time;
     this.pose = lerpPose(this.pose, this.target, ease(dt, 0.16));
     this.facing += (this.facingTarget - this.facing) * ease(dt, this.turn);
     m.stride += (this.strideTarget - m.stride) * ease(dt, 0.12); if (m.stride < 0.012 && this.strideTarget === 0) m.stride = 0;
+    m.gazeX += (this.gazeX - m.gazeX) * ease(dt, 0.12); m.gazeY += (this.gazeY - m.gazeY) * ease(dt, 0.12);
     m.wag += (this.wagTarget - m.wag) * ease(dt, 0.4);
     this.earV += (-150 * m.ear - 10 * this.earV) * dt; m.ear = clamp(m.ear + this.earV * dt, -28, 28);
     if (time > this.nextBlink && this.pose.eyes > 0.6) { this.blinkAt = time; this.nextBlink = time + 2.2 + 3.8 * Math.random(); if (Math.random() < 0.18) this.nextBlink = time + 0.32; }

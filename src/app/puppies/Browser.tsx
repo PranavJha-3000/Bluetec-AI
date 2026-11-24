@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Img from "@/components/Img";
 import { gone, puppies, puppyLabel, type Puppy } from "@/data";
-import { INK, WASH } from "./art";
+import { inkFor, washFor } from "./art";
 
 type F = { breed?: string; gender?: string; origin?: string };
 const GROUPS: { key: keyof F; label: string; opts: [string, string][] }[] = [
@@ -22,9 +22,9 @@ function Sketch({ p, i }: { p: Puppy; i: number }) {
     <li>
       <Link href={`/puppies/${p.slug}`} className="pp-sketch" style={style(i)} data-revealed>
         <span className="pp-sketch__frame">
-          <Svg html={WASH} />
+          <Svg html={washFor(i)} />
           <span className="pp-sketch__photo" style={{ borderRadius: "46% 54% 49% 51% / 52% 47% 53% 48%" }}><Img m={p.cover} eager={i < 4} /></span>
-          <Svg html={INK} />
+          <Svg html={inkFor(i)} />
           <span className="pp-sketch__sticker font-scrawl">Available</span>
           {video && <span className="pp-sketch__video">with video</span>}
         </span>
@@ -41,6 +41,7 @@ export default function Browser() {
   useEffect(() => {
     const sp = new URLSearchParams(location.search);
     const url: F = { breed: sp.get("breed") ?? undefined, gender: sp.get("gender") ?? undefined, origin: sp.get("origin") ?? undefined };
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- URL is only readable after mount; reading it during render would break hydration
     if (url.breed || url.gender || url.origin) setF(url);
   }, []);
 
@@ -89,7 +90,7 @@ export default function Browser() {
           </div>
           <ul className="pp-gone-strip__row">
             {gone.slice(0, 5).map((g, i) => (
-              <li key={g.slug}><Link href={`/puppies/${g.slug}`} className="pp-sketch pp-sketch--small" style={style(i, "#f9cdbf")} data-revealed><span className="pp-sketch__frame"><span className="pp-sketch__photo" style={{ borderRadius: "46% 54% 49% 51% / 52% 47% 53% 48%" }}><Img src={g.cover} alt="" /></span></span><span className="pp-sketch__name font-plush">{g.name}</span></Link></li>
+              <li key={g.slug}><Link href={`/puppies/${g.slug}`} className="pp-sketch pp-sketch--small" style={style(i, "#f9cdbf")} data-revealed><span className="pp-sketch__frame"><span className="pp-sketch__photo" style={{ borderRadius: "46% 54% 49% 51% / 52% 47% 53% 48%" }}><Img src={g.cover} alt="" /></span></span><span className="pp-sketch__name font-plush">{g.name || g.breed}</span></Link></li>
             ))}
           </ul>
         </div>

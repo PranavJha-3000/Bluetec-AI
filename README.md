@@ -7,6 +7,7 @@ npm install
 npm run dev          # http://localhost:3000
 npm run build && npm start
 npm run typecheck
+npm run lint
 npm test             # Playwright: builds, serves on :3100, runs tests/smoke.spec.ts
 ```
 

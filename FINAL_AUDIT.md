@@ -17,16 +17,28 @@ Scope: whole repo, final QA pass. Evidence for each fix is in `TEST_REPORT.md` a
 | 10 | P1 | Thin tests (14) | 25 tests: console errors, FAQ, gallery, form, mobile menu, back/forward, keyboard, dog landing, reduced motion | `npx playwright test` |
 | 11 | P2 | Scraped reference HTML/CSS tracked in git, scratch files in root | Untracked `recon/mascot`, deleted `*.tmp.*` scratch, ignore rules added | `git status` |
 
+## Closed in the completion pass
+| Item | Change | Evidence |
+|---|---|---|
+| `/puppies` performance | `Img` now uses `next/image` (resized AVIF/WebP) | Lighthouse `/puppies` perf 100, a11y 100, CLS 0 |
+| No lint | ESLint 9 + `eslint-config-next`; `npm run lint` clean (TypeScript pinned to 6.x because typescript-eslint does not support 7) | `npx eslint src tests` exits 0 |
+| /puppies cards shared one outline | Seeded per-card wash/ink shapes | visual check |
+| Detail page 768 height, markers 2-4 | Numbered scrapbook sheets | 4412 vs 4490 at 768 |
+| Page curtain | Ported from the reference CSS: plays on load, covers and lifts on internal navigation (capture-phase click, 4 s fail-safe, off under reduced motion) | Playwright curtain test |
+| Smooth scroll | Small wheel lerp (0.1) on fine pointers, no library; touch/keyboard native | manual |
+| Header | Hides on scroll down, returns on scroll up (reference `data-hidden`) | Playwright test |
+| Phone dog | Reference "lane" mode: docked at x=-72px, out at x=205px for Paths/Passport/Night at 390 wide | Playwright test (values measured on the reference) |
+| Mascot gaze | Eyes follow the mouse pointer | code only, not frame-compared |
+| Link without text (a11y) | Gone-home strip falls back to breed | Lighthouse a11y 100 |
+
 ## Known gaps (not fixed)
-1. **Inner pages now within about 0-6% of reference height at 1440** (see `VISUAL_PARITY.md`). Remaining: per-card /puppies art, /puppies/[slug] 768 (~9% short), numbered markers 2-4 on the detail page.
-2. Mascot cue choreography (gaze, woof, spin) and mobile docked peek dog.
-3. Curtain intro, Lenis smooth scroll, view transitions.
-4. `/puppies` Lighthouse performance 81-87 because covers are unresized ~250 KB JPEGs in plain `<img>`; `next/image` would fix it.
-5. Door section: ref is mid-open at its screenshot position, ours animates over the same range; art matches but exact open angle at a given scroll was not compared frame by frame. Mobile 978 vs 992.
-6. No ESLint config; JSON-LD uses `dangerouslySetInnerHTML` with static trusted data (acceptable now, escape `<` if data ever becomes dynamic).
-7. WhatsApp number/email are the reference's placeholders. Media (65 MB) and saved reference data are committed.
-8. Pixel-diff parity was only done coarsely and manually; no automated visual regression.
-9. Lighthouse, 3 pages only; one run each.
+1. Mascot woof/spin cues: the reference exposes no cue markers I could read, so only gaze, blink, ear twitch and the walk/hop/sit poses exist.
+2. View Transitions API is not used: Next 16's `experimental.viewTransition` is not in the config types here; the curtain is the page transition. Native `startViewTransition` was not reproduced.
+3. Smooth scroll is a small custom lerp, not Lenis; feel was not frame-compared with the reference.
+4. Door scene: open angle at a given scroll not compared frame by frame.
+5. JSON-LD uses `dangerouslySetInnerHTML` with static trusted data (escape `<` if data becomes dynamic).
+6. WhatsApp number/email are the reference's placeholders. Media (65 MB) and saved reference data are committed.
+7. Pixel-diff parity is by height/screenshots, not an automated visual-regression suite. 390px detail page is ~3% taller than the reference.
 
 ## Deployment status
 **Deployed by the author to Vercel (reported by the author; I have not opened the deployed URL or compared its commit with `main`).** Latest pushed commit on `main` is the one to match. No env vars are needed. After deploy run `npx playwright test` with `baseURL` set to the deployed URL to confirm.
@@ -34,7 +46,7 @@ Scope: whole repo, final QA pass. Evidence for each fix is in `TEST_REPORT.md` a
 ## Technical-interviewer view
 | Area | Assessment |
 |---|---|
-| Visual accuracy | Home scenes transcribed from reference rules and close in height (hero, Meet, passport exact); inner pages rebuilt from reference DOM/CSS and within ~0-6% of reference height at 1440/768/390 (exceptions in `VISUAL_PARITY.md`). Per-pixel diff not automated. 7.5/10 overall |
+| Visual accuracy | Home scenes transcribed from reference rules and close in height (hero, Meet, passport exact); inner pages rebuilt from reference DOM/CSS and within ~0-6% of reference height at 1440/768/390 (exceptions in `VISUAL_PARITY.md`). Per-pixel diff not automated. 8/10 overall |
 | Motion fidelity | Scroll-driven doors, pinned Meet, stamps, walking dog with hop; mascot cues missing. 7/10 |
 | Functionality | All routes, filters, gallery, FAQ, nav work and are tested; form is honestly a demo. 8/10 |
 | Responsiveness | No overflow at 390/768/1440; mobile heights differ partly from a scrollbar artifact. 7/10 |

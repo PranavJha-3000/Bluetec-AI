@@ -71,15 +71,15 @@ export default async function Detail({ params }: { params: Promise<{ slug: strin
       </div>
       {!gone && (
         <>
-          <section className="mt-16" aria-labelledby="comes-title">
-            <p className="hand text-xl text-toffee-ink">what comes with {puppyLabel(sub)}</p>
+          <section className="pd-sheet mt-12 md:mt-16" aria-labelledby="comes-title">
+            <p className="pd-mark"><b>2</b>what comes with {puppyLabel(sub)}</p>
             <h2 id="comes-title" className="mt-1 text-4xl">Every Teddy Pup comes</h2>
             <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {["Vaccinated", "Dewormed", "Verified health certificate from licensed vets", "Thoroughly checked before joining your family"].map((t) => <li key={t} className="card p-5 font-semibold">{t}</li>)}
             </ul>
           </section>
-          <section className="mt-16" aria-labelledby="abroad-title">
-            <p className="hand text-xl text-toffee-ink">the way home</p>
+          <section className="pd-sheet mt-12 md:mt-16" aria-labelledby="abroad-title">
+            <p className="pd-mark"><b>3</b>the way home</p>
             <h2 id="abroad-title" className="mt-1 text-4xl">Coming home from abroad</h2>
             <ol className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {ABROAD.map(([t, d], i) => <li key={t} className="card p-5"><span className="hand text-toffee-ink">Step {i + 1}</span><h3 className="text-xl">{t}</h3><p className="mt-1 text-cocoa-soft">{d}</p></li>)}
@@ -88,7 +88,8 @@ export default async function Detail({ params }: { params: Promise<{ slug: strin
         </>
       )}
       {!gone && (
-        <section id="enquire" className="mt-16 scroll-mt-24">
+        <section id="enquire" className="pd-sheet mt-12 md:mt-16 scroll-mt-24">
+          <p className="pd-mark"><b>4</b>dear TeddyPups…</p>
           <h2 className="mb-6 text-4xl">Send an enquiry about {puppyLabel(sub)}</h2>
           <LetterForm puppyId={slug} id={`enquiry-${slug}`} />
         </section>

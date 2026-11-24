@@ -23,6 +23,7 @@ export default function Wall() {
       es.forEach((e) => e.isIntersecting && io.unobserve(e.target));
     }, { rootMargin: "0px 0px -8% 0px" });
     document.querySelectorAll(".hf-wall__item").forEach((el) => io.observe(el));
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- arm the reveal only after the observer exists (SSR renders everything visible)
     setArmed(true);
     return () => io.disconnect();
   }, []);
