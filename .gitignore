@@ -31,3 +31,4 @@ recon/css
 *.tmp.png
 *.tmp.html
 *.tmp.log
+*.tmp.css
